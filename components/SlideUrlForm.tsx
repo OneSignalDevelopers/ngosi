@@ -25,9 +25,10 @@ const createSubmitHandler =
       body: JSON.stringify(values),
     });
 
-    const { url } = response;
-    if (url) {
-      router.replace(url);
+    const body = await response.json();
+    const { qrCodeData } = body;
+    if (qrCodeData) {
+      router.replace(`/qr?qrcd=${qrCodeData}`);
     }
   };
 
