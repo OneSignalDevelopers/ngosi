@@ -2,14 +2,7 @@ import React, { useState } from "react";
 import * as Yup from "yup";
 import { withFormik, FormikProps, FormikErrors, Form, Field } from "formik";
 import ToggleSwitch from "./ToggleSwitch";
-
-interface FormValues {
-  fullname: string;
-  email: string;
-  notificationWhenVideoPublished: boolean;
-  rateMyPresentation: boolean;
-  notificationOfOtherTalks: boolean;
-}
+import { PresentationDownloadForm as FormValues } from "./types/survey";
 
 interface AttendeeFormProps {
   initialName?: string;
