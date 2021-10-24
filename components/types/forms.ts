@@ -5,3 +5,8 @@ export interface PresentationDownloadForm {
   rateMyPresentation: boolean;
   notificationOfOtherTalks: boolean;
 }
+
+export interface SlidesUrlForm {
+  /** The URL to access the presener's slides */
+  slides: string;
+}
