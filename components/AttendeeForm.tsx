@@ -96,7 +96,14 @@ const validate = (values: FormValues) => {
   return errors;
 };
 
-const handleSubmit = (values: FormValues) => {};
+const handleSubmit = async (values: FormValues) => {
+  const response = await fetch("/api/survey-response", {
+    method: "POST",
+    body: JSON.stringify(values),
+  });
+
+  console.log(response);
+};
 
 const AttendeeForm = withFormik<AttendeeFormProps, FormValues>({
   mapPropsToValues: props => ({
