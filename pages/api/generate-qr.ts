@@ -4,7 +4,7 @@ import QRCode from "qrcode";
 
 export type Response =
   | {
-      url: string;
+      qrCodeData: string;
     }
   | {
       error: String;
@@ -17,7 +17,8 @@ export default async function asynchandler(
   const { slides } = JSON.parse(req.body);
 
   try {
-    return res.status(200).json({ url: slides });
+    const qrCode = await QRCode.toDataURL(slides);
+    return res.status(200).json({ qrCodeData: qrCode });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: (error as Error).message });
