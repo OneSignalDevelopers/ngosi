@@ -15,7 +15,6 @@ export default async function asynchandler(
 ) {
   try {
     console.log(req.body);
-
     res.status(200).json({ message: "completed" });
   } catch (error) {
     console.log(error);
