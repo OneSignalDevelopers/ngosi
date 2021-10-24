@@ -2,16 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import QRCode from "qrcode";
 
-interface PresenterRecord {
-  pictureUrl?: string;
-  firstName: string;
-  lastName: string;
-  presentationTitle: string;
-  confName: string;
-  confLocation: string;
-}
-
-type Response =
+export type Response =
   | {
       url: string;
     }
