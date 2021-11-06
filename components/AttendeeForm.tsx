@@ -12,7 +12,7 @@ interface AttendeeFormProps {
   initialNotificationOfOtherTalks?: boolean;
 }
 
-const InnerForm = (props: FormikProps<FormValues>) => {
+const InnerForm = (props: FormikProps<SurveyForm>) => {
   const { touched, errors, isSubmitting, initialValues } = props;
   const [notificationWhenVideoPublished, setNotificationWhenVideoPublished] =
     useState(initialValues.notificationWhenVideoPublished);
@@ -96,9 +96,9 @@ const validate = (values: FormValues) => {
   return errors;
 };
 
-const handleSubmit = (values: FormValues) => {};
+const handleSubmit = (values: SurveyForm) => {};
 
-const AttendeeForm = withFormik<AttendeeFormProps, FormValues>({
+const AttendeeForm = withFormik<AttendeeFormProps, SurveyForm>({
   mapPropsToValues: props => ({
     email: props.initialEmail || "",
     fullname: props.initialName || "",
