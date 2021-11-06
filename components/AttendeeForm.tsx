@@ -82,8 +82,8 @@ const InnerForm = (props: FormikProps<SurveyForm>) => {
   );
 };
 
-const validate = (values: FormValues) => {
-  let errors: FormikErrors<FormValues> = {};
+const validate = (values: SurveyForm) => {
+  let errors: FormikErrors<SurveyForm> = {};
 
   if (!values.fullname) {
     errors.fullname = "Required";
@@ -96,7 +96,14 @@ const validate = (values: FormValues) => {
   return errors;
 };
 
-const handleSubmit = (values: SurveyForm) => {};
+const handleSubmit = async (values: SurveyForm) => {
+  const response = await fetch("/api/survey-response", {
+    method: "POST",
+    body: JSON.stringify(values),
+  });
+
+  console.log(response);
+};
 
 const AttendeeForm = withFormik<AttendeeFormProps, SurveyForm>({
   mapPropsToValues: props => ({

@@ -2,18 +2,9 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import QRCode from "qrcode";
 
-interface PresenterRecord {
-  pictureUrl?: string;
-  firstName: string;
-  lastName: string;
-  presentationTitle: string;
-  confName: string;
-  confLocation: string;
-}
-
-type Response =
+export type Response =
   | {
-      url: string;
+      qrCodeData: string;
     }
   | {
       error: String;
@@ -23,9 +14,11 @@ export default async function asynchandler(
   req: NextApiRequest,
   res: NextApiResponse<Response>
 ) {
+  const { slides } = JSON.parse(req.body);
+
   try {
-    const url = await QRCode.toDataURL("https://google.com");
-    return res.status(200).json({ url });
+    const qrCode = await QRCode.toDataURL(slides);
+    return res.status(200).json({ qrCodeData: qrCode });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: (error as Error).message });
