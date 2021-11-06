@@ -1,12 +1,14 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import Footer from "../components/Footer";
-import SlideUrlForm from "../components/SlideUrlForm";
 import QRCode from "react-qr-code";
-
-const qrCodeLink = "https://google.com";
+import { useRecoilValue } from "recoil";
+import AddPresentationForm from "../components/AddPresentationForm/AddPresentationForm";
+import { presentationUrl } from "../components/AddPresentationForm/state";
+import Footer from "../components/Footer";
 
 const AddPresentation: NextPage = () => {
+  const url = useRecoilValue(presentationUrl);
+
   return (
     <div className="flex flex-col min-h-screen min-w-full">
       <Head>
@@ -14,8 +16,8 @@ const AddPresentation: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex flex-col flex-1 mt-2 space-y-3">
-        <SlideUrlForm />
-        <QRCode value={qrCodeLink} />
+        <AddPresentationForm />
+        <QRCode value={url} />
       </main>
       <Footer />
     </div>
