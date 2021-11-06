@@ -1,25 +1,25 @@
 import { Field, Form, Formik, FormikErrors, FormikHelpers } from "formik";
 import { NextRouter, useRouter } from "next/router";
 import React from "react";
-import { SlidesUrlForm as FormValues } from "./types/forms";
+import { AddPresentationForm } from "../@types/forms";
 
 interface SlideUrlForm {
   slides?: string;
 }
 
-const onValidate = (values: FormValues) => {
-  let errors: FormikErrors<FormValues> = {};
+const onValidate = (values: AddPresentationForm) => {
+  let errors: FormikErrors<AddPresentationForm> = {};
 
-  if (!values.slides) {
-    errors.slides = "Required";
+  if (!values.url) {
+    errors.url = "Required";
   }
 
   return errors;
 };
 
 const createSubmitHandler =
-  (router: NextRouter, formikHelpers?: FormikHelpers<FormValues>) =>
-  async (values: FormValues) => {
+  (router: NextRouter, formikHelpers?: FormikHelpers<AddPresentationForm>) =>
+  async (values: AddPresentationForm) => {
     const response = await fetch("/api/generate-qr", {
       method: "POST",
       body: JSON.stringify(values),
@@ -35,7 +35,7 @@ const createSubmitHandler =
 const SlideUrlForm: React.FC<{}> = () => {
   const router = useRouter();
   const onSubmit = createSubmitHandler(router);
-  const initialValues: FormValues = { slides: "" };
+  const initialValues: AddPresentationForm = { url: "" };
 
   return (
     <Formik
