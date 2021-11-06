@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import * as Yup from "yup";
 import { withFormik, FormikProps, FormikErrors, Form, Field } from "formik";
 import ToggleSwitch from "./ToggleSwitch";
-import { PresentationDownloadForm as FormValues } from "./types/forms";
+import { SurveyForm } from "../@types/forms";
 
 interface AttendeeFormProps {
   initialName?: string;
@@ -12,7 +12,7 @@ interface AttendeeFormProps {
   initialNotificationOfOtherTalks?: boolean;
 }
 
-const InnerForm = (props: FormikProps<FormValues>) => {
+const InnerForm = (props: FormikProps<SurveyForm>) => {
   const { touched, errors, isSubmitting, initialValues } = props;
   const [notificationWhenVideoPublished, setNotificationWhenVideoPublished] =
     useState(initialValues.notificationWhenVideoPublished);
@@ -82,8 +82,8 @@ const InnerForm = (props: FormikProps<FormValues>) => {
   );
 };
 
-const validate = (values: FormValues) => {
-  let errors: FormikErrors<FormValues> = {};
+const validate = (values: SurveyForm) => {
+  let errors: FormikErrors<SurveyForm> = {};
 
   if (!values.fullname) {
     errors.fullname = "Required";
@@ -96,7 +96,7 @@ const validate = (values: FormValues) => {
   return errors;
 };
 
-const handleSubmit = async (values: FormValues) => {
+const handleSubmit = async (values: SurveyForm) => {
   const response = await fetch("/api/survey-response", {
     method: "POST",
     body: JSON.stringify(values),
@@ -105,7 +105,7 @@ const handleSubmit = async (values: FormValues) => {
   console.log(response);
 };
 
-const AttendeeForm = withFormik<AttendeeFormProps, FormValues>({
+const AttendeeForm = withFormik<AttendeeFormProps, SurveyForm>({
   mapPropsToValues: props => ({
     email: props.initialEmail || "",
     fullname: props.initialName || "",

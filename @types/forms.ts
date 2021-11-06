@@ -1,4 +1,4 @@
-export interface PresentationDownloadForm {
+export interface SurveyForm {
   fullname: string;
   email: string;
   notificationWhenVideoPublished: boolean;
@@ -6,7 +6,7 @@ export interface PresentationDownloadForm {
   notificationOfOtherTalks: boolean;
 }
 
-export interface SlidesUrlForm {
+export interface AddPresentationForm {
   /** The URL to access the presener's slides */
-  slides: string;
+  url: string;
 }

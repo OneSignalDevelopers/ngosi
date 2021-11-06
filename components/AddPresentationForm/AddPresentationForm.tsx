@@ -1,25 +1,23 @@
 import { Field, Form, Formik, FormikErrors, FormikHelpers } from "formik";
 import { NextRouter, useRouter } from "next/router";
 import React from "react";
-import { SlidesUrlForm as FormValues } from "./types/forms";
+import { useRecoilState } from "recoil";
+import { AddPresentationForm } from "../../@types/forms";
+import { presentationUrl } from "./state";
 
-interface SlideUrlForm {
-  slides?: string;
-}
+const onValidate = (values: AddPresentationForm) => {
+  let errors: FormikErrors<AddPresentationForm> = {};
 
-const onValidate = (values: FormValues) => {
-  let errors: FormikErrors<FormValues> = {};
-
-  if (!values.slides) {
-    errors.slides = "Required";
+  if (!values.url) {
+    errors.url = "Required";
   }
 
   return errors;
 };
 
 const createSubmitHandler =
-  (router: NextRouter, formikHelpers?: FormikHelpers<FormValues>) =>
-  async (values: FormValues) => {
+  (router: NextRouter, formikHelpers?: FormikHelpers<AddPresentationForm>) =>
+  async (values: AddPresentationForm) => {
     const response = await fetch("/api/generate-qr", {
       method: "POST",
       body: JSON.stringify(values),
@@ -32,10 +30,11 @@ const createSubmitHandler =
     }
   };
 
-const SlideUrlForm: React.FC<{}> = () => {
+const AddPresentationForm: React.FC<{}> = () => {
   const router = useRouter();
   const onSubmit = createSubmitHandler(router);
-  const initialValues: FormValues = { slides: "" };
+  const initialValues: AddPresentationForm = { url: "" };
+  const [url, setUrl] = useRecoilState(presentationUrl);
 
   return (
     <Formik
@@ -46,15 +45,24 @@ const SlideUrlForm: React.FC<{}> = () => {
       {({ isSubmitting }) => (
         <Form className="flex flex-col space-y-5">
           <div className="flex flex-col space-y-1">
-            <label className="font-bold text-sm" htmlFor="slides">
+            <label className="font-bold text-sm" htmlFor="url">
               Link to slides
             </label>
             <Field
               type="url"
-              name="slides"
+              name="url"
               className="h-10 w-full border border-black capitalize px-2"
             />
           </div>
+
+          <input
+            type="text"
+            onChange={e => {
+              e.preventDefault();
+              setUrl(e.target.value);
+            }}
+            value={url}
+          />
 
           <button
             type="submit"
@@ -68,4 +76,4 @@ const SlideUrlForm: React.FC<{}> = () => {
     </Formik>
   );
 };
-export default SlideUrlForm;
+export default AddPresentationForm;
