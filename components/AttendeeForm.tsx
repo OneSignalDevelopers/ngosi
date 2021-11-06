@@ -2,14 +2,7 @@ import React, { useState } from "react";
 import * as Yup from "yup";
 import { withFormik, FormikProps, FormikErrors, Form, Field } from "formik";
 import ToggleSwitch from "./ToggleSwitch";
-
-interface FormValues {
-  fullname: string;
-  email: string;
-  notificationWhenVideoPublished: boolean;
-  rateMyPresentation: boolean;
-  notificationOfOtherTalks: boolean;
-}
+import { PresentationDownloadForm as FormValues } from "./types/forms";
 
 interface AttendeeFormProps {
   initialName?: string;
@@ -103,7 +96,14 @@ const validate = (values: FormValues) => {
   return errors;
 };
 
-const handleSubmit = (values: FormValues) => {};
+const handleSubmit = async (values: FormValues) => {
+  const response = await fetch("/api/survey-response", {
+    method: "POST",
+    body: JSON.stringify(values),
+  });
+
+  console.log(response);
+};
 
 const AttendeeForm = withFormik<AttendeeFormProps, FormValues>({
   mapPropsToValues: props => ({
