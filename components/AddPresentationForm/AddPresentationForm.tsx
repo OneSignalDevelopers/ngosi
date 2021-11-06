@@ -1,11 +1,9 @@
 import { Field, Form, Formik, FormikErrors, FormikHelpers } from "formik";
 import { NextRouter, useRouter } from "next/router";
 import React from "react";
-import { AddPresentationForm } from "../@types/forms";
-
-interface SlideUrlForm {
-  slides?: string;
-}
+import { useRecoilState } from "recoil";
+import { AddPresentationForm } from "../../@types/forms";
+import { presentationUrl } from "./state";
 
 const onValidate = (values: AddPresentationForm) => {
   let errors: FormikErrors<AddPresentationForm> = {};
@@ -32,10 +30,11 @@ const createSubmitHandler =
     }
   };
 
-const SlideUrlForm: React.FC<{}> = () => {
+const AddPresentationForm: React.FC<{}> = () => {
   const router = useRouter();
   const onSubmit = createSubmitHandler(router);
   const initialValues: AddPresentationForm = { url: "" };
+  const [url, setUrl] = useRecoilState(presentationUrl);
 
   return (
     <Formik
@@ -46,12 +45,12 @@ const SlideUrlForm: React.FC<{}> = () => {
       {({ isSubmitting }) => (
         <Form className="flex flex-col space-y-5">
           <div className="flex flex-col space-y-1">
-            <label className="font-bold text-sm" htmlFor="slides">
+            <label className="font-bold text-sm" htmlFor="url">
               Link to slides
             </label>
             <Field
               type="url"
-              name="slides"
+              name="url"
               className="h-10 w-full border border-black capitalize px-2"
             />
           </div>
@@ -68,4 +67,4 @@ const SlideUrlForm: React.FC<{}> = () => {
     </Formik>
   );
 };
-export default SlideUrlForm;
+export default AddPresentationForm;
