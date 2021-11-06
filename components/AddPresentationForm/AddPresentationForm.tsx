@@ -55,6 +55,15 @@ const AddPresentationForm: React.FC<{}> = () => {
             />
           </div>
 
+          <input
+            type="text"
+            onChange={e => {
+              e.preventDefault();
+              setUrl(e.target.value);
+            }}
+            value={url}
+          />
+
           <button
             type="submit"
             disabled={isSubmitting}
