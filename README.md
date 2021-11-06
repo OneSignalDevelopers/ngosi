@@ -1,3 +1,5 @@
+<img src="https://user-images.githubusercontent.com/1715082/140621829-ba80f963-840c-4be4-abe5-7167b8edc906.png" height="250px"/>
+
 ## What is it?
 
 Ngosi is a tool that aims to make it easy to share you presentation with a live audience and (building a list).
