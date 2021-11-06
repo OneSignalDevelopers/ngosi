@@ -8,11 +8,12 @@ import PresentationInfo from "../components/PresentationInfo";
 import { Presentation, Presenter } from "../@types/presenter";
 import FatalError from "../components/FatalError";
 
-const presenter = {
+const presenter: Presenter = {
   id: "1",
   firstName: "Yohanan",
   lastName: "Negash",
   email: "yoh.negash@yahoo.com",
+  profileImage: "",
   presentations: [],
 };
 
