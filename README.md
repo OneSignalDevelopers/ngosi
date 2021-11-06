@@ -42,3 +42,7 @@ Then, run the development server:
 ```bash
 yarn dev
 ```
+
+### Branding
+* Font - Lato italic
+* Ngosi green - #77bb3f
