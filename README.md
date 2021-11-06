@@ -21,6 +21,12 @@ The form survey will ask for some information:
 5. Whether to send a follow-up survey after the presenter concludes their live talk to give feedback
 6. Whether to be notified when this presenter gives a talk in the future
 
+## Yea, but why?
+
+I needed a _real_ project in which to demonstrate the power of [OneSignal](). The product direction is guided mostly by the messaging workflows OneSignal excels at.
+
+I've not gone to a single conference where someone either asked for the slides or decided to take pictures of the slides during the presentation. If you're going to share the slides, why not also collect some info so you can own your own audience?
+
 ## Getting Started
 
 First, install dependencies:
