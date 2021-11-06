@@ -5,3 +5,8 @@ export interface SurveyForm {
   rateMyPresentation: boolean;
   notificationOfOtherTalks: boolean;
 }
+
+export interface AddPresentationForm {
+  /** The URL to access the presener's slides */
+  url: string;
+}

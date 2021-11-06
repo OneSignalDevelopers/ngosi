@@ -11,6 +11,9 @@ export interface Presenter {
   /** The presenter's email address */
   readonly email: string;
 
+  /** The URL to the presenters profile photo */
+  readonly profileImage: string;
+
   /** A list of presentations the presenter has created in Ngosi */
   readonly presentations: Presentation[];
 }
