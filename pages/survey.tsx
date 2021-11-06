@@ -1,14 +1,14 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import AttendeeForm from "../components/AttendeeForm";
-import EventHeader from "../components/EventHeader";
-import Footer from "../components/Footer";
-import PresentationInfo from "../components/PresentationInfo";
+import AttendeeForm from "../../components/AttendeeForm";
+import EventHeader from "../../components/EventHeader";
+import Footer from "../../components/Footer";
+import PresentationInfo from "../../components/PresentationInfo";
 
 const title =
   "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.";
 
-const Home: NextPage = () => {
+const Survey: NextPage = () => {
   return (
     <div className="flex flex-col min-h-screen min-w-full">
       <Head>
@@ -34,4 +34,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default Survey;
