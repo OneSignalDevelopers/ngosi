@@ -5,7 +5,7 @@ import "../styles/globals.css";
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <RecoilRoot>
-      <Component {...pageProps} />;
+      <Component {...pageProps} />
     </RecoilRoot>
   );
 }
