@@ -1,12 +1,12 @@
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import AttendeeForm from "../components/AttendeeForm";
-import EventHeader from "../components/EventHeader";
-import Footer from "../components/Footer";
-import PresentationInfo from "../components/PresentationInfo";
-import { Presentation, Presenter } from "../@types/presenter";
-import FatalError from "../components/FatalError";
+import AttendeeForm from "../../components/AttendeeForm";
+import EventHeader from "../../components/EventHeader";
+import Footer from "../../components/Footer";
+import PresentationInfo from "../../components/PresentationInfo";
+import { Presentation, Presenter } from "../../@types/presenter";
+import FatalError from "../../components/FatalError";
 
 const presenter: Presenter = {
   id: "1",
@@ -39,14 +39,14 @@ const title =
 
 const Survey: NextPage = () => {
   const router = useRouter();
+  const { pid } = router.query;
 
-  const { presentationid } = router.query;
-
-  if (!presentationid || typeof presentationid !== "string") {
+  console.log("PID", pid);
+  if (!pid || typeof pid !== "string") {
     return <FatalError message="An error occured." />;
   }
 
-  const presention = getPresentation(presentationid);
+  const presention = getPresentation(pid);
   if (!presention) {
     return <FatalError message="Presentation doesn't exist" />;
   }
@@ -57,8 +57,6 @@ const Survey: NextPage = () => {
     );
   }
   const { firstName, lastName } = presenter;
-
-  console.log("Presentation ID", presentationid);
 
   return (
     <div className="flex flex-col min-h-screen min-w-full">
