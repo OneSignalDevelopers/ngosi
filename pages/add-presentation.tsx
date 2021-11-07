@@ -15,9 +15,18 @@ const AddPresentation: NextPage = () => {
         <title>Ngosi</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="flex flex-col flex-1 mt-2 space-y-3">
-        <AddPresentationForm />
-        <QRCode value={url} />
+      <main className="flex flex-col flex-1">
+        <h1 className="text-3xl bg-black py-2 px-6 text-white">
+          Add Presentation
+        </h1>
+        <div className="flex flex-col mt-4  pt-4 px-6">
+          <div className="flex justify-center">
+            <QRCode value={url} />
+          </div>
+          <div className="mt-6">
+            <AddPresentationForm />
+          </div>
+        </div>
       </main>
       <Footer />
     </div>

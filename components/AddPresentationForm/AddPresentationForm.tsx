@@ -52,22 +52,24 @@ const AddPresentationForm: React.FC<{}> = () => {
       {({ isSubmitting }) => (
         <Form className="flex flex-col space-y-5">
           <div className="flex flex-col space-y-1">
-            <label className="font-bold text-sm" htmlFor="url">
+            <label
+              className="font-semibold text-sm text-gray-900"
+              htmlFor="url"
+            >
               Enter link to your presentation
             </label>
-            <Field
-              type="url"
-              name="url"
-              className="h-10 w-full border border-black capitalize px-2"
-            >
+            <Field name="url">
               {({ field }: FieldProps) => (
                 <input
                   {...field}
-                  onChange={e => {
+                  type="url"
+                  onChange={(e) => {
                     e.preventDefault();
                     setUrl(e.target.value);
                   }}
                   value={url}
+                  className="h-12 w-full border border-black text-lg px-2 "
+                  placeholder="https://ngosi.io"
                 />
               )}
             </Field>
