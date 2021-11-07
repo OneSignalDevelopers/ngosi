@@ -1,4 +1,11 @@
-import { Field, Form, Formik, FormikErrors, FormikHelpers } from "formik";
+import {
+  Field,
+  FieldProps,
+  Form,
+  Formik,
+  FormikErrors,
+  FormikHelpers,
+} from "formik";
 import { NextRouter, useRouter } from "next/router";
 import React from "react";
 import { useRecoilState } from "recoil";
@@ -46,30 +53,32 @@ const AddPresentationForm: React.FC<{}> = () => {
         <Form className="flex flex-col space-y-5">
           <div className="flex flex-col space-y-1">
             <label className="font-bold text-sm" htmlFor="url">
-              Link to slides
+              Enter link to your presentation
             </label>
             <Field
               type="url"
               name="url"
               className="h-10 w-full border border-black capitalize px-2"
-            />
+            >
+              {({ field }: FieldProps) => (
+                <input
+                  {...field}
+                  onChange={e => {
+                    e.preventDefault();
+                    setUrl(e.target.value);
+                  }}
+                  value={url}
+                />
+              )}
+            </Field>
           </div>
-
-          <input
-            type="text"
-            onChange={e => {
-              e.preventDefault();
-              setUrl(e.target.value);
-            }}
-            value={url}
-          />
 
           <button
             type="submit"
             disabled={isSubmitting}
             className="w-full h-14 bg-black text-white font-bold text-xl"
           >
-            Submit
+            Download QR
           </button>
         </Form>
       )}
