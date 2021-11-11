@@ -1,4 +1,3 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { NextApiRequest, NextApiResponse } from "next";
 
 type Data =
@@ -14,10 +13,9 @@ export default async function asynchandler(
   res: NextApiResponse<Data>
 ) {
   try {
-    console.log(req.body);
-    res.status(200).json({ message: "completed" });
+    res.status(200).json({ message: "ok" });
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: (error as Error).message });
+    const { message } = error as Error;
+    res.status(500).json({ error: message });
   }
 }
