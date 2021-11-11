@@ -37,15 +37,14 @@ const createSubmitHandler =
     }
   };
 
-const PresentationForm: React.FC<{}> = () => {
+const PresentationForm: React.FC = () => {
   const router = useRouter();
   const onSubmit = createSubmitHandler(router);
-  const initialValues: PresentationForm = { url: "" };
   const [url, setUrl] = useRecoilState(presentationUrl);
 
   return (
     <Formik
-      initialValues={initialValues}
+      initialValues={{ url: "" }}
       onSubmit={onSubmit}
       validate={onValidate}
     >
