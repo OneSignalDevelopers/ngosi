@@ -1,8 +1,7 @@
+import { Field, Form, FormikErrors, FormikProps, withFormik } from "formik";
 import React, { useState } from "react";
-import * as Yup from "yup";
-import { withFormik, FormikProps, FormikErrors, Form, Field } from "formik";
-import ToggleSwitch from "./ToggleSwitch";
-import { SurveyForm } from "../@types/forms";
+import { SurveyForm } from "../../@types/forms";
+import ToggleSwitch from "../ToggleSwitch";
 
 interface AttendeeFormProps {
   initialName?: string;

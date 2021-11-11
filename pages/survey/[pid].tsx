@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import AttendeeForm from "@components/AttendeeForm";
+import AttendeeForm from "@components/AttendeeForm/AttendeeForm";
 import EventHeader from "@components/EventHeader";
 import Footer from "@components/Footer";
 import PresentationInfo from "@components/PresentationInfo";
