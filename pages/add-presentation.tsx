@@ -1,10 +1,10 @@
-import type { NextPage } from "next";
+import AddPresentationForm from "@components/AddPresentationForm";
+import Footer from "@components/Footer";
+import { presentationUrl } from "@state";
+import { NextPage } from "next";
 import Head from "next/head";
 import QRCode from "react-qr-code";
 import { useRecoilValue } from "recoil";
-import AddPresentationForm from "../components/AddPresentationForm/AddPresentationForm";
-import { presentationUrl } from "../components/AddPresentationForm/state";
-import Footer from "../components/Footer";
 
 const AddPresentation: NextPage = () => {
   const url = useRecoilValue(presentationUrl);

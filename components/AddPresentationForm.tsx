@@ -1,3 +1,5 @@
+import { presentationUrl } from "@state";
+import { AddPresentationForm } from "@types";
 import {
   Field,
   FieldProps,
@@ -9,8 +11,6 @@ import {
 import { NextRouter, useRouter } from "next/router";
 import React from "react";
 import { useRecoilState } from "recoil";
-import { AddPresentationForm } from "../../@types/forms";
-import { presentationUrl } from "./state";
 
 const onValidate = (values: AddPresentationForm) => {
   let errors: FormikErrors<AddPresentationForm> = {};
@@ -63,7 +63,7 @@ const AddPresentationForm: React.FC<{}> = () => {
                 <input
                   {...field}
                   type="url"
-                  onChange={(e) => {
+                  onChange={e => {
                     e.preventDefault();
                     setUrl(e.target.value);
                   }}
