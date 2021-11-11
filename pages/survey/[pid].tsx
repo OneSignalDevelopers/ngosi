@@ -2,7 +2,7 @@ import EventHeader from "@components/EventHeader";
 import FatalError from "@components/FatalError";
 import Footer from "@components/Footer";
 import PresentationInfo from "@components/PresentationInfo";
-import AttendeeForm from "@components/AttendeeForm";
+import SurveyForm from "@components/SurveyForm";
 import { Presentation, Presenter } from "@types";
 import { NextPage } from "next";
 import Head from "next/head";
@@ -77,7 +77,7 @@ const Survey: NextPage = () => {
         </div>
         <div className="w-full bg-gray-50">
           <div className="px-8 py-3">
-            <AttendeeForm />
+            <SurveyForm />
           </div>
         </div>
       </main>

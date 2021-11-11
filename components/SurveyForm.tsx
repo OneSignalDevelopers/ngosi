@@ -3,7 +3,7 @@ import { Field, Form, FormikErrors, FormikProps, withFormik } from "formik";
 import React, { useState } from "react";
 import { SurveyForm } from "types";
 
-interface AttendeeFormProps {
+interface Props {
   initialName?: string;
   initialEmail?: string;
   initialNotificationWhenVideoPublished?: boolean;
@@ -96,7 +96,7 @@ const validate = (values: SurveyForm) => {
 };
 
 const handleSubmit = async (values: SurveyForm) => {
-  const response = await fetch("/api/survey-response", {
+  const response = await fetch("/api/survey", {
     method: "POST",
     body: JSON.stringify(values),
   });
@@ -104,7 +104,7 @@ const handleSubmit = async (values: SurveyForm) => {
   console.log(response);
 };
 
-const AttendeeForm = withFormik<AttendeeFormProps, SurveyForm>({
+const SurveyForm = withFormik<Props, SurveyForm>({
   mapPropsToValues: props => ({
     email: props.initialEmail || "",
     fullname: props.initialName || "",
@@ -116,4 +116,4 @@ const AttendeeForm = withFormik<AttendeeFormProps, SurveyForm>({
   handleSubmit,
 })(InnerForm);
 
-export default AttendeeForm;
+export default SurveyForm;

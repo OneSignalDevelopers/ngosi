@@ -1,4 +1,4 @@
-import AddPresentationForm from "@components/AddPresentationForm";
+import PresentationForm from "@components/PresentationForm";
 import Footer from "@components/Footer";
 import { presentationUrl } from "@state";
 import { NextPage } from "next";
@@ -6,7 +6,7 @@ import Head from "next/head";
 import QRCode from "react-qr-code";
 import { useRecoilValue } from "recoil";
 
-const AddPresentation: NextPage = () => {
+const Preso: NextPage = () => {
   const url = useRecoilValue(presentationUrl);
 
   return (
@@ -24,7 +24,7 @@ const AddPresentation: NextPage = () => {
             <QRCode value={url} />
           </div>
           <div className="mt-6">
-            <AddPresentationForm />
+            <PresentationForm />
           </div>
         </div>
       </main>
@@ -33,4 +33,4 @@ const AddPresentation: NextPage = () => {
   );
 };
 
-export default AddPresentation;
+export default Preso;

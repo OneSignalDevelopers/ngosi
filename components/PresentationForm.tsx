@@ -1,5 +1,5 @@
 import { presentationUrl } from "@state";
-import { AddPresentationForm } from "@types";
+import { AddPresentationForm as PresentationForm } from "@types";
 import {
   Field,
   FieldProps,
@@ -12,8 +12,8 @@ import { NextRouter, useRouter } from "next/router";
 import React from "react";
 import { useRecoilState } from "recoil";
 
-const onValidate = (values: AddPresentationForm) => {
-  let errors: FormikErrors<AddPresentationForm> = {};
+const onValidate = (values: PresentationForm) => {
+  let errors: FormikErrors<PresentationForm> = {};
 
   if (!values.url) {
     errors.url = "Required";
@@ -23,8 +23,8 @@ const onValidate = (values: AddPresentationForm) => {
 };
 
 const createSubmitHandler =
-  (router: NextRouter, formikHelpers?: FormikHelpers<AddPresentationForm>) =>
-  async (values: AddPresentationForm) => {
+  (router: NextRouter, formikHelpers?: FormikHelpers<PresentationForm>) =>
+  async (values: PresentationForm) => {
     const response = await fetch("/api/generate-qr", {
       method: "POST",
       body: JSON.stringify(values),
@@ -37,10 +37,10 @@ const createSubmitHandler =
     }
   };
 
-const AddPresentationForm: React.FC<{}> = () => {
+const PresentationForm: React.FC<{}> = () => {
   const router = useRouter();
   const onSubmit = createSubmitHandler(router);
-  const initialValues: AddPresentationForm = { url: "" };
+  const initialValues: PresentationForm = { url: "" };
   const [url, setUrl] = useRecoilState(presentationUrl);
 
   return (
@@ -87,4 +87,4 @@ const AddPresentationForm: React.FC<{}> = () => {
     </Formik>
   );
 };
-export default AddPresentationForm;
+export default PresentationForm;
