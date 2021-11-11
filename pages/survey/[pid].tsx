@@ -1,12 +1,12 @@
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import Head from "next/head";
-import AttendeeForm from "../../components/AttendeeForm";
-import EventHeader from "../../components/EventHeader";
-import Footer from "../../components/Footer";
-import PresentationInfo from "../../components/PresentationInfo";
+import AttendeeForm from "@components/AttendeeForm";
+import EventHeader from "@components/EventHeader";
+import Footer from "@components/Footer";
+import PresentationInfo from "@components/PresentationInfo";
 import { Presentation, Presenter } from "../../@types/presenter";
-import FatalError from "../../components/FatalError";
+import FatalError from "@components/FatalError";
 
 const presenter: Presenter = {
   id: "1",
