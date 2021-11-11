@@ -15,10 +15,10 @@ export interface Presenter {
   readonly profileImage: string;
 
   /** A list of presentations the presenter has created in Ngosi */
-  readonly presentations: Presentation[];
+  readonly presentations: Preso[];
 }
 
-export interface Presentation {
+export interface Preso {
   /** A unique identifier for a presentation */
   readonly id: string;
 
@@ -43,7 +43,7 @@ export interface SurveyForm {
   notificationOfOtherTalks: boolean;
 }
 
-export interface AddPresentationForm {
+export interface PresoForm {
   /** The URL to access the presener's slides */
   url: string;
 }

@@ -1,5 +1,5 @@
 import { presentationUrl } from "@state";
-import { AddPresentationForm as PresentationForm } from "@types";
+import { PresoForm as PresoForm } from "@types";
 import {
   Field,
   FieldProps,
@@ -8,12 +8,11 @@ import {
   FormikErrors,
   FormikHelpers,
 } from "formik";
-import { NextRouter, useRouter } from "next/router";
 import React from "react";
 import { useRecoilState } from "recoil";
 
-const onValidate = (values: PresentationForm) => {
-  let errors: FormikErrors<PresentationForm> = {};
+const onValidate = (values: PresoForm) => {
+  let errors: FormikErrors<PresoForm> = {};
 
   if (!values.url) {
     errors.url = "Required";
@@ -22,32 +21,24 @@ const onValidate = (values: PresentationForm) => {
   return errors;
 };
 
-const createSubmitHandler =
-  (router: NextRouter, formikHelpers?: FormikHelpers<PresentationForm>) =>
-  async (values: PresentationForm) => {
-    const response = await fetch("/api/generate-qr", {
-      method: "POST",
-      body: JSON.stringify(values),
-    });
+const onSubmit = async (
+  values: PresoForm,
+  formikHelpers: FormikHelpers<PresoForm>
+) => {
+  console.log("test");
+  const response = await fetch("/api/preso", {
+    method: "POST",
+    body: JSON.stringify(values),
+  });
 
-    const body = await response.json();
-    const { qrCodeData } = body;
-    if (qrCodeData) {
-      router.replace(`/qr?qrcd=${qrCodeData}`);
-    }
-  };
+  console.log(response);
+};
 
-const PresentationForm: React.FC = () => {
-  const router = useRouter();
-  const onSubmit = createSubmitHandler(router);
+const PresoForm: React.FC = () => {
   const [url, setUrl] = useRecoilState(presentationUrl);
 
   return (
-    <Formik
-      initialValues={{ url: "" }}
-      onSubmit={onSubmit}
-      validate={onValidate}
-    >
+    <Formik initialValues={{ url }} onSubmit={onSubmit} validate={onValidate}>
       {({ isSubmitting }) => (
         <Form className="flex flex-col space-y-5">
           <div className="flex flex-col space-y-1">
@@ -62,10 +53,7 @@ const PresentationForm: React.FC = () => {
                 <input
                   {...field}
                   type="url"
-                  onChange={e => {
-                    e.preventDefault();
-                    setUrl(e.target.value);
-                  }}
+                  onChange={e => setUrl(e.target.value)}
                   value={url}
                   className="h-12 w-full border border-black text-lg px-2 "
                   placeholder="https://ngosi.io"
@@ -86,4 +74,4 @@ const PresentationForm: React.FC = () => {
     </Formik>
   );
 };
-export default PresentationForm;
+export default PresoForm;

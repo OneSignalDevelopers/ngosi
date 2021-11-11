@@ -3,7 +3,7 @@ import FatalError from "@components/FatalError";
 import Footer from "@components/Footer";
 import PresentationInfo from "@components/PresentationInfo";
 import SurveyForm from "@components/SurveyForm";
-import { Presentation, Presenter } from "@types";
+import { Preso, Presenter } from "@types";
 import { NextPage } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -17,7 +17,7 @@ const presenter: Presenter = {
   presentations: [],
 };
 
-const presentation: Presentation = {
+const presentation: Preso = {
   id: "SEXY",
   eventName: "React Conf",
   presenter: presenter.id,
@@ -26,7 +26,7 @@ const presentation: Presentation = {
 };
 
 const presenterDb = new Map<string, Presenter>();
-const presentationDb = new Map<string, Presentation>();
+const presentationDb = new Map<string, Preso>();
 
 presenterDb.set(presenter.id, presenter);
 presentationDb.set(presentation.id, presentation);

@@ -1,4 +1,4 @@
-import PresentationForm from "@components/PresentationForm";
+import PresentationForm from "@components/PresoForm";
 import Footer from "@components/Footer";
 import { presentationUrl } from "@state";
 import { NextPage } from "next";
