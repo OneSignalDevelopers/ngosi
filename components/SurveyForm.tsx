@@ -3,14 +3,6 @@ import { Field, Form, FormikErrors, FormikProps, withFormik } from "formik";
 import React, { useState } from "react";
 import { SurveyForm } from "types";
 
-interface Props {
-  initialName?: string;
-  initialEmail?: string;
-  initialNotificationWhenVideoPublished?: boolean;
-  initialRateMyPresentation?: boolean;
-  initialNotificationOfOtherTalks?: boolean;
-}
-
 const InnerForm = (props: FormikProps<SurveyForm>) => {
   const { touched, errors, isSubmitting, initialValues } = props;
   const [notificationWhenVideoPublished, setNotificationWhenVideoPublished] =
@@ -104,7 +96,15 @@ const handleSubmit = async (values: SurveyForm) => {
   console.log(response);
 };
 
-const SurveyForm = withFormik<Props, SurveyForm>({
+interface InitProps {
+  initialName?: string;
+  initialEmail?: string;
+  initialNotificationWhenVideoPublished?: boolean;
+  initialRateMyPresentation?: boolean;
+  initialNotificationOfOtherTalks?: boolean;
+}
+
+const SurveyForm = withFormik<InitProps, SurveyForm>({
   mapPropsToValues: props => ({
     email: props.initialEmail || "",
     fullname: props.initialName || "",
