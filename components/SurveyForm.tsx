@@ -1,16 +1,7 @@
+import ToggleSwitch from "@components/ToggleSwitch";
+import { Field, Form, FormikErrors, FormikProps, withFormik } from "formik";
 import React, { useState } from "react";
-import * as Yup from "yup";
-import { withFormik, FormikProps, FormikErrors, Form, Field } from "formik";
-import ToggleSwitch from "./ToggleSwitch";
-import { SurveyForm } from "../@types/forms";
-
-interface AttendeeFormProps {
-  initialName?: string;
-  initialEmail?: string;
-  initialNotificationWhenVideoPublished?: boolean;
-  initialRateMyPresentation?: boolean;
-  initialNotificationOfOtherTalks?: boolean;
-}
+import { SurveyForm } from "types";
 
 const InnerForm = (props: FormikProps<SurveyForm>) => {
   const { touched, errors, isSubmitting, initialValues } = props;
@@ -97,7 +88,7 @@ const validate = (values: SurveyForm) => {
 };
 
 const handleSubmit = async (values: SurveyForm) => {
-  const response = await fetch("/api/survey-response", {
+  const response = await fetch("/api/survey", {
     method: "POST",
     body: JSON.stringify(values),
   });
@@ -105,7 +96,15 @@ const handleSubmit = async (values: SurveyForm) => {
   console.log(response);
 };
 
-const AttendeeForm = withFormik<AttendeeFormProps, SurveyForm>({
+interface InitProps {
+  initialName?: string;
+  initialEmail?: string;
+  initialNotificationWhenVideoPublished?: boolean;
+  initialRateMyPresentation?: boolean;
+  initialNotificationOfOtherTalks?: boolean;
+}
+
+const SurveyForm = withFormik<InitProps, SurveyForm>({
   mapPropsToValues: props => ({
     email: props.initialEmail || "",
     fullname: props.initialName || "",
@@ -117,4 +116,4 @@ const AttendeeForm = withFormik<AttendeeFormProps, SurveyForm>({
   handleSubmit,
 })(InnerForm);
 
-export default AttendeeForm;
+export default SurveyForm;

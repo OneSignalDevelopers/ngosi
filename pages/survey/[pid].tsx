@@ -1,12 +1,12 @@
-import type { NextPage } from "next";
-import { useRouter } from "next/router";
+import EventHeader from "@components/EventHeader";
+import FatalError from "@components/FatalError";
+import Footer from "@components/Footer";
+import PresentationInfo from "@components/PresentationInfo";
+import SurveyForm from "@components/SurveyForm";
+import { Preso, Presenter } from "@types";
+import { NextPage } from "next";
 import Head from "next/head";
-import AttendeeForm from "../../components/AttendeeForm";
-import EventHeader from "../../components/EventHeader";
-import Footer from "../../components/Footer";
-import PresentationInfo from "../../components/PresentationInfo";
-import { Presentation, Presenter } from "../../@types/presenter";
-import FatalError from "../../components/FatalError";
+import { useRouter } from "next/router";
 
 const presenter: Presenter = {
   id: "1",
@@ -17,7 +17,7 @@ const presenter: Presenter = {
   presentations: [],
 };
 
-const presentation: Presentation = {
+const presentation: Preso = {
   id: "SEXY",
   eventName: "React Conf",
   presenter: presenter.id,
@@ -26,7 +26,7 @@ const presentation: Presentation = {
 };
 
 const presenterDb = new Map<string, Presenter>();
-const presentationDb = new Map<string, Presentation>();
+const presentationDb = new Map<string, Preso>();
 
 presenterDb.set(presenter.id, presenter);
 presentationDb.set(presentation.id, presentation);
@@ -77,7 +77,7 @@ const Survey: NextPage = () => {
         </div>
         <div className="w-full bg-gray-50">
           <div className="px-8 py-3">
-            <AttendeeForm />
+            <SurveyForm />
           </div>
         </div>
       </main>
