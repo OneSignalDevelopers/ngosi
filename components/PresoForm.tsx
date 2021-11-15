@@ -25,21 +25,29 @@ const onSubmit = async (
   values: PresoForm,
   formikHelpers: FormikHelpers<PresoForm>
 ) => {
-  console.log("test");
-  const response = await fetch("/api/preso", {
-    method: "POST",
-    body: JSON.stringify(values),
-  });
+  try {
+    const response = await fetch("/api/preso", {
+      method: "POST",
+      body: JSON.stringify(values),
+    });
 
-  console.log(response);
+    console.log(response);
+  } catch (error) {
+    const { message } = error as Error;
+    console.error(message);
+  }
 };
 
 const PresoForm: React.FC = () => {
   const [url, setUrl] = useRecoilState(presentationUrl);
 
   return (
-    <Formik initialValues={{ url }} onSubmit={onSubmit} validate={onValidate}>
-      {({ isSubmitting }) => (
+    <Formik
+      initialValues={{ url: "" }}
+      onSubmit={onSubmit}
+      validate={onValidate}
+    >
+      {formikProps => (
         <Form className="flex flex-col space-y-5">
           <div className="flex flex-col space-y-1">
             <label
@@ -49,22 +57,31 @@ const PresoForm: React.FC = () => {
               Enter link to your presentation
             </label>
             <Field name="url">
-              {({ field }: FieldProps) => (
-                <input
-                  {...field}
-                  type="url"
-                  onChange={e => setUrl(e.target.value)}
-                  value={url}
-                  className="h-12 w-full border border-black text-lg px-2 "
-                  placeholder="https://ngosi.io"
-                />
+              {({ field, form, ...props }: FieldProps<PresoForm>) => (
+                <>
+                  <input
+                    {...field}
+                    type="url"
+                    onChange={e => {
+                      formikProps.handleChange(e);
+                      setUrl(e.target.value);
+                    }}
+                    onBlur={formikProps.handleBlur}
+                    value={formikProps.values.url}
+                    className="h-12 w-full border border-black text-lg px-2 "
+                    placeholder="https://ngosi.io"
+                  />
+                  {form.touched.url && form.errors.url && (
+                    <div>{form.errors.url}</div>
+                  )}
+                </>
               )}
             </Field>
           </div>
 
           <button
             type="submit"
-            disabled={isSubmitting}
+            disabled={formikProps.isSubmitting}
             className="w-full h-14 bg-black text-white font-bold text-xl"
           >
             Download QR
