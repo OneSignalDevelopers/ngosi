@@ -15,6 +15,7 @@
     "jsx": "preserve",
     "incremental": true,
     "baseUrl": ".",
+    "sourceMap": true,
     "paths": {
       "@components/*": ["components/*"],
       "@types": ["types.ts"],
