@@ -1,27 +1,26 @@
-import Footer from "@components/Footer";
-import PresentationForm from "@components/PresoForm";
-import { PresoForm } from "@types";
-import { NextPage } from "next";
-import Head from "next/head";
-import { useRouter } from "next/router";
+import Footer from '@components/Footer'
+import PresentationForm from '@components/PresoForm'
+import { PresoForm } from '@types'
+import { NextPage } from 'next'
+import Head from 'next/head'
+import { useRouter } from 'next/router'
 
 const Preso: NextPage = () => {
-  const router = useRouter();
+  const router = useRouter()
 
   const onSubmit = async (values: PresoForm) => {
     try {
-      const response = await fetch("/api/preso", {
-        method: "POST",
-        body: JSON.stringify(values),
-      });
-      const jsonRes = await response.json();
-      const { presoUid } = jsonRes;
-      router.replace(`/qr?preso=${presoUid}`);
+      const response = await fetch('/api/preso', {
+        method: 'POST',
+        body: JSON.stringify(values)
+      })
+      const json = await response.json()
+      router.replace(`/qr?preso=${encodeURIComponent(json.presoShortCode)}`)
     } catch (error) {
-      const { message } = error as Error;
-      console.error(message);
+      const { message } = error as Error
+      console.error(message)
     }
-  };
+  }
 
   return (
     <div className="flex flex-col min-h-screen min-w-full">
@@ -41,7 +40,7 @@ const Preso: NextPage = () => {
       </main>
       <Footer />
     </div>
-  );
-};
+  )
+}
 
-export default Preso;
+export default Preso
