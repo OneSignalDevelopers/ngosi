@@ -3,13 +3,18 @@ import { NextPage } from "next";
 import Head from "next/head";
 import QRCode from "react-qr-code";
 import { useRouter } from "next/router";
+import { PublicUrl } from "common/constants";
+
+const downloadQRCode = (e: React.MouseEvent) => {
+  console.log("downloadQRCode clicked.");
+};
 
 const Qr: NextPage = () => {
   const router = useRouter();
 
-  const { url } = router.query;
-  if (!url || typeof url !== "string") {
-    return <div>URL is missing</div>;
+  const { preso } = router.query;
+  if (!preso || typeof preso !== "string") {
+    return <div>Preso ID is missing</div>;
   }
 
   return (
@@ -19,8 +24,14 @@ const Qr: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex flex-col flex-1">
-        <QRCode value={url} />
-        <button type="button">Download QR</button>
+        <QRCode value={`${PublicUrl}/survey/${preso}`} />
+        <button
+          className="w-full h-14 bg-black text-white font-bold text-xl mt-5"
+          type="button"
+          onClick={downloadQRCode}
+        >
+          Download QR
+        </button>
       </main>
       <Footer />
     </div>

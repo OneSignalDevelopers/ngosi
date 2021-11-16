@@ -15,9 +15,8 @@ const Preso: NextPage = () => {
         body: JSON.stringify(values),
       });
       const jsonRes = await response.json();
-      const { navigateToUrl } = jsonRes;
-      const encodedUrl = encodeURIComponent(navigateToUrl);
-      router.replace(`/qr?url=${encodedUrl}`);
+      const { presoUid } = jsonRes;
+      router.replace(`/qr?preso=${presoUid}`);
     } catch (error) {
       const { message } = error as Error;
       console.error(message);

@@ -57,7 +57,7 @@ const PresoForm: React.FC<Props> = props => {
             disabled={formikProps.isSubmitting}
             className="w-full h-14 bg-black text-white font-bold text-xl"
           >
-            Download QR
+            Generate QR Code
           </button>
         </Form>
       )}
