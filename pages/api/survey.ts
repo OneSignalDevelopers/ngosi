@@ -1,6 +1,7 @@
 import { Preso } from '@types'
-import { getInMemDb } from 'utils/db'
+
 import { NextApiRequest, NextApiResponse } from 'next'
+import { db } from './common/database'
 
 type Data =
   | {
@@ -14,19 +15,33 @@ export default async function asynchandler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const inMemDb = getInMemDb()
-  console.log('Get from db', inMemDb.get('72fe95c'))
-
   try {
-    const { pid } = req.body
-    const preso = inMemDb.get(pid as string)
-    console.log('Preso', preso)
-    if (!preso) {
-      res.status(500).json({ error: `Preso with ID ${pid} couldn't be found.` })
+    const { presoShortCode } = JSON.parse(req.body)
+    if (!presoShortCode) {
+      res.status(400).json({ error: `Invalid url.` })
       return
     }
 
-    res.status(200).json({ preso })
+    const preso = await db.preso.findUnique({
+      where: { shortCode: presoShortCode }
+    })
+
+    if (!preso) {
+      res
+        .status(500)
+        .json({ error: `Preso with ID ${presoShortCode} couldn't be found.` })
+      return
+    }
+
+    res.status(200).json({
+      preso: {
+        eventName: preso.eventName,
+        shortCode: preso.shortCode,
+        title: preso.title,
+        url: preso.url,
+        eventLocation: preso.eventLocation
+      }
+    })
   } catch (error) {
     const { message } = error as Error
     res.status(500).json({ error: message })

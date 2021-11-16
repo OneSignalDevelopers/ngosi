@@ -1,10 +1,11 @@
+import cuid from 'cuid'
+import { nanoid } from 'nanoid'
 import { NextApiRequest, NextApiResponse } from 'next'
-import checksum from 'checksum'
-import { getInMemDb } from 'utils/db'
+import { db } from './common/database'
 
 type Data =
   | {
-      presoUid: string
+      presoShortCode: string
     }
   | {
       error: string
@@ -14,29 +15,24 @@ export default async function asynchandler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const inMemDb = getInMemDb()
-
   try {
     const { url } = JSON.parse(req.body)
     if (!url) {
-      res.status(500).json({ error: 'No url given.' })
+      res.status(400).json({ error: 'Presentation url is required.' })
     }
 
-    // process the URL
-    const hash = checksum(url)
-    const pid = hash.substr(0, 7)
-
-    inMemDb.set(pid, {
-      id: pid,
-      eventName: 'Testing Ngosi',
-      presenter: 'William Shepherd',
-      title: 'Does it matter?',
-      location: 'Houston'
+    const preso = await db.preso.create({
+      data: {
+        id: cuid(),
+        eventName: 'ReactConf',
+        eventLocation: 'Houston, TX',
+        title: 'How to do stuff in react',
+        url: 'https://conf.reactjs.org/',
+        shortCode: nanoid(7)
+      }
     })
 
-    console.log('inMemDb', JSON.stringify(inMemDb.get(pid)))
-
-    res.status(200).json({ presoUid: pid })
+    res.status(200).json({ presoShortCode: preso.shortCode })
   } catch (error) {
     const { message } = error as Error
     res.status(500).json({ error: message })
