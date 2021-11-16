@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "db:sync:schema": "prisma db push --force-reset"
+    "db:sync:schema": "prisma db push --force-reset",
+    "vercel-build": "prisma generate && prisma migrate deploy && next build"
   },
   "dependencies": {
     "@headlessui/react": "^1.4.1",
