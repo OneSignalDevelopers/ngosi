@@ -26,10 +26,10 @@ export interface Preso {
   readonly presenter: string;
 
   /** The name of the presentation */
-  readonly title: String;
+  readonly title: string;
 
   /** The location where the live talk took place */
-  readonly location?: String;
+  readonly location?: string;
 
   /** The name of the conf or event where the presentation was given */
   readonly eventName: string;
