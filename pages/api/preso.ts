@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 type Data =
   | {
-      message: string;
+      navigateToUrl: string;
     }
   | {
       error: string;
@@ -13,7 +13,12 @@ export default async function asynchandler(
   res: NextApiResponse<Data>
 ) {
   try {
-    res.status(200).json({ message: "ok" });
+    const { url } = JSON.parse(req.body);
+    if (!url) {
+      res.status(500).json({ error: "No url given." });
+    }
+
+    res.status(200).json({ navigateToUrl: url });
   } catch (error) {
     const { message } = error as Error;
     res.status(500).json({ error: message });

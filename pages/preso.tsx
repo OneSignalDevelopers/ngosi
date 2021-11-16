@@ -1,11 +1,28 @@
-import PresentationForm from "@components/PresoForm";
 import Footer from "@components/Footer";
-import { presentationUrl } from "@state";
+import PresentationForm from "@components/PresoForm";
+import { PresoForm } from "@types";
 import { NextPage } from "next";
 import Head from "next/head";
-import QRCode from "react-qr-code";
+import { useRouter } from "next/router";
 
 const Preso: NextPage = () => {
+  const router = useRouter();
+
+  const onSubmit = async (values: PresoForm) => {
+    try {
+      const response = await fetch("/api/preso", {
+        method: "POST",
+        body: JSON.stringify(values),
+      });
+      const jsonRes = await response.json();
+      const { navigateToUrl } = jsonRes;
+      const encodedUrl = encodeURIComponent(navigateToUrl);
+      router.replace(`/qr?url=${encodedUrl}`);
+    } catch (error) {
+      const { message } = error as Error;
+      console.error(message);
+    }
+  };
 
   return (
     <div className="flex flex-col min-h-screen min-w-full">
@@ -17,12 +34,9 @@ const Preso: NextPage = () => {
         <h1 className="text-3xl bg-black py-2 px-6 text-white">
           Add Presentation
         </h1>
-        <div className="flex flex-col mt-4  pt-4 px-6">
-          <div className="flex justify-center">
-            <QRCode value={url} />
-          </div>
+        <div className="pt-4 px-6">
           <div className="mt-6">
-            <PresentationForm />
+            <PresentationForm onSubmit={onSubmit} />
           </div>
         </div>
       </main>
