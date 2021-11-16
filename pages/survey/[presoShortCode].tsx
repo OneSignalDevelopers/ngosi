@@ -12,27 +12,29 @@ import { useEffect, useState } from 'react'
 const Survey: NextPage = () => {
   const router = useRouter()
   const [preso, setPreso] = useState<Preso | null>(null)
-  const { pid } = router.query
+  const { presoShortCode } = router.query
 
   useEffect(() => {
-    if (!pid || typeof pid !== 'string') {
+    if (!presoShortCode || typeof presoShortCode !== 'string') {
       return
     }
 
     const fetchPresentation = async () => {
       const response = await fetch('/api/survey', {
         method: 'POST',
-        body: JSON.stringify({ pid })
+        body: JSON.stringify({ presoShortCode })
       })
+
       const json = await response.json()
-      if (json.preso) {
+      const { preso } = json
+      if (preso) {
         setPreso(preso)
         console.log('Preso set', preso)
       }
     }
 
     fetchPresentation()
-  })
+  }, [presoShortCode])
 
   if (!preso) {
     return <FatalError message="Presentation doesn't exist" />
