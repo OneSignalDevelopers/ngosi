@@ -4,10 +4,8 @@ import { presentationUrl } from "@state";
 import { NextPage } from "next";
 import Head from "next/head";
 import QRCode from "react-qr-code";
-import { useRecoilValue } from "recoil";
 
 const Preso: NextPage = () => {
-  const url = useRecoilValue(presentationUrl);
 
   return (
     <div className="flex flex-col min-h-screen min-w-full">

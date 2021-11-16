@@ -9,7 +9,6 @@ import {
   FormikHelpers,
 } from "formik";
 import React from "react";
-import { useRecoilState } from "recoil";
 
 const onValidate = (values: PresoForm) => {
   let errors: FormikErrors<PresoForm> = {};
@@ -62,10 +61,7 @@ const PresoForm: React.FC = () => {
                   <input
                     {...field}
                     type="url"
-                    onChange={e => {
-                      formikProps.handleChange(e);
-                      setUrl(e.target.value);
-                    }}
+                    onChange={formikProps.handleChange}
                     onBlur={formikProps.handleBlur}
                     value={formikProps.values.url}
                     className="h-12 w-full border border-black text-lg px-2 "
