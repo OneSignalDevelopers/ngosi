@@ -1,20 +1,20 @@
-import Footer from "@components/Footer";
-import { NextPage } from "next";
-import Head from "next/head";
-import QRCode from "react-qr-code";
-import { useRouter } from "next/router";
-import { PublicUrl } from "common/constants";
+import Footer from '@components/Footer'
+import { NextPage } from 'next'
+import Head from 'next/head'
+import QRCode from 'react-qr-code'
+import { useRouter } from 'next/router'
+import { PublicUrl } from '@common/constants'
 
 const downloadQRCode = (e: React.MouseEvent) => {
-  console.log("downloadQRCode clicked.");
-};
+  console.log('downloadQRCode clicked.')
+}
 
 const Qr: NextPage = () => {
-  const router = useRouter();
+  const router = useRouter()
 
-  const { preso } = router.query;
-  if (!preso || typeof preso !== "string") {
-    return <div>Preso ID is missing</div>;
+  const { preso } = router.query
+  if (!preso || typeof preso !== 'string') {
+    return <div>Preso ID is missing</div>
   }
 
   return (
@@ -35,7 +35,7 @@ const Qr: NextPage = () => {
       </main>
       <Footer />
     </div>
-  );
-};
+  )
+}
 
-export default Qr;
+export default Qr
