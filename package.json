@@ -6,12 +6,15 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:sync:schema": "prisma db push --force-reset"
   },
   "dependencies": {
     "@headlessui/react": "^1.4.1",
+    "checksum": "^1.0.0",
     "formik": "^2.2.9",
     "next": "^12.0.3",
+    "postgresql": "^0.0.1",
     "qrcode": "^1.4.4",
     "react": "17.0.2",
     "react-dom": "17.0.2",
@@ -20,12 +23,15 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
+    "@types/checksum": "^0.1.33",
     "@types/qrcode": "^1.4.1",
     "@types/react": "17.0.31",
     "autoprefixer": "^10.3.7",
     "eslint": "8.1.0",
     "eslint-config-next": "11.1.2",
     "postcss": "^8.3.11",
+    "prettier": "^2.4.1",
+    "prisma": "^3.4.2",
     "tailwindcss": "^2.2.17",
     "typescript": "4.4.4"
   }
