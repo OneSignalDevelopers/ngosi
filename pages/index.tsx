@@ -1,5 +1,5 @@
-import { NextPage } from "next";
-import Head from "next/head";
+import { NextPage } from 'next'
+import Head from 'next/head'
 
 const Home: NextPage = () => {
   return (
@@ -7,12 +7,12 @@ const Home: NextPage = () => {
       <Head>
         <script
           src="https://cdn.onesignal.com/sdks/OneSignalSDK.js"
-          async=""
+          async
         ></script>
       </Head>
       <h1 className="text-white text-6xl">ngosi</h1>
     </div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
