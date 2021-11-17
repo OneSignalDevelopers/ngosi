@@ -1,38 +1,44 @@
 export interface Presenter {
   /** A unique identifier for the presenter */
-  readonly id: string
+  id: string
 
   /** The presenter's first name */
-  readonly firstName: string
+  firstName: string
 
   /** The presenter's last name */
-  readonly lastName: string
+  lastName: string
 
   /** The presenter's email address */
-  readonly email: string
+  email: string
 
   /** The URL to the presenters profile photo */
   profileImage?: string
 
   /** A list of presentations the presenter has created in Ngosi */
-  readonly presentations: Preso[]
+  presentations: Preso[]
 }
 
 export interface Preso {
-  /** The publically visible unique identifier for the presentation.  */
-  readonly shortCode: string
+  /** Just an ID for internal use. */
+  id: string
 
   /** The name of the presentation. */
-  readonly title: string
+  title: string
 
-  /** The location where the event took place. */
-  readonly eventLocation?: string
+  /** The Url where the presener's slides are located */
+  url: string
+
+  /** The publically visible unique identifier for the presentation.  */
+  shortCode: string
 
   /** The name of the event where the presentation was given. */
-  readonly eventName: string
+  eventName: string
 
-  /** The url where the presentation can be found. */
-  readonly url: string
+  /** The location where the event took place. */
+  eventLocation?: string
+
+  createAt?: string
+  updatedAt?: string
 }
 
 export interface SurveyForm {
