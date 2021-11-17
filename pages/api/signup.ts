@@ -7,7 +7,7 @@ import { db } from './common/database'
 
 type Data =
   | {
-      presenter: Presenter
+      presenterId: string
     }
   | {
       error: string
@@ -35,7 +35,7 @@ export default async function asynchandler(
       }
     })
 
-    res.status(200).json({ presenter })
+    res.status(200).json({ presenterId: presenter.id })
   } catch (error) {
     const { message } = error as Error
     res.status(500).json({ error: message })

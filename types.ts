@@ -1,3 +1,9 @@
+declare global {
+  interface window {
+    Onesignal: any
+  }
+}
+
 export interface Presenter {
   /** A unique identifier for the presenter */
   readonly id: string

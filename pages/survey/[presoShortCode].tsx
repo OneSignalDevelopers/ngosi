@@ -1,3 +1,4 @@
+import { Presenter } from '.prisma/client'
 import EventHeader from '@components/EventHeader'
 import FatalError from '@components/FatalError'
 import Footer from '@components/Footer'
@@ -12,6 +13,8 @@ import { useEffect, useState } from 'react'
 const Survey: NextPage = () => {
   const router = useRouter()
   const [preso, setPreso] = useState<Preso | null>(null)
+  const [presenter, setPresenter] = useState<Presenter | null>(null)
+
   const { presoShortCode } = router.query
 
   useEffect(() => {
@@ -26,10 +29,10 @@ const Survey: NextPage = () => {
       })
 
       const json = await response.json()
-      const { preso } = json
-      if (preso) {
+      const { preso, presenter } = json
+      if (preso && presenter) {
         setPreso(preso)
-        console.log('Preso set', preso)
+        setPresenter(presenter)
       }
     }
 
@@ -40,12 +43,12 @@ const Survey: NextPage = () => {
     return <FatalError message="Presentation doesn't exist" />
   }
 
-  const presenter = { firstName: 'William', lastName: 'Shepherd' }
   if (!presenter) {
     return (
       <FatalError message="Presenter could not be found. This is a big problem." />
     )
   }
+
   const { firstName, lastName } = presenter
 
   return (

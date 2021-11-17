@@ -63,6 +63,52 @@ const PresoForm: React.FC<Props> = (props) => {
             </Field>
           </div>
 
+          <div className="flex flex-col space-y-1">
+            <label
+              className="font-semibold text-sm text-gray-900"
+              htmlFor="url"
+            >
+              Title
+            </label>
+            <Field
+              name="title"
+              type="text"
+              className="h-12 w-full border border-black text-lg px-2"
+              placeholder="Yahoo!"
+            ></Field>
+          </div>
+
+          <div className="flex flex-col space-y-1">
+            <label
+              className="font-semibold text-sm text-gray-900"
+              htmlFor="url"
+            >
+              Event Name
+            </label>
+            <Field
+              name="eventName"
+              type="text"
+              className="h-12 w-full border border-black text-lg px-2"
+              placeholder="Yahoo! Conf"
+            ></Field>
+          </div>
+
+          <div className="flex flex-col space-y-1">
+            <label
+              className="font-semibold text-sm text-gray-900"
+              htmlFor="url"
+            >
+              Event location
+            </label>
+
+            <Field
+              name="location"
+              type="text"
+              className="h-12 w-full border border-black text-lg px-2"
+              placeholder="Houston, TX"
+            ></Field>
+          </div>
+
           <button
             type="submit"
             disabled={formikProps.isSubmitting}

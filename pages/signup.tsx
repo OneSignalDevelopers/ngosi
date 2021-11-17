@@ -14,8 +14,9 @@ const SignUp: NextPage = () => {
       method: 'POST',
       body: JSON.stringify(values)
     })
-    const json = (await response.json()) as Presenter
-    setUser(json.id)
+    const json = await response.json()
+    setUser(json.presenterId)
+
     router.replace('/preso')
   }
 

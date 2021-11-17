@@ -15,7 +15,7 @@ const Preso: NextPage = () => {
     try {
       const response = await fetch('/api/preso', {
         method: 'POST',
-        body: JSON.stringify(values)
+        body: JSON.stringify({ ...values, presenterId: user })
       })
       const json = await response.json()
       router.replace(`/qr?preso=${encodeURIComponent(json.presoShortCode)}`)
