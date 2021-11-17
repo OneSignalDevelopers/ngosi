@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "db:sync:schema": "prisma db push --force-reset",
+    "db:create:migration": "prisma migrate dev",
     "vercel-build": "prisma generate && prisma migrate deploy && next build"
   },
   "dependencies": {
