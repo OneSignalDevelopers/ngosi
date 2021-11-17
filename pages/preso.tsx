@@ -1,12 +1,15 @@
 import Footer from '@components/Footer'
 import PresentationForm from '@components/PresoForm'
+import { LoggedInUser } from '@state'
 import { PresoForm } from '@types'
 import { NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
+import { useRecoilValue } from 'recoil'
 
 const Preso: NextPage = () => {
   const router = useRouter()
+  const user = useRecoilValue(LoggedInUser)
 
   const onSubmit = async (values: PresoForm) => {
     try {
@@ -38,6 +41,7 @@ const Preso: NextPage = () => {
           </div>
         </div>
       </main>
+      <pre>{user || 'nothing...'}</pre>
       <Footer />
     </div>
   )
