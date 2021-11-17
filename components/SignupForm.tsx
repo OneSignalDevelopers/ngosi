@@ -1,6 +1,10 @@
 import { PresenterSignupForm } from '@types'
-import { FormikErrors, FormikProps, withFormik, Form, Field } from 'formik'
+import { Field, Form, Formik, FormikErrors, FormikProps } from 'formik'
 import React from 'react'
+
+interface Props {
+  onSubmit: (values: PresenterSignupForm) => Promise<void>
+}
 
 const InnerForm = (props: FormikProps<PresenterSignupForm>) => {
   const { touched, errors, isSubmitting, initialValues } = props
@@ -74,7 +78,7 @@ const InnerForm = (props: FormikProps<PresenterSignupForm>) => {
   )
 }
 
-const validate = (values: PresenterSignupForm) => {
+const onValidate = (values: PresenterSignupForm) => {
   let errors: FormikErrors<PresenterSignupForm> = {}
 
   if (!values.firstName) {
@@ -92,26 +96,23 @@ const validate = (values: PresenterSignupForm) => {
   return errors
 }
 
-const handleSubmit = async (values: PresenterSignupForm) => {
-  const response = await fetch('/api/signup', {
-    method: 'POST',
-    body: JSON.stringify(values)
-  })
-
-  console.log('SignupFormSubmit', response)
+const SignUpForm: React.FC<Props> = (props) => {
+  return (
+    <Formik
+      initialValues={
+        {
+          firstName: '',
+          lastName: '',
+          email: '',
+          profileImage: ''
+        } as PresenterSignupForm
+      }
+      onSubmit={props.onSubmit}
+      validate={onValidate}
+    >
+      {(formikProps) => InnerForm(formikProps)}
+    </Formik>
+  )
 }
-
-type InitProps = Partial<PresenterSignupForm>
-
-const SignUpForm = withFormik<InitProps, PresenterSignupForm>({
-  mapPropsToValues: (props) => ({
-    firstName: props.firstName || '',
-    lastName: props.lastName || '',
-    email: props.email || '',
-    profileImage: props.profileImage || ''
-  }),
-  validate,
-  handleSubmit
-})(InnerForm)
 
 export default SignUpForm
