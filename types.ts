@@ -18,6 +18,8 @@ export interface Presenter {
   presentations: Preso[]
 }
 
+export type PresenterSignupForm = Omit<Presenter, 'id' | 'presentations'>
+
 export interface Preso {
   /** Just an ID for internal use. */
   id: string
@@ -41,7 +43,12 @@ export interface Preso {
   updatedAt?: string
 }
 
-export interface SurveyForm {
+export type PresoForm = Omit<Preso, 'id' | 'createdAt' | 'updatedAt'>
+
+export interface Survey {
+  /** Just an ID for internal use. */
+  id: string
+
   /** The survey respondent's first and last name. */
   fullname: string
 
@@ -68,9 +75,9 @@ export interface SurveyForm {
    * the presenter presents again.
    */
   notificationOfOtherTalks: boolean
+
+  createAt?: string
+  updatedAt?: string
 }
 
-export interface PresoForm {
-  /** The Url where the presener's slides are located */
-  url: string
-}
+export type SurveyForm = Omit<Survey, 'id' | 'createdAt' | 'updatedAt'>
