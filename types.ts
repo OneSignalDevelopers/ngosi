@@ -16,9 +16,15 @@ export interface Presenter {
 
   /** A list of presentations the presenter has created in Ngosi */
   presentations: Preso[]
+
+  createdAt?: string
+  updatedAt?: string
 }
 
-export type PresenterSignupForm = Omit<Presenter, 'id' | 'presentations'>
+export type PresenterSignupForm = Omit<
+  Presenter,
+  'id' | 'presentations' | 'createdAt' | 'updatedAt'
+>
 
 export interface Preso {
   /** Just an ID for internal use. */
@@ -39,11 +45,14 @@ export interface Preso {
   /** The location where the event took place. */
   eventLocation?: string
 
-  createAt?: string
+  createdAt?: string
   updatedAt?: string
 }
 
-export type PresoForm = Omit<Preso, 'id' | 'createdAt' | 'updatedAt'>
+export type PresoForm = Omit<
+  Preso,
+  'id' | 'shortCode' | 'createdAt' | 'updatedAt'
+>
 
 export interface Survey {
   /** Just an ID for internal use. */
@@ -76,7 +85,7 @@ export interface Survey {
    */
   notificationOfOtherTalks: boolean
 
-  createAt?: string
+  createdAt?: string
   updatedAt?: string
 }
 
