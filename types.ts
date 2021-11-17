@@ -85,8 +85,8 @@ export interface Survey {
    */
   notificationOfOtherTalks: boolean
 
-  createdAt?: string
-  updatedAt?: string
+  /** The time the survey was completed. */
+  readonly createdAt?: string
 }
 
-export type SurveyForm = Omit<Survey, 'id' | 'createdAt' | 'updatedAt'>
+export type SurveyForm = Omit<Survey, 'id' | 'createdAt'>
