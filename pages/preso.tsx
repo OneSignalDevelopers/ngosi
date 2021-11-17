@@ -41,7 +41,6 @@ const Preso: NextPage = () => {
           </div>
         </div>
       </main>
-      <pre>{user || 'nothing...'}</pre>
       <Footer />
     </div>
   )
