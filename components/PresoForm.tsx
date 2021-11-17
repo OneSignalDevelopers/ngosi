@@ -9,8 +9,16 @@ interface Props {
 const onValidate = (values: PresoForm) => {
   let errors: FormikErrors<PresoForm> = {}
 
+  if (!values.title) {
+    errors.title = 'A presentation title is required.'
+  }
+
   if (!values.url) {
-    errors.url = 'Required'
+    errors.url = 'The link to your slides is required.'
+  }
+
+  if (!values.eventName) {
+    errors.eventName = 'A name for the event is required.'
   }
 
   return errors
@@ -19,7 +27,9 @@ const onValidate = (values: PresoForm) => {
 const PresoForm: React.FC<Props> = (props) => {
   return (
     <Formik
-      initialValues={{ url: '' }}
+      initialValues={
+        { url: '', eventName: '', title: '', eventLocation: '' } as PresoForm
+      }
       onSubmit={props.onSubmit}
       validate={onValidate}
     >
