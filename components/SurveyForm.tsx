@@ -1,3 +1,4 @@
+import type { Writeable } from '@common/utils'
 import ToggleSwitch from '@components/ToggleSwitch'
 import { Field, Form, FormikErrors, FormikProps, withFormik } from 'formik'
 import React, { useState } from 'react'
@@ -74,7 +75,7 @@ const InnerForm = (props: FormikProps<SurveyForm>) => {
 }
 
 const validate = (values: SurveyForm) => {
-  let errors: FormikErrors<SurveyForm> = {}
+  let errors: FormikErrors<Writeable<SurveyForm>> = {}
 
   if (!values.fullname) {
     errors.fullname = 'Required'

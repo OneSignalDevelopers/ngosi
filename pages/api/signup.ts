@@ -1,7 +1,7 @@
 import { Presenter } from '.prisma/client'
+import type { Writeable } from '@common/utils'
 import { PresenterSignupForm } from '@types'
 import cuid from 'cuid'
-import { nanoid } from 'nanoid'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { db } from './common/database'
 
@@ -43,7 +43,7 @@ export default async function asynchandler(
 }
 
 function validate(formData: PresenterSignupForm) {
-  let errors: Partial<PresenterSignupForm> = {}
+  let errors: Partial<Writeable<PresenterSignupForm>> = {}
 
   if (!formData.firstName) {
     errors.firstName = 'First name is required.'

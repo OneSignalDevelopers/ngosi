@@ -1,13 +1,14 @@
 import { PresoForm as PresoForm } from '@types'
 import { Field, FieldProps, Form, Formik, FormikErrors } from 'formik'
 import React from 'react'
+import type { Writeable } from '@common/utils'
 
 interface Props {
   readonly onSubmit: (values: PresoForm) => Promise<void>
 }
 
 const onValidate = (values: PresoForm) => {
-  let errors: FormikErrors<PresoForm> = {}
+  let errors: FormikErrors<Writeable<PresoForm>> = {}
 
   if (!values.title) {
     errors.title = 'A presentation title is required.'

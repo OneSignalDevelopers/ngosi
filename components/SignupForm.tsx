@@ -1,3 +1,4 @@
+import type { Writeable } from '@common/utils'
 import { PresenterSignupForm } from '@types'
 import { Field, Form, Formik, FormikErrors, FormikProps } from 'formik'
 import React from 'react'
@@ -79,7 +80,7 @@ const InnerForm = (props: FormikProps<PresenterSignupForm>) => {
 }
 
 const onValidate = (values: PresenterSignupForm) => {
-  let errors: FormikErrors<PresenterSignupForm> = {}
+  let errors: FormikErrors<Writeable<PresenterSignupForm>> = {}
 
   if (!values.firstName) {
     errors.firstName = 'First name is required.'
