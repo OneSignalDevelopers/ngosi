@@ -12,7 +12,7 @@ export interface Presenter {
   readonly email: string
 
   /** The URL to the presenters profile photo */
-  readonly profileImage: string
+  profileImage?: string
 
   /** A list of presentations the presenter has created in Ngosi */
   readonly presentations: Preso[]
