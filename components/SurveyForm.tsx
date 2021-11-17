@@ -1,18 +1,18 @@
-import ToggleSwitch from "@components/ToggleSwitch";
-import { Field, Form, FormikErrors, FormikProps, withFormik } from "formik";
-import React, { useState } from "react";
-import { SurveyForm } from "types";
+import ToggleSwitch from '@components/ToggleSwitch'
+import { Field, Form, FormikErrors, FormikProps, withFormik } from 'formik'
+import React, { useState } from 'react'
+import { SurveyForm } from 'types'
 
 const InnerForm = (props: FormikProps<SurveyForm>) => {
-  const { touched, errors, isSubmitting, initialValues } = props;
+  const { touched, errors, isSubmitting, initialValues } = props
   const [notificationWhenVideoPublished, setNotificationWhenVideoPublished] =
-    useState(initialValues.notificationWhenVideoPublished);
+    useState(initialValues.notificationWhenVideoPublished)
   const [rateMyPresentation, setRateMyPresentation] = useState(
     initialValues.rateMyPresentation
-  );
+  )
   const [notificationOfOtherTalks, setNotificationOfOtherTalks] = useState(
     initialValues.notificationOfOtherTalks
-  );
+  )
 
   return (
     <Form className="flex flex-col space-y-5">
@@ -70,50 +70,50 @@ const InnerForm = (props: FormikProps<SurveyForm>) => {
         Submit
       </button>
     </Form>
-  );
-};
+  )
+}
 
 const validate = (values: SurveyForm) => {
-  let errors: FormikErrors<SurveyForm> = {};
+  let errors: FormikErrors<SurveyForm> = {}
 
   if (!values.fullname) {
-    errors.fullname = "Required";
+    errors.fullname = 'Required'
   }
 
   if (!values.email) {
-    errors.email = "Required";
+    errors.email = 'Required'
   }
 
-  return errors;
-};
+  return errors
+}
 
 const handleSubmit = async (values: SurveyForm) => {
-  const response = await fetch("/api/survey", {
-    method: "POST",
-    body: JSON.stringify(values),
-  });
+  const response = await fetch('/api/survey', {
+    method: 'POST',
+    body: JSON.stringify(values)
+  })
 
-  console.log(response);
-};
+  console.log('SurveyFormSubmit', response)
+}
 
 interface InitProps {
-  initialName?: string;
-  initialEmail?: string;
-  initialNotificationWhenVideoPublished?: boolean;
-  initialRateMyPresentation?: boolean;
-  initialNotificationOfOtherTalks?: boolean;
+  initialName?: string
+  initialEmail?: string
+  initialNotificationWhenVideoPublished?: boolean
+  initialRateMyPresentation?: boolean
+  initialNotificationOfOtherTalks?: boolean
 }
 
 const SurveyForm = withFormik<InitProps, SurveyForm>({
-  mapPropsToValues: props => ({
-    email: props.initialEmail || "",
-    fullname: props.initialName || "",
+  mapPropsToValues: (props) => ({
+    email: props.initialEmail || '',
+    fullname: props.initialName || '',
     notificationWhenVideoPublished: false,
     rateMyPresentation: true,
-    notificationOfOtherTalks: false,
+    notificationOfOtherTalks: false
   }),
   validate,
-  handleSubmit,
-})(InnerForm);
+  handleSubmit
+})(InnerForm)
 
-export default SurveyForm;
+export default SurveyForm
