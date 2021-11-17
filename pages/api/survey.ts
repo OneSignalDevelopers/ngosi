@@ -35,6 +35,7 @@ export default async function asynchandler(
 
     res.status(200).json({
       preso: {
+        id: preso.id,
         eventName: preso.eventName,
         shortCode: preso.shortCode,
         title: preso.title,
