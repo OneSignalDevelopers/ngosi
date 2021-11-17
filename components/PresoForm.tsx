@@ -1,15 +1,10 @@
-import { presentationUrl } from "@state";
 import { PresoForm as PresoForm } from "@types";
-import {
-  Field,
-  FieldProps,
-  Form,
-  Formik,
-  FormikErrors,
-  FormikHelpers,
-} from "formik";
+import { Field, FieldProps, Form, Formik, FormikErrors } from "formik";
 import React from "react";
-import { useRecoilState } from "recoil";
+
+interface Props {
+  readonly onSubmit: (values: PresoForm) => Promise<void>;
+}
 
 const onValidate = (values: PresoForm) => {
   let errors: FormikErrors<PresoForm> = {};
@@ -21,30 +16,11 @@ const onValidate = (values: PresoForm) => {
   return errors;
 };
 
-const onSubmit = async (
-  values: PresoForm,
-  formikHelpers: FormikHelpers<PresoForm>
-) => {
-  try {
-    const response = await fetch("/api/preso", {
-      method: "POST",
-      body: JSON.stringify(values),
-    });
-
-    console.log(response);
-  } catch (error) {
-    const { message } = error as Error;
-    console.error(message);
-  }
-};
-
-const PresoForm: React.FC = () => {
-  const [url, setUrl] = useRecoilState(presentationUrl);
-
+const PresoForm: React.FC<Props> = props => {
   return (
     <Formik
       initialValues={{ url: "" }}
-      onSubmit={onSubmit}
+      onSubmit={props.onSubmit}
       validate={onValidate}
     >
       {formikProps => (
@@ -62,10 +38,7 @@ const PresoForm: React.FC = () => {
                   <input
                     {...field}
                     type="url"
-                    onChange={e => {
-                      formikProps.handleChange(e);
-                      setUrl(e.target.value);
-                    }}
+                    onChange={formikProps.handleChange}
                     onBlur={formikProps.handleBlur}
                     value={formikProps.values.url}
                     className="h-12 w-full border border-black text-lg px-2 "
@@ -84,7 +57,7 @@ const PresoForm: React.FC = () => {
             disabled={formikProps.isSubmitting}
             className="w-full h-14 bg-black text-white font-bold text-xl"
           >
-            Download QR
+            Generate QR Code
           </button>
         </Form>
       )}
