@@ -97,21 +97,15 @@ const handleSubmit = async (values: SurveyForm) => {
   console.log('SurveyFormSubmit', response)
 }
 
-interface InitProps {
-  initialName?: string
-  initialEmail?: string
-  initialNotificationWhenVideoPublished?: boolean
-  initialRateMyPresentation?: boolean
-  initialNotificationOfOtherTalks?: boolean
-}
+type InitProps = Partial<SurveyForm>
 
 const SurveyForm = withFormik<InitProps, SurveyForm>({
   mapPropsToValues: (props) => ({
-    email: props.initialEmail || '',
-    fullname: props.initialName || '',
-    notificationWhenVideoPublished: false,
+    email: props.email || '',
+    fullname: props.fullname || '',
+    notificationWhenVideoPublished: true,
     rateMyPresentation: true,
-    notificationOfOtherTalks: false
+    notificationOfOtherTalks: true
   }),
   validate,
   handleSubmit
