@@ -16,7 +16,7 @@ export default async function asynchandler(
   res: NextApiResponse<Data>
 ) {
   try {
-    const { url } = JSON.parse(req.body)
+    const { url, presenterId } = JSON.parse(req.body)
     if (!url) {
       res.status(400).json({ error: 'Presentation url is required.' })
     }
@@ -28,7 +28,8 @@ export default async function asynchandler(
         eventLocation: 'Houston, TX',
         title: 'How to do stuff in react',
         url: 'https://conf.reactjs.org/',
-        shortCode: nanoid(7)
+        shortCode: nanoid(7),
+        presenterId: presenterId
       }
     })
 
