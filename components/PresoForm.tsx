@@ -1,29 +1,29 @@
-import { PresoForm as PresoForm } from "@types";
-import { Field, FieldProps, Form, Formik, FormikErrors } from "formik";
-import React from "react";
+import { PresoForm as PresoForm } from '@types'
+import { Field, FieldProps, Form, Formik, FormikErrors } from 'formik'
+import React from 'react'
 
 interface Props {
-  readonly onSubmit: (values: PresoForm) => Promise<void>;
+  readonly onSubmit: (values: PresoForm) => Promise<void>
 }
 
 const onValidate = (values: PresoForm) => {
-  let errors: FormikErrors<PresoForm> = {};
+  let errors: FormikErrors<PresoForm> = {}
 
   if (!values.url) {
-    errors.url = "Required";
+    errors.url = 'Required'
   }
 
-  return errors;
-};
+  return errors
+}
 
-const PresoForm: React.FC<Props> = props => {
+const PresoForm: React.FC<Props> = (props) => {
   return (
     <Formik
-      initialValues={{ url: "" }}
+      initialValues={{ url: '' }}
       onSubmit={props.onSubmit}
       validate={onValidate}
     >
-      {formikProps => (
+      {(formikProps) => (
         <Form className="flex flex-col space-y-5">
           <div className="flex flex-col space-y-1">
             <label
@@ -62,6 +62,6 @@ const PresoForm: React.FC<Props> = props => {
         </Form>
       )}
     </Formik>
-  );
-};
-export default PresoForm;
+  )
+}
+export default PresoForm
