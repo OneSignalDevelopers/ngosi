@@ -1,3 +1,4 @@
+import { prisma } from '.prisma/client'
 import { SurveyForm } from '@types'
 import cuid from 'cuid'
 import { nanoid } from 'nanoid'
@@ -23,9 +24,21 @@ export default async function asynchandler(
       notificationOfOtherTalks,
       notificationWhenVideoPublished,
       rateMyPresentation,
-      presoId
-    } = JSON.parse(req.body) as SurveyForm & { presoId: string }
+      presoShortCode
+    } = JSON.parse(req.body) as SurveyForm & { presoShortCode: string }
 
+    const preso = await db.preso.findUnique({
+      where: { shortCode: presoShortCode }
+    })
+    if (!preso) {
+      res.status(500).json({
+        error: `Preso with short code ${presoShortCode} couldn't be found.`
+      })
+      return
+    }
+
+    // lookup attendee
+    // create one if they aren't in the db
     const attendee = await db.attendee.create({
       data: {
         id: cuid(),
@@ -37,7 +50,7 @@ export default async function asynchandler(
     const surveyResponse = await db.survey.create({
       data: {
         id: cuid(),
-        presoId,
+        presoId: preso.id,
         attendeeId: attendee.id,
         notifyOfOtherTalks: notificationOfOtherTalks,
         notifyWhenVideoPublished: notificationWhenVideoPublished,
