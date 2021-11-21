@@ -9,13 +9,22 @@ import { NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import type { SurveyForm as ISurveyForm } from 'types'
 
 const Survey: NextPage = () => {
   const router = useRouter()
   const [preso, setPreso] = useState<Preso | null>(null)
   const [presenter, setPresenter] = useState<Presenter | null>(null)
-
   const { presoShortCode } = router.query
+
+  const onSurveySubmit = async (values: ISurveyForm) => {
+    const response = await fetch('/api/survey-response', {
+      method: 'POST',
+      body: JSON.stringify({ ...values, presoShortCode })
+    })
+
+    console.log('SurveyFormSubmit', response)
+  }
 
   useEffect(() => {
     if (!presoShortCode || typeof presoShortCode !== 'string') {
@@ -70,7 +79,7 @@ const Survey: NextPage = () => {
         </div>
         <div className="w-full bg-gray-50">
           <div className="px-8 py-3">
-            <SurveyForm />
+            <SurveyForm onSubmit={onSurveySubmit} />
           </div>
         </div>
       </main>
