@@ -77,8 +77,8 @@ const InnerForm = (props: FormikProps<SurveyForm>) => {
 const validate = (values: SurveyForm) => {
   let errors: FormikErrors<Writeable<SurveyForm>> = {}
 
-  if (!values.fullname) {
-    errors.fullname = 'Required'
+  if (!values.fullName) {
+    errors.fullName = 'Required'
   }
 
   if (!values.email) {
@@ -102,7 +102,7 @@ type InitProps = Partial<SurveyForm>
 const SurveyForm = withFormik<InitProps, SurveyForm>({
   mapPropsToValues: (props) => ({
     email: props.email || '',
-    fullname: props.fullname || '',
+    fullName: props.fullName || '',
     notificationWhenVideoPublished: true,
     rateMyPresentation: true,
     notificationOfOtherTalks: true

@@ -71,7 +71,7 @@ export interface Survey {
   readonly id: string
 
   /** The survey respondent's first and last name. */
-  readonly fullname: string
+  readonly fullName: string
 
   /** The survey respondent's email address. */
   readonly email: string
