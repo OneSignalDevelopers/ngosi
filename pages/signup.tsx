@@ -1,13 +1,9 @@
-import SignUpForm from '@components/SignupForm'
-import { LoggedInUser } from '@state'
-import { Presenter, PresenterSignupForm } from '@types'
-import { NextPage } from 'next'
-import { useRecoilState } from 'recoil'
-import { useRouter } from 'next/router'
-<<<<<<< HEAD
 import Auth from '@components/Auth'
-=======
->>>>>>> dev
+import { LoggedInUser } from '@state'
+import { PresenterSignupForm } from '@types'
+import { NextPage } from 'next'
+import { useRouter } from 'next/router'
+import { useRecoilState } from 'recoil'
 
 const SignUp: NextPage = () => {
   const router = useRouter()
@@ -27,12 +23,7 @@ const SignUp: NextPage = () => {
   return (
     <div className="h-screen w-screen bg-primary pt-4 pl-6">
       <h1 className="text-white text-6xl">Sign Up</h1>
-<<<<<<< HEAD
-      {/* <SignUpForm onSubmit={onSubmit} /> */}
       <Auth />
-=======
-      <SignUpForm onSubmit={onSubmit} />
->>>>>>> dev
     </div>
   )
 }
