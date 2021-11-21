@@ -1,15 +1,15 @@
-import Image from "next/image";
-import presenter from "../public/images/presenter.jpg";
+import Image from 'next/image'
+import presenter from '../public/images/presenter.jpg'
 
 interface Props {
   /** The presenter's first name */
-  firstName: string;
+  firstName: string
 
   /** The presenter's last name */
-  lastName: string;
+  lastName: string
 
   /** The title of the presentation */
-  title: string;
+  title: string
 }
 
 const PresentationInfo: React.FC<Props> = ({ firstName, lastName, title }) => (
@@ -32,4 +32,4 @@ const PresentationInfo: React.FC<Props> = ({ firstName, lastName, title }) => (
   </div>
 );
 
-export default PresentationInfo;
+export default PresentationInfo

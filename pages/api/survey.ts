@@ -1,4 +1,5 @@
-import { Preso } from '@types'
+import { Presenter, Preso } from '@types'
+import cuid from 'cuid'
 
 import { NextApiRequest, NextApiResponse } from 'next'
 import { db } from './common/database'
@@ -6,6 +7,7 @@ import { db } from './common/database'
 type Data =
   | {
       preso: Preso
+      presenter: Presenter
     }
   | {
       error: string
@@ -17,10 +19,6 @@ export default async function asynchandler(
 ) {
   try {
     const { presoShortCode } = JSON.parse(req.body)
-    if (!presoShortCode) {
-      res.status(400).json({ error: `Invalid url.` })
-      return
-    }
 
     const preso = await db.preso.findUnique({
       where: { shortCode: presoShortCode }
@@ -33,13 +31,30 @@ export default async function asynchandler(
       return
     }
 
+    const presenter = await db.presenter.findUnique({
+      where: { id: preso?.presenterId }
+    })
+    if (!presenter) {
+      res.status(500).json({ error: `An unrecoverable error occured.` })
+      return
+    }
+
     res.status(200).json({
       preso: {
+        id: preso.id,
         eventName: preso.eventName,
         shortCode: preso.shortCode,
         title: preso.title,
         url: preso.url,
         eventLocation: preso.eventLocation
+      },
+      presenter: {
+        id: presenter.id,
+        email: presenter.email,
+        firstName: presenter.firstName,
+        lastName: presenter.lastName,
+        profileImage: presenter.profileImage || '',
+        presentations: []
       }
     })
   } catch (error) {

@@ -33,6 +33,3 @@ yarn-error.log*
 
 # vercel
 .vercel
-
-# prisma client
-prisma/node_modules

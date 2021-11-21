@@ -18,7 +18,42 @@ model Preso {
   title String
   url String
   shortCode String @unique
+  presenterId String
+  presenter Presenter @relation(fields: [presenterId], references: [id] )
+  surveys Survey[]
   createdAt  DateTime @default(now())
   updatedAt  DateTime @default(now())
+}
+
+model Presenter {
+  id String @id
+  firstName String
+  lastName String
+  email String @unique
+  profileImage String?
+  presos Preso[]
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now())
+}
+
+model Attendee {
+  id String @id
+  fullName String
+  email String @unique
+  surveys Survey[]
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now())
+}
+
+model Survey {
+  id String @id
+  presoId String
+  preso Preso @relation(fields: [presoId], references: [id])
+  attendeeId String
+  attendee Attendee @relation(fields: [attendeeId], references: [id])
+  notifyWhenVideoPublished Boolean
+  sendPresoFeedback Boolean
+  notifyOfOtherTalks Boolean
+  createdAt  DateTime @default(now())
 }
 

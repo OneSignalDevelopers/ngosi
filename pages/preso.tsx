@@ -1,18 +1,21 @@
 import Footer from '@components/Footer'
 import PresentationForm from '@components/PresoForm'
+import { LoggedInUser } from '@state'
 import { PresoForm } from '@types'
 import { NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
+import { useRecoilValue } from 'recoil'
 
 const Preso: NextPage = () => {
   const router = useRouter()
+  const user = useRecoilValue(LoggedInUser)
 
   const onSubmit = async (values: PresoForm) => {
     try {
       const response = await fetch('/api/preso', {
         method: 'POST',
-        body: JSON.stringify(values)
+        body: JSON.stringify({ ...values, presenterId: user })
       })
       const json = await response.json()
       router.replace(`/qr?preso=${encodeURIComponent(json.presoShortCode)}`)
