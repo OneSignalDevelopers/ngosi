@@ -1,3 +1,9 @@
+declare global {
+  interface window {
+    Onesignal: any
+  }
+}
+
 export interface Presenter {
   /** A unique identifier for the presenter */
   readonly id: string
@@ -12,42 +18,70 @@ export interface Presenter {
   readonly email: string
 
   /** The URL to the presenters profile photo */
-  readonly profileImage: string
+  readonly profileImage?: string
 
   /** A list of presentations the presenter has created in Ngosi */
   readonly presentations: Preso[]
+
+  /** The time the presenter account was created. */
+  readonly createdAt?: string
+
+  /** The time the presenter account was updated. */
+  readonly updatedAt?: string
 }
 
+export type PresenterSignupForm = Omit<
+  Presenter,
+  'id' | 'presentations' | 'createdAt' | 'updatedAt'
+>
+
 export interface Preso {
-  /** The publically visible unique identifier for the presentation.  */
-  readonly shortCode: string
+  /** Just an ID for internal use. */
+  readonly id: string
 
   /** The name of the presentation. */
   readonly title: string
 
-  /** The location where the event took place. */
-  readonly eventLocation?: string
+  /** The Url where the presener's slides are located */
+  readonly url: string
+
+  /** The publically visible unique identifier for the presentation.  */
+  readonly shortCode: string
 
   /** The name of the event where the presentation was given. */
   readonly eventName: string
 
-  /** The url where the presentation can be found. */
-  readonly url: string
+  /** The location where the event took place. */
+  readonly eventLocation?: string
+
+  /** The time the presentation was created. */
+  readonly createdAt?: string
+
+  /** The time the presentation was updated. */
+  readonly updatedAt?: string
 }
 
-export interface SurveyForm {
+export type PresoForm = Omit<
+  Preso,
+  'id' | 'shortCode' | 'createdAt' | 'updatedAt'
+>
+
+export interface Survey {
+  /** Just an ID for internal use. */
+  readonly id: string
+
   /** The survey respondent's first and last name. */
-  fullname: string
+  readonly fullName: string
 
   /** The survey respondent's email address. */
-  email: string
+  readonly email: string
 
   /** Indicates if the survey respondent
    * should be sent an email when
    * the recording of the presentation
    * is published by the event host.
    * */
-  notificationWhenVideoPublished: boolean
+  readonly notificationWhenVideoPublished: boolean
 
   /** Indicates if the survey respondent
    * should be sent an SMS with a
@@ -55,16 +89,16 @@ export interface SurveyForm {
    * minutes after the live talk
    * is scheduled to conclude.
    */
-  rateMyPresentation: boolean
+  readonly rateMyPresentation: boolean
 
   /** Indicates if the survey respondent
    * should be notified whenever
    * the presenter presents again.
    */
-  notificationOfOtherTalks: boolean
+  readonly notificationOfOtherTalks: boolean
+
+  /** The time the survey was completed. */
+  readonly createdAt?: string
 }
 
-export interface PresoForm {
-  /** The Url where the presener's slides are located */
-  url: string
-}
+export type SurveyForm = Omit<Survey, 'id' | 'createdAt'>

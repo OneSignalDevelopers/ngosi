@@ -7,6 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "clean": "rm -rf node_modules prisma/node_modules",
+    "db:gen:client": "prisma generate",
     "db:sync:schema": "prisma db push --force-reset",
     "db:create:migration": "prisma migrate dev",
     "vercel-build": "prisma generate && prisma migrate deploy && next build"
@@ -23,7 +25,9 @@
     "qrcode": "^1.4.4",
     "react": "17.0.2",
     "react-dom": "17.0.2",
+    "react-onesignal": "^2.0.2",
     "react-qr-code": "^2.0.2",
+    "recoil": "^0.5.2",
     "yup": "^0.32.11"
   },
   "devDependencies": {
@@ -34,7 +38,7 @@
     "eslint-config-next": "11.1.2",
     "postcss": "^8.3.11",
     "prettier": "^2.4.1",
-    "prisma": "3.4.2",
+    "prisma": "^3.5.0",
     "tailwindcss": "^2.2.17",
     "typescript": "4.4.4"
   }
