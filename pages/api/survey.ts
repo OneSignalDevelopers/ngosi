@@ -1,4 +1,5 @@
 import { Presenter, Preso } from '@types'
+import cuid from 'cuid'
 
 import { NextApiRequest, NextApiResponse } from 'next'
 import { db } from './common/database'
@@ -18,14 +19,11 @@ export default async function asynchandler(
 ) {
   try {
     const { presoShortCode } = JSON.parse(req.body)
-    if (!presoShortCode) {
-      res.status(400).json({ error: `Invalid url.` })
-      return
-    }
 
     const preso = await db.preso.findUnique({
       where: { shortCode: presoShortCode }
     })
+
     if (!preso) {
       res
         .status(500)
