@@ -2,7 +2,7 @@ import cuid from 'cuid'
 import { nanoid } from 'nanoid'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { db } from './common/database'
-
+import { StatusCodes } from 'http-status-codes'
 type Data =
   | {
       presoShortCode: string
@@ -18,7 +18,9 @@ export default async function asynchandler(
   try {
     const { url, presenterId } = JSON.parse(req.body)
     if (!url) {
-      res.status(400).json({ error: 'Presentation url is required.' })
+      res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ error: 'Presentation url is required.' })
     }
 
     const preso = await db.preso.create({
@@ -33,9 +35,9 @@ export default async function asynchandler(
       }
     })
 
-    res.status(200).json({ presoShortCode: preso.shortCode })
+    res.status(StatusCodes.OK).json({ presoShortCode: preso.shortCode })
   } catch (error) {
     const { message } = error as Error
-    res.status(500).json({ error: message })
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: message })
   }
 }

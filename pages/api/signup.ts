@@ -4,7 +4,7 @@ import { PresenterSignupForm } from '@types'
 import cuid from 'cuid'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { db } from './common/database'
-
+import { StatusCodes } from 'http-status-codes'
 type Data =
   | {
       presenterId: string
@@ -21,7 +21,9 @@ export default async function asynchandler(
     const formData = JSON.parse(req.body) as PresenterSignupForm
     const errors = validate(formData)
     if (!Object.keys(errors)) {
-      res.status(500).json({ error: JSON.stringify(errors) })
+      res
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({ error: JSON.stringify(errors) })
       return
     }
 
@@ -35,10 +37,10 @@ export default async function asynchandler(
       }
     })
 
-    res.status(200).json({ presenterId: presenter.id })
+    res.status(StatusCodes.OK).json({ presenterId: presenter.id })
   } catch (error) {
     const { message } = error as Error
-    res.status(500).json({ error: message })
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: message })
   }
 }
 

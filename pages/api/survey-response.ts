@@ -4,7 +4,7 @@ import cuid from 'cuid'
 import { nanoid } from 'nanoid'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { db } from './common/database'
-
+import { StatusCodes } from 'http-status-codes'
 type Data =
   | {
       message: string
@@ -31,7 +31,7 @@ export default async function asynchandler(
       where: { shortCode: presoShortCode }
     })
     if (!preso) {
-      res.status(500).json({
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
         error: `Preso with short code ${presoShortCode} couldn't be found.`
       })
       return
@@ -58,9 +58,9 @@ export default async function asynchandler(
       }
     })
 
-    res.status(200).json({ message: 'ok' })
+    res.status(StatusCodes.OK).json({ message: 'ok' })
   } catch (error) {
     const { message } = error as Error
-    res.status(500).json({ error: message })
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: message })
   }
 }

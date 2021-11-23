@@ -1,6 +1,6 @@
 import { Presenter, Preso } from '@types'
 import cuid from 'cuid'
-
+import { StatusCodes } from 'http-status-codes'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { db } from './common/database'
 
@@ -26,7 +26,7 @@ export default async function asynchandler(
 
     if (!preso) {
       res
-        .status(500)
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
         .json({ error: `Preso with ID ${presoShortCode} couldn't be found.` })
       return
     }
@@ -35,11 +35,13 @@ export default async function asynchandler(
       where: { id: preso?.presenterId }
     })
     if (!presenter) {
-      res.status(500).json({ error: `An unrecoverable error occured.` })
+      res
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({ error: `An unrecoverable error occured.` })
       return
     }
 
-    res.status(200).json({
+    res.status(StatusCodes.OK).json({
       preso: {
         id: preso.id,
         eventName: preso.eventName,
@@ -59,6 +61,6 @@ export default async function asynchandler(
     })
   } catch (error) {
     const { message } = error as Error
-    res.status(500).json({ error: message })
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: message })
   }
 }
