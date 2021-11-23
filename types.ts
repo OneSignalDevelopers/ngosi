@@ -45,6 +45,9 @@ export interface Preso {
   /** The Url where the presener's slides are located */
   readonly url: string
 
+  /** The Id of the user who created this preso */
+  readonly userId: string
+
   /** The publically visible unique identifier for the presentation.  */
   readonly shortCode: string
 
