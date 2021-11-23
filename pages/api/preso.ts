@@ -1,3 +1,4 @@
+import { PresoForm } from '@types'
 import cuid from 'cuid'
 import { nanoid } from 'nanoid'
 import { NextApiRequest, NextApiResponse } from 'next'
@@ -16,7 +17,9 @@ export default async function asynchandler(
   res: NextApiResponse<Data>
 ) {
   try {
-    const { url, presenterId } = JSON.parse(req.body)
+    const { url, userId, eventName, title, eventLocation } = JSON.parse(
+      req.body
+    ) as PresoForm
     if (!url) {
       res.status(400).json({ error: 'Presentation url is required.' })
     }
@@ -24,12 +27,12 @@ export default async function asynchandler(
     const preso = await db.preso.create({
       data: {
         id: cuid(),
-        eventName: 'ReactConf',
-        eventLocation: 'Houston, TX',
-        title: 'How to do stuff in react',
-        url: 'https://conf.reactjs.org/',
+        eventName: eventName,
+        eventLocation: eventLocation,
+        title: title,
+        url: url,
         shortCode: nanoid(7),
-        presenterId: presenterId
+        userId: userId
       }
     })
 
