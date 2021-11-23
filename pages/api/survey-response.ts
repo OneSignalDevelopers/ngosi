@@ -1,7 +1,5 @@
-import { prisma } from '.prisma/client'
 import { SurveyForm } from '@types'
 import cuid from 'cuid'
-import { nanoid } from 'nanoid'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { db } from './common/database'
 
@@ -37,21 +35,12 @@ export default async function asynchandler(
       return
     }
 
-    // lookup attendee
-    // create one if they aren't in the db
-    const attendee = await db.attendee.create({
-      data: {
-        id: cuid(),
-        email,
-        fullName
-      }
-    })
-
     const surveyResponse = await db.survey.create({
       data: {
         id: cuid(),
         presoId: preso.id,
-        attendeeId: attendee.id,
+        email: email,
+        fullName: fullName,
         notifyOfOtherTalks: notificationOfOtherTalks,
         notifyWhenVideoPublished: notificationWhenVideoPublished,
         sendPresoFeedback: rateMyPresentation
