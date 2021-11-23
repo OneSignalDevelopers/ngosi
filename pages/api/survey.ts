@@ -1,18 +1,19 @@
-import { Presenter, Preso } from '@types'
-import cuid from 'cuid'
-
+import { Preso } from '@types'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { db } from './common/database'
 
 type Data =
   | {
       preso: Preso
-      presenter: Presenter
     }
   | {
       error: string
     }
 
+/**
+ * 1. Fetch the preso using the short code
+ * 2. Pluck userId property from record
+ */
 export default async function asynchandler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
@@ -31,14 +32,6 @@ export default async function asynchandler(
       return
     }
 
-    const presenter = await db.presenter.findUnique({
-      where: { id: preso?.presenterId }
-    })
-    if (!presenter) {
-      res.status(500).json({ error: `An unrecoverable error occured.` })
-      return
-    }
-
     res.status(200).json({
       preso: {
         id: preso.id,
@@ -46,15 +39,8 @@ export default async function asynchandler(
         shortCode: preso.shortCode,
         title: preso.title,
         url: preso.url,
-        eventLocation: preso.eventLocation
-      },
-      presenter: {
-        id: presenter.id,
-        email: presenter.email,
-        firstName: presenter.firstName,
-        lastName: presenter.lastName,
-        profileImage: presenter.profileImage || '',
-        presentations: []
+        eventLocation: preso.eventLocation || undefined,
+        userId: preso.userId
       }
     })
   } catch (error) {
