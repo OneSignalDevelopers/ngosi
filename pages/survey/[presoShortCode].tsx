@@ -1,8 +1,9 @@
 import EventHeader from '@components/EventHeader'
 import FatalError from '@components/FatalError'
 import Footer from '@components/Footer'
+import PresentationInfo from '@components/PresentationInfo'
 import SurveyForm from '@components/SurveyForm'
-import { Preso } from '@types'
+import { PresenterHeader, Preso } from '@types'
 import { NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
@@ -12,6 +13,7 @@ import type { SurveyForm as ISurveyForm } from 'types'
 const Survey: NextPage = () => {
   const router = useRouter()
   const [preso, setPreso] = useState<Preso | null>(null)
+  const [presenter, setPresenter] = useState<PresenterHeader | null>(null)
 
   useEffect(() => {
     const { presoShortCode } = router.query
@@ -26,9 +28,10 @@ const Survey: NextPage = () => {
       })
 
       const json = await response.json()
-      const { preso } = json
-      if (preso) {
+      const { preso, presenter } = json
+      if (preso && presenter) {
         setPreso(preso)
+        setPresenter(presenter)
       }
     }
 
@@ -45,7 +48,7 @@ const Survey: NextPage = () => {
     })
   }
 
-  if (!preso) {
+  if (!preso || !presenter) {
     return <FatalError message="Presentation doesn't exist" />
   }
 
@@ -60,11 +63,11 @@ const Survey: NextPage = () => {
 
       <main className="flex flex-col flex-1 mt-2 space-y-3">
         <div className="px-8 py-2">
-          {/* <PresentationInfo
-            firstName={preso}
-            lastName={lastName}
+          <PresentationInfo
+            firstName={presenter.firstName}
+            lastName={presenter.lastName}
             title={preso.title}
-          /> */}
+          />
         </div>
         <div className="w-full bg-gray-50">
           <div className="px-8 py-3">

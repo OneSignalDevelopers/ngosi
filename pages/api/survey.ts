@@ -1,10 +1,11 @@
-import { Preso } from '@types'
+import { PresenterHeader, Preso } from '@types'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { db } from './common/database'
 
 type Data =
   | {
       preso: Preso
+      presenter: PresenterHeader
     }
   | {
       error: string
@@ -24,11 +25,20 @@ export default async function asynchandler(
     const preso = await db.preso.findUnique({
       where: { shortCode: presoShortCode }
     })
-
     if (!preso) {
       res
         .status(500)
         .json({ error: `Preso with ID ${presoShortCode} couldn't be found.` })
+      return
+    }
+
+    const presenter = await db.profiles.findUnique({
+      where: { id: preso.userId }
+    })
+    if (!presenter) {
+      res
+        .status(500)
+        .json({ error: `Presenter with ID ${preso.userId} couldn't be found.` })
       return
     }
 
@@ -41,6 +51,11 @@ export default async function asynchandler(
         url: preso.url,
         eventLocation: preso.eventLocation || undefined,
         userId: preso.userId
+      },
+      presenter: {
+        firstName: presenter?.username!,
+        lastName: '',
+        profileImage: presenter.avatar_url || undefined
       }
     })
   } catch (error) {

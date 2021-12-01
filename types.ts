@@ -30,6 +30,11 @@ export interface Presenter {
   readonly updatedAt?: string
 }
 
+export type PresenterHeader = Omit<
+  Presenter,
+  'id' | 'presentations' | 'email' | 'createdAt' | 'updatedAt'
+>
+
 export type PresenterSignupForm = Omit<
   Presenter,
   'id' | 'presentations' | 'createdAt' | 'updatedAt'
