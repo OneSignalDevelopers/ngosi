@@ -15,6 +15,10 @@ const AccountPage: NextPage = () => {
   //   }
   // }, [authState, router, session])
 
+  if (!session) {
+    return <div>No session</div>
+  }
+
   return (
     <div className="h-screen w-screen bg-primary pt-4 pl-6">
       <Head>
@@ -24,7 +28,7 @@ const AccountPage: NextPage = () => {
         ></script>
       </Head>
       <h1 className="text-white text-6xl">ngosi</h1>
-      {session && <Account key={session.user?.id} session={session!} />}
+      <Account key={session.user?.id} session={session!} />
       <button
         className=""
         onClick={async () => {
