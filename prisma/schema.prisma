@@ -38,7 +38,7 @@ model Survey {
 
 model profiles {
   id String @id
-  updated_at String
+  updated_at String?
   username String
-  avatar_url String
+  avatar_url String?
 }
