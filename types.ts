@@ -110,3 +110,15 @@ export interface Survey {
 }
 
 export type SurveyForm = Omit<Survey, 'id' | 'createdAt'>
+
+export interface Profile {
+  readonly id: string
+  readonly username: string
+  readonly firstName: string
+  readonly lastName: string
+  readonly email: string
+  readonly website?: string
+  readonly avatar_url?: string
+  readonly createdAt?: string
+  readonly UpdatedAt?: string
+}
