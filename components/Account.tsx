@@ -56,9 +56,12 @@ const Account: React.FC<Props> = (props) => {
         updated_at: new Date()
       }
 
-      let { error } = await supabaseClient.from('profiles').upsert(updates, {
-        returning: 'minimal' // Don't return the value after inserting
+      const response = await fetch('/api/profile', {
+        method: 'POST',
+        body: JSON.stringify(updates)
       })
+      const json = await response.json()
+      const { message, error } = json
 
       if (error) {
         throw error

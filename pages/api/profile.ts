@@ -10,10 +10,26 @@ type Data =
       error: string
     }
 
+// PUT
 export default async function asynchandler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
+  switch (req.method) {
+    case 'POST':
+      updateProfile(req, res)
+      break
+    case 'PUT':
+      console.log('Put stuff.')
+      completeOnboarding(req, res)
+      break
+  }
+}
+
+const updateProfile = async (
+  req: NextApiRequest,
+  res: NextApiResponse<Data>
+) => {
   try {
     const { id, username, avatar_url } = JSON.parse(req.body) as Profile
 
@@ -37,3 +53,8 @@ export default async function asynchandler(
     res.status(500).json({ error: message })
   }
 }
+
+const completeOnboarding = async (
+  req: NextApiRequest,
+  res: NextApiResponse<Data>
+) => {}
