@@ -1,8 +1,8 @@
-import { PresoForm } from '@types'
+import { supabaseClient } from '@common/useSupabase'
+import { Preso, PresoForm } from '@types'
 import cuid from 'cuid'
 import { nanoid } from 'nanoid'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { db } from './common/database'
 
 type Data =
   | {
@@ -24,8 +24,9 @@ export default async function asynchandler(
       res.status(400).json({ error: 'Presentation url is required.' })
     }
 
-    const preso = await db.preso.create({
-      data: {
+    const { data, error } = await supabaseClient
+      .from<Preso>('Preso')
+      .insert({
         id: cuid(),
         eventName: eventName,
         eventLocation: eventLocation,
@@ -33,10 +34,14 @@ export default async function asynchandler(
         url: url,
         shortCode: nanoid(7),
         userId: userId
-      }
-    })
+      })
+      .single()
 
-    res.status(200).json({ presoShortCode: preso.shortCode })
+    if (error) {
+      res.status(500).json({ error: JSON.stringify(error) })
+    } else {
+      res.status(200).json({ presoShortCode: data?.shortCode || '' })
+    }
   } catch (error) {
     const { message } = error as Error
     res.status(500).json({ error: message })

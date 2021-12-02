@@ -1,7 +1,7 @@
-import { SurveyForm } from '@types'
+import { supabaseClient } from '@common/useSupabase'
+import { Preso, Survey, SurveyForm } from '@types'
 import cuid from 'cuid'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { db } from './common/database'
 
 type Data =
   | {
@@ -25,27 +25,30 @@ export default async function asynchandler(
       presoShortCode
     } = JSON.parse(req.body) as SurveyForm & { presoShortCode: string }
 
-    const preso = await db.preso.findUnique({
-      where: { shortCode: presoShortCode }
-    })
-    if (!preso) {
+    const presoResult = await supabaseClient
+      .from<Preso>('Preso')
+      .select('')
+      .eq('shortCode', presoShortCode)
+      .single()
+
+    if (!presoResult.data) {
       res.status(500).json({
         error: `Preso with short code ${presoShortCode} couldn't be found.`
       })
       return
     }
 
-    const surveyResponse = await db.survey.create({
-      data: {
+    const surveyResult = await supabaseClient
+      .from<Survey & { presoId: string }>('Survey')
+      .insert({
         id: cuid(),
-        presoId: preso.id,
-        email: email,
-        fullName: fullName,
-        notifyOfOtherTalks: notificationOfOtherTalks,
-        notifyWhenVideoPublished: notificationWhenVideoPublished,
-        sendPresoFeedback: rateMyPresentation
-      }
-    })
+        presoId: presoResult.data.id,
+        email,
+        fullName,
+        notificationOfOtherTalks,
+        notificationWhenVideoPublished,
+        rateMyPresentation
+      })
 
     res.status(200).json({ message: 'ok' })
   } catch (error) {

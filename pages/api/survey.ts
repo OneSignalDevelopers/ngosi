@@ -1,6 +1,6 @@
-import { PresenterHeader, Preso } from '@types'
+import { supabaseClient } from '@common/useSupabase'
+import { Presenter, PresenterHeader, Preso } from '@types'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { db } from './common/database'
 
 type Data =
   | {
@@ -22,40 +22,25 @@ export default async function asynchandler(
   try {
     const { presoShortCode } = JSON.parse(req.body)
 
-    const preso = await db.preso.findUnique({
-      where: { shortCode: presoShortCode }
-    })
-    if (!preso) {
-      res
-        .status(500)
-        .json({ error: `Preso with ID ${presoShortCode} couldn't be found.` })
-      return
-    }
+    const presoResult = await supabaseClient
+      .from<Preso>('Preso')
+      .select()
+      .eq('shortCode', presoShortCode)
+      .maybeSingle()
 
-    const presenter = await db.profiles.findUnique({
-      where: { id: preso.userId }
-    })
-    if (!presenter) {
-      res
-        .status(500)
-        .json({ error: `Presenter with ID ${preso.userId} couldn't be found.` })
-      return
-    }
+    const presenterResult = await supabaseClient
+      .from<Presenter>('Presenter')
+      .select()
+      .eq('id', presoResult.data?.userId)
+      .maybeSingle()
 
     res.status(200).json({
       preso: {
-        id: preso.id,
-        eventName: preso.eventName,
-        shortCode: preso.shortCode,
-        title: preso.title,
-        url: preso.url,
-        eventLocation: preso.eventLocation || undefined,
-        userId: preso.userId
+        ...presoResult.data!,
+        eventLocation: presoResult.data!.eventLocation || undefined
       },
       presenter: {
-        firstName: presenter?.username!,
-        lastName: '',
-        profileImage: presenter.avatar_url || undefined
+        ...presenterResult.data!
       }
     })
   } catch (error) {

@@ -1,6 +1,6 @@
+import { supabaseClient } from '@common/useSupabase'
 import { Profile } from '@types'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { db } from './common/database'
 
 type Data =
   | {
@@ -17,44 +17,43 @@ export default async function asynchandler(
 ) {
   switch (req.method) {
     case 'POST':
-      updateProfile(req, res)
+      completeOnboarding(req, res)
       break
     case 'PUT':
       console.log('Put stuff.')
-      completeOnboarding(req, res)
+      a(req, res)
       break
-  }
-}
-
-const updateProfile = async (
-  req: NextApiRequest,
-  res: NextApiResponse<Data>
-) => {
-  try {
-    const { id, username, avatar_url } = JSON.parse(req.body) as Profile
-
-    await db.profiles.upsert({
-      where: {
-        id: id
-      },
-      update: {
-        avatar_url: avatar_url || ''
-      },
-      create: {
-        id: id, // We don't create this ID because we get it from supabase auth.
-        avatar_url: avatar_url || '',
-        username: username
-      }
-    })
-
-    res.status(200).json({ message: 'ok' })
-  } catch (error) {
-    const { message } = error as Error
-    res.status(500).json({ error: message })
   }
 }
 
 const completeOnboarding = async (
   req: NextApiRequest,
   res: NextApiResponse<Data>
-) => {}
+) => {
+  try {
+    const { id, username, avatar_url, website } = JSON.parse(
+      req.body
+    ) as Profile
+
+    const { data, error } = await supabaseClient
+      .from<Profile>('profiles')
+      .upsert({
+        id: '5ceaf5a8-544e-42a2-8187-eb2e22bc9041',
+        username,
+        website,
+        avatar_url: avatar_url || ''
+      })
+      .single()
+
+    if (error) {
+      res.status(500).json({ error: JSON.stringify(error) })
+    } else {
+      res.status(200).json({ message: JSON.stringify(data) })
+    }
+  } catch (error) {
+    const { message } = error as Error
+    res.status(500).json({ error: message })
+  }
+}
+
+const a = async (req: NextApiRequest, res: NextApiResponse<Data>) => {}
