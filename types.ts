@@ -30,6 +30,11 @@ export interface Presenter {
   readonly updatedAt?: string
 }
 
+export type PresenterHeader = Omit<
+  Presenter,
+  'id' | 'presentations' | 'email' | 'createdAt' | 'updatedAt'
+>
+
 export type PresenterSignupForm = Omit<
   Presenter,
   'id' | 'presentations' | 'createdAt' | 'updatedAt'
@@ -44,6 +49,9 @@ export interface Preso {
 
   /** The Url where the presener's slides are located */
   readonly url: string
+
+  /** The Id of the user who created this preso */
+  readonly userId: string
 
   /** The publically visible unique identifier for the presentation.  */
   readonly shortCode: string
@@ -102,3 +110,15 @@ export interface Survey {
 }
 
 export type SurveyForm = Omit<Survey, 'id' | 'createdAt'>
+
+export interface Profile {
+  readonly id: string
+  readonly username: string
+  readonly firstName: string
+  readonly lastName: string
+  readonly email: string
+  readonly website?: string
+  readonly avatar_url?: string
+  readonly createdAt?: string
+  readonly UpdatedAt?: string
+}

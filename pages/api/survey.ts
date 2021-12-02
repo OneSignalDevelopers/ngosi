@@ -1,18 +1,20 @@
-import { Presenter, Preso } from '@types'
-import cuid from 'cuid'
-
+import { supabaseClient } from '@common/useSupabase'
+import { Presenter, PresenterHeader, Preso } from '@types'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { db } from './common/database'
 
 type Data =
   | {
       preso: Preso
-      presenter: Presenter
+      presenter: PresenterHeader
     }
   | {
       error: string
     }
 
+/**
+ * 1. Fetch the preso using the short code
+ * 2. Pluck userId property from record
+ */
 export default async function asynchandler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
@@ -20,41 +22,25 @@ export default async function asynchandler(
   try {
     const { presoShortCode } = JSON.parse(req.body)
 
-    const preso = await db.preso.findUnique({
-      where: { shortCode: presoShortCode }
-    })
+    const presoResult = await supabaseClient
+      .from<Preso>('Preso')
+      .select()
+      .eq('shortCode', presoShortCode)
+      .maybeSingle()
 
-    if (!preso) {
-      res
-        .status(500)
-        .json({ error: `Preso with ID ${presoShortCode} couldn't be found.` })
-      return
-    }
-
-    const presenter = await db.presenter.findUnique({
-      where: { id: preso?.presenterId }
-    })
-    if (!presenter) {
-      res.status(500).json({ error: `An unrecoverable error occured.` })
-      return
-    }
+    const presenterResult = await supabaseClient
+      .from<Presenter>('Presenter')
+      .select()
+      .eq('id', presoResult.data?.userId)
+      .maybeSingle()
 
     res.status(200).json({
       preso: {
-        id: preso.id,
-        eventName: preso.eventName,
-        shortCode: preso.shortCode,
-        title: preso.title,
-        url: preso.url,
-        eventLocation: preso.eventLocation
+        ...presoResult.data!,
+        eventLocation: presoResult.data!.eventLocation || undefined
       },
       presenter: {
-        id: presenter.id,
-        email: presenter.email,
-        firstName: presenter.firstName,
-        lastName: presenter.lastName,
-        profileImage: presenter.profileImage || '',
-        presentations: []
+        ...presenterResult.data!
       }
     })
   } catch (error) {
