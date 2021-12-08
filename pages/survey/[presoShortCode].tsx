@@ -44,7 +44,7 @@ const Survey: NextPage = () => {
       body: JSON.stringify({
         ...values,
         presoShortCode: router.query.presoShortCode
-      })
+      } as ISurveyForm)
     })
   }
 
