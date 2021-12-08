@@ -4,41 +4,26 @@ declare global {
   }
 }
 
-export interface Presenter {
+export interface Profile {
   /** A unique identifier for the presenter */
   readonly id: string
 
-  /** The presenter's first name */
-  readonly firstName: string
-
-  /** The presenter's last name */
-  readonly lastName: string
-
-  /** The presenter's email address */
+  /** The presenter's email address also their username*/
   readonly email: string
 
   /** The URL to the presenters profile photo */
-  readonly profileImage?: string
+  readonly avatar_url?: string
 
-  /** A list of presentations the presenter has created in Ngosi */
-  readonly presentations: Preso[]
-
-  /** The time the presenter account was created. */
-  readonly createdAt?: string
+  /** The user's personal website */
+  readonly website?: string
 
   /** The time the presenter account was updated. */
   readonly updatedAt?: string
 }
 
-export type PresenterHeader = Omit<
-  Presenter,
-  'id' | 'presentations' | 'email' | 'createdAt' | 'updatedAt'
->
+export type PresenterHeader = Omit<Profile, 'id' | 'updatedAt'>
 
-export type PresenterSignupForm = Omit<
-  Presenter,
-  'id' | 'presentations' | 'createdAt' | 'updatedAt'
->
+export type PresenterSignupForm = Omit<Profile, 'id' | 'updatedAt'>
 
 export interface Preso {
   /** Just an ID for internal use. */
