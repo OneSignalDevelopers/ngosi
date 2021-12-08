@@ -12,6 +12,9 @@ type Data =
       error: string
     }
 
+/**
+ * Create a preso.
+ */
 export default async function asynchandler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
