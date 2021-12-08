@@ -9,12 +9,6 @@ const AccountPage: NextPage = () => {
   const { authState, session, supabaseClient } = useSupabase()
   const router = useRouter()
 
-  // useEffect(() => {
-  //   if (authState !== 'authenticated' || !session) {
-  //     router.replace('/sign-in')
-  //   }
-  // }, [authState, router, session])
-
   if (!session) {
     return <div>No session</div>
   }
