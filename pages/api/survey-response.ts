@@ -38,6 +38,33 @@ export default async function asynchandler(
       return
     }
 
+    const attendeeResult = await supabaseClient
+      .from<Attendee>('Attendee')
+      .select()
+      .eq('email', email)
+      .single()
+
+    let attendee: Attendee | undefined = undefined
+    if (attendeeResult.data) {
+      attendee = attendeeResult.data
+    } else {
+      const { data, error } = await supabaseClient
+        .from<Attendee>('Attendee')
+        .insert({ email: email, fullName: fullName, id: cuid() })
+        .single()
+
+      if (data) {
+        attendee = data
+      }
+    }
+
+    if (!attendee) {
+      res.status(500).json({
+        error: 'An unknown error occurred'
+      })
+      return
+    }
+
     const surveyResult = await supabaseClient
       .from<Survey & { presoId: string }>('Survey')
       .insert({
