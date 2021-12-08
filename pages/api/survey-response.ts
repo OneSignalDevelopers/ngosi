@@ -1,5 +1,5 @@
 import { supabaseClient } from '@common/useSupabase'
-import { Preso, Survey, SurveyForm } from '@types'
+import { Attendee, Preso, Survey, SurveyForm, SurveyFormResponse } from '@types'
 import cuid from 'cuid'
 import { NextApiRequest, NextApiResponse } from 'next'
 
@@ -17,19 +17,19 @@ export default async function asynchandler(
 ) {
   try {
     const {
-      fullName,
       email,
-      notificationOfOtherTalks,
-      notificationWhenVideoPublished,
-      rateMyPresentation,
+      fullName,
+      notifyOfOtherTalks,
+      notifyWhenVideoPublished,
+      sendPresoFeedback,
       presoShortCode
-    } = JSON.parse(req.body) as SurveyForm & { presoShortCode: string }
+    } = JSON.parse(req.body) as SurveyFormResponse & { presoShortCode: string }
 
     const presoResult = await supabaseClient
       .from<Preso>('Preso')
-      .select('')
+      .select()
       .eq('shortCode', presoShortCode)
-      .single()
+      .maybeSingle()
 
     if (!presoResult.data) {
       res.status(500).json({
@@ -43,12 +43,12 @@ export default async function asynchandler(
       .insert({
         id: cuid(),
         presoId: presoResult.data.id,
-        email,
-        fullName,
-        notificationOfOtherTalks,
-        notificationWhenVideoPublished,
-        rateMyPresentation
+        attendeeId: attendee.id,
+        notifyOfOtherTalks,
+        notifyWhenVideoPublished,
+        sendPresoFeedback
       })
+      .maybeSingle()
 
     res.status(200).json({ message: 'ok' })
   } catch (error) {

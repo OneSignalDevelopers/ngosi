@@ -63,18 +63,15 @@ export interface Survey {
   /** Just an ID for internal use. */
   readonly id: string
 
-  /** The survey respondent's first and last name. */
-  readonly fullName: string
-
-  /** The survey respondent's email address. */
-  readonly email: string
+  /** The attendee whose response is this survey */
+  readonly attendeeId: string
 
   /** Indicates if the survey respondent
    * should be sent an email when
    * the recording of the presentation
    * is published by the event host.
    * */
-  readonly notificationWhenVideoPublished: boolean
+  readonly notifyWhenVideoPublished: boolean
 
   /** Indicates if the survey respondent
    * should be sent an SMS with a
@@ -82,19 +79,24 @@ export interface Survey {
    * minutes after the live talk
    * is scheduled to conclude.
    */
-  readonly rateMyPresentation: boolean
+  readonly sendPresoFeedback: boolean
 
   /** Indicates if the survey respondent
    * should be notified whenever
    * the presenter presents again.
    */
-  readonly notificationOfOtherTalks: boolean
+  readonly notifyOfOtherTalks: boolean
 
   /** The time the survey was completed. */
   readonly createdAt?: string
 }
 
-export type SurveyForm = Omit<Survey, 'id' | 'createdAt'>
+export type SurveyForm = Omit<Survey, 'id' | 'attendeeId' | 'createdAt'>
+
+export type SurveyFormResponse = {
+  readonly email: string
+  readonly fullName: string
+} & SurveyForm
 
 export interface Profile {
   readonly id: string
@@ -106,4 +108,10 @@ export interface Profile {
   readonly avatar_url?: string
   readonly createdAt?: string
   readonly UpdatedAt?: string
+}
+
+export interface Attendee {
+  readonly id: string
+  readonly fullName: string
+  readonly email: string
 }

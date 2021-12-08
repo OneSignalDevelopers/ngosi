@@ -2,17 +2,17 @@ import type { Writeable } from '@common/utils'
 import ToggleSwitch from '@components/ToggleSwitch'
 import { Field, Form, Formik, FormikErrors, FormikProps } from 'formik'
 import React, { useState } from 'react'
-import { SurveyForm } from 'types'
+import { SurveyForm, SurveyFormResponse } from 'types'
 
-const InnerForm = (props: FormikProps<SurveyForm>) => {
+const InnerForm = (props: FormikProps<SurveyFormResponse>) => {
   const { touched, errors, isSubmitting, initialValues } = props
   const [notificationWhenVideoPublished, setNotificationWhenVideoPublished] =
-    useState(initialValues.notificationWhenVideoPublished)
+    useState(initialValues.notifyWhenVideoPublished)
   const [rateMyPresentation, setRateMyPresentation] = useState(
-    initialValues.rateMyPresentation
+    initialValues.sendPresoFeedback
   )
   const [notificationOfOtherTalks, setNotificationOfOtherTalks] = useState(
-    initialValues.notificationOfOtherTalks
+    initialValues.notifyOfOtherTalks
   )
 
   return (
@@ -86,10 +86,10 @@ const SurveyForm: React.FC<Props> = (props) => {
         {
           fullName: '',
           email: '',
-          notificationOfOtherTalks: true,
-          notificationWhenVideoPublished: true,
-          rateMyPresentation: true
-        } as SurveyForm
+          notifyOfOtherTalks: true,
+          notifyWhenVideoPublished: true,
+          sendPresoFeedback: true
+        } as SurveyFormResponse
       }
       onSubmit={props.onSubmit}
       validate={onValidate}
@@ -99,8 +99,8 @@ const SurveyForm: React.FC<Props> = (props) => {
   )
 }
 
-const onValidate = (values: SurveyForm) => {
-  let errors: FormikErrors<Writeable<SurveyForm>> = {}
+const onValidate = (values: SurveyFormResponse) => {
+  let errors: FormikErrors<Writeable<SurveyFormResponse>> = {}
 
   if (!values.fullName) {
     errors.fullName = 'Required'
