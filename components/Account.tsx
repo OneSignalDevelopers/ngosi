@@ -3,7 +3,6 @@ import { useSupabase } from '@common/useSupabase'
 import type { Session } from '@supabase/supabase-js'
 import { useRouter } from 'next/router'
 import cuid from 'cuid'
-import { Presenter } from '@types'
 
 interface Props {
   session: Session
@@ -68,8 +67,6 @@ const Account: React.FC<Props> = (props) => {
       if (error) {
         throw error
       }
-
-      supabaseClient.from<Presenter>('Presenter').insert({ id: cuid() })
     } catch (error) {
       alert((error as any).message)
     } finally {

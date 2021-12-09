@@ -1,5 +1,5 @@
 import { supabaseClient } from '@common/useSupabase'
-import { Attendee, Preso, Survey, SurveyForm, SurveyFormResponse } from '@types'
+import { Attendee, Preso, Survey, SurveyFormResponse } from '@types'
 import cuid from 'cuid'
 import { NextApiRequest, NextApiResponse } from 'next'
 

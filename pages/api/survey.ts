@@ -1,5 +1,5 @@
 import { supabaseClient } from '@common/useSupabase'
-import { Presenter, PresenterHeader, Preso } from '@types'
+import { PresenterHeader, Preso, Profile } from '@types'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 type Data =
@@ -29,7 +29,7 @@ export default async function asynchandler(
       .maybeSingle()
 
     const presenterResult = await supabaseClient
-      .from<Presenter>('Presenter')
+      .from<Profile>('profiles')
       .select()
       .eq('id', presoResult.data?.userId)
       .maybeSingle()
