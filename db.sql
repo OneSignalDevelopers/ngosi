@@ -37,20 +37,6 @@ CREATE TABLE "Survey" (
     CONSTRAINT "Survey_pkey" PRIMARY KEY ("id")
 );
 
--- This is commented out becuase supabase handles the
--- creation of this table. It's only here as reference
--- since its used in the public schema.
--- -- CreateTable
--- CREATE TABLE "profiles" (
---     "id" uuid NOT NULL,
---     "updated_at" timestamptz DEFAULT now(),
---     "username" text CHECK (char_length(username) >= 3),
---     "avatar_url" text,
---     "website" text,
-
---     CONSTRAINT "profiles_pkey" PRIMARY KEY ("id")
--- );
-
 -- CreateIndex
 CREATE UNIQUE INDEX "Attendee_email_key" ON "Attendee"("email");
 
