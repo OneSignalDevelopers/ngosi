@@ -22,7 +22,7 @@ export default async function asynchandler(
     const { data, error } = await supabaseClient
       .from<Profile>('profiles')
       .upsert({
-        id: '5ceaf5a8-544e-42a2-8187-eb2e22bc9041',
+        id: id,
         username,
         website,
         avatar_url: avatar_url || ''
