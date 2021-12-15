@@ -10,26 +10,10 @@ type Data =
       error: string
     }
 
-// PUT
 export default async function asynchandler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  switch (req.method) {
-    case 'POST':
-      completeOnboarding(req, res)
-      break
-    case 'PUT':
-      console.log('Put stuff.')
-      a(req, res)
-      break
-  }
-}
-
-const completeOnboarding = async (
-  req: NextApiRequest,
-  res: NextApiResponse<Data>
-) => {
   try {
     const { id, username, avatar_url, website } = JSON.parse(
       req.body
@@ -55,5 +39,3 @@ const completeOnboarding = async (
     res.status(500).json({ error: message })
   }
 }
-
-const a = async (req: NextApiRequest, res: NextApiResponse<Data>) => {}
