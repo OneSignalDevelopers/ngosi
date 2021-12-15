@@ -1,23 +1,16 @@
-/*
-  Warnings:
-
-  - Added the required column `presenterId` to the `Preso` table without a default value. This is not possible if the table is not empty.
-
-*/
--- AlterTable
-ALTER TABLE "Preso" ADD COLUMN     "presenterId" TEXT NOT NULL;
-
 -- CreateTable
-CREATE TABLE "Presenter" (
+CREATE TABLE "Preso" (
     "id" TEXT NOT NULL,
-    "firstName" TEXT NOT NULL,
-    "lastName" TEXT NOT NULL,
-    "email" TEXT NOT NULL,
-    "profileImage" TEXT,
+    "eventName" TEXT NOT NULL,
+    "eventLocation" TEXT NULL,
+    "title" TEXT NOT NULL,
+    "url" TEXT,
+    "shortCode" TEXT,
+    "userId" UUID NOT NULL
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-    CONSTRAINT "Presenter_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Preso_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -44,17 +37,31 @@ CREATE TABLE "Survey" (
     CONSTRAINT "Survey_pkey" PRIMARY KEY ("id")
 );
 
--- CreateIndex
-CREATE UNIQUE INDEX "Presenter_email_key" ON "Presenter"("email");
+-- This is commented out becuase supabase handles the
+-- creation of this table. It's only here as reference
+-- since its used in the public schema.
+-- -- CreateTable
+-- CREATE TABLE "profiles" (
+--     "id" uuid NOT NULL,
+--     "updated_at" timestamptz DEFAULT now(),
+--     "username" text CHECK (char_length(username) >= 3),
+--     "avatar_url" text,
+--     "website" text,
+
+--     CONSTRAINT "profiles_pkey" PRIMARY KEY ("id")
+-- );
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Attendee_email_key" ON "Attendee"("email");
 
 -- AddForeignKey
-ALTER TABLE "Preso" ADD CONSTRAINT "Preso_presenterId_fkey" FOREIGN KEY ("presenterId") REFERENCES "Presenter"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Preso" ADD CONSTRAINT "Preso_userId_fkey" FOREIGN KEY ("userId") REFERENCES "profiles"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Survey" ADD CONSTRAINT "Survey_presoId_fkey" FOREIGN KEY ("presoId") REFERENCES "Preso"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Survey" ADD CONSTRAINT "Survey_attendeeId_fkey" FOREIGN KEY ("attendeeId") REFERENCES "Attendee"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "profiles" ADD CONSTRAINT "profiles_userId_fkey" FOREIGN KEY ("id") REFERENCES "auth"."users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

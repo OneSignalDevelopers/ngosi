@@ -1,19 +1,16 @@
 import { useSupabase } from '@common/useSupabase'
-import Auth from '@components/Auth'
+import Account from '@components/Account'
 import { NextPage } from 'next'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 
-const Home: NextPage = () => {
-  const { session, supabaseClient } = useSupabase()
+const AccountPage: NextPage = () => {
+  const { authState, session, supabaseClient } = useSupabase()
+  const router = useRouter()
 
   if (!session) {
-    return (
-      <div className="h-screen w-screen bg-primary pt-4 pl-6">
-        <div className="">
-          <Auth />
-        </div>
-      </div>
-    )
+    return <div>No session</div>
   }
 
   return (
@@ -25,6 +22,7 @@ const Home: NextPage = () => {
         ></script>
       </Head>
       <h1 className="text-white text-6xl">ngosi</h1>
+      <Account key={session.user?.id} session={session!} />
       <button
         className=""
         onClick={async () => {
@@ -38,4 +36,4 @@ const Home: NextPage = () => {
   )
 }
 
-export default Home
+export default AccountPage

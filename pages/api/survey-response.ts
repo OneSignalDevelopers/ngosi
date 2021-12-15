@@ -1,9 +1,7 @@
-import { prisma } from '.prisma/client'
-import { SurveyForm } from '@types'
+import { supabaseClient } from '@common/useSupabase'
+import { Attendee, Preso, Survey, SurveyFormResponse } from '@types'
 import cuid from 'cuid'
-import { nanoid } from 'nanoid'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { db } from './common/database'
 
 type Data =
   | {
@@ -19,44 +17,65 @@ export default async function asynchandler(
 ) {
   try {
     const {
-      fullName,
       email,
-      notificationOfOtherTalks,
-      notificationWhenVideoPublished,
-      rateMyPresentation,
+      fullName,
+      notifyOfOtherTalks,
+      notifyWhenVideoPublished,
+      sendPresoFeedback,
       presoShortCode
-    } = JSON.parse(req.body) as SurveyForm & { presoShortCode: string }
+    } = JSON.parse(req.body) as SurveyFormResponse & { presoShortCode: string }
 
-    const preso = await db.preso.findUnique({
-      where: { shortCode: presoShortCode }
-    })
-    if (!preso) {
+    const presoResult = await supabaseClient
+      .from<Preso>('Preso')
+      .select()
+      .eq('shortCode', presoShortCode)
+      .maybeSingle()
+
+    if (!presoResult.data) {
       res.status(500).json({
         error: `Preso with short code ${presoShortCode} couldn't be found.`
       })
       return
     }
 
-    // lookup attendee
-    // create one if they aren't in the db
-    const attendee = await db.attendee.create({
-      data: {
-        id: cuid(),
-        email,
-        fullName
-      }
-    })
+    const attendeeResult = await supabaseClient
+      .from<Attendee>('Attendee')
+      .select()
+      .eq('email', email)
+      .single()
 
-    const surveyResponse = await db.survey.create({
-      data: {
-        id: cuid(),
-        presoId: preso.id,
-        attendeeId: attendee.id,
-        notifyOfOtherTalks: notificationOfOtherTalks,
-        notifyWhenVideoPublished: notificationWhenVideoPublished,
-        sendPresoFeedback: rateMyPresentation
+    let attendee: Attendee | undefined = undefined
+    if (attendeeResult.data) {
+      attendee = attendeeResult.data
+    } else {
+      const { data, error } = await supabaseClient
+        .from<Attendee>('Attendee')
+        .insert({ email: email, fullName: fullName, id: cuid() })
+        .single()
+
+      if (data) {
+        attendee = data
       }
-    })
+    }
+
+    if (!attendee) {
+      res.status(500).json({
+        error: 'An unknown error occurred'
+      })
+      return
+    }
+
+    const surveyResult = await supabaseClient
+      .from<Survey & { presoId: string }>('Survey')
+      .insert({
+        id: cuid(),
+        presoId: presoResult.data.id,
+        attendeeId: attendee.id,
+        notifyOfOtherTalks,
+        notifyWhenVideoPublished,
+        sendPresoFeedback
+      })
+      .maybeSingle()
 
     res.status(200).json({ message: 'ok' })
   } catch (error) {

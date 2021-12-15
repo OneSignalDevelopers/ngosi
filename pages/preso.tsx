@@ -1,21 +1,27 @@
+import { useSupabase } from '@common/useSupabase'
 import Footer from '@components/Footer'
 import PresentationForm from '@components/PresoForm'
-import { LoggedInUser } from '@state'
 import { PresoForm } from '@types'
 import { NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { useRecoilValue } from 'recoil'
 
 const Preso: NextPage = () => {
   const router = useRouter()
-  const user = useRecoilValue(LoggedInUser)
+  const { authState, session } = useSupabase()
+
+  if (!session) {
+    return <div>No logged in user.</div>
+  }
 
   const onSubmit = async (values: PresoForm) => {
     try {
       const response = await fetch('/api/preso', {
         method: 'POST',
-        body: JSON.stringify({ ...values, presenterId: user })
+        body: JSON.stringify({
+          ...values,
+          userId: session?.user?.id
+        } as PresoForm)
       })
       const json = await response.json()
       router.replace(`/qr?preso=${encodeURIComponent(json.presoShortCode)}`)
@@ -37,11 +43,12 @@ const Preso: NextPage = () => {
         </h1>
         <div className="pt-4 px-6">
           <div className="mt-6">
-            <PresentationForm onSubmit={onSubmit} />
+            <PresentationForm onSubmit={(values) => onSubmit(values)} />
           </div>
         </div>
       </main>
       <Footer />
+      <pre>{JSON.stringify({ authState, session }, null, 2)}</pre>
     </div>
   )
 }

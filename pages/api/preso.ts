@@ -1,7 +1,8 @@
+import { supabaseClient } from '@common/useSupabase'
+import { Preso, PresoForm } from '@types'
 import cuid from 'cuid'
 import { nanoid } from 'nanoid'
 import { NextApiRequest, NextApiResponse } from 'next'
-import { db } from './common/database'
 
 type Data =
   | {
@@ -11,29 +12,39 @@ type Data =
       error: string
     }
 
+/**
+ * Create a preso.
+ */
 export default async function asynchandler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
   try {
-    const { url, presenterId } = JSON.parse(req.body)
+    const { url, userId, eventName, title, eventLocation } = JSON.parse(
+      req.body
+    ) as PresoForm
     if (!url) {
       res.status(400).json({ error: 'Presentation url is required.' })
     }
 
-    const preso = await db.preso.create({
-      data: {
+    const { data, error } = await supabaseClient
+      .from<Preso>('Preso')
+      .insert({
         id: cuid(),
-        eventName: 'ReactConf',
-        eventLocation: 'Houston, TX',
-        title: 'How to do stuff in react',
-        url: 'https://conf.reactjs.org/',
+        eventName: eventName,
+        eventLocation: eventLocation,
+        title: title,
+        url: url,
         shortCode: nanoid(7),
-        presenterId: presenterId
-      }
-    })
+        userId: userId
+      })
+      .single()
 
-    res.status(200).json({ presoShortCode: preso.shortCode })
+    if (error) {
+      res.status(500).json({ error: JSON.stringify(error) })
+    } else {
+      res.status(200).json({ presoShortCode: data?.shortCode || '' })
+    }
   } catch (error) {
     const { message } = error as Error
     res.status(500).json({ error: message })
