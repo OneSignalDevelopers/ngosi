@@ -6,7 +6,7 @@ CREATE TABLE "Preso" (
     "title" TEXT NOT NULL,
     "url" TEXT,
     "shortCode" TEXT,
-    "userId" UUID NOT NULL
+    "userId" UUID NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
