@@ -51,3 +51,15 @@ ALTER TABLE "Survey" ADD CONSTRAINT "Survey_attendeeId_fkey" FOREIGN KEY ("atten
 
 -- AddForeignKey
 ALTER TABLE "profiles" ADD CONSTRAINT "profiles_userId_fkey" FOREIGN KEY ("id") REFERENCES "auth"."users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+CREATE TABLE "public"."profiles" (
+    "id" uuid NOT NULL,
+    "updated_at" timestamptz DEFAULT now(),
+    "username" text CHECK (char_length(username) >= 3),
+    "avatar_url" text,
+    "website" text,
+    CONSTRAINT "profiles_userId_fkey" FOREIGN KEY ("id") REFERENCES "auth"."users"("id") ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT "profiles_id_fkey" FOREIGN KEY ("id") REFERENCES "auth"."users"("id"),
+    PRIMARY KEY ("id")
+);
+
