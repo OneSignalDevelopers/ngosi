@@ -45,6 +45,15 @@ const Preso: NextPage = () => {
           <div className="mt-6">
             <PresentationForm onSubmit={(values) => onSubmit(values)} />
           </div>
+          <button
+            className="w-full h-14 bg-black text-white font-bold text-xl mt-5"
+            type="button"
+            onClick={() => {
+              router.replace('presos')
+            }}
+          >
+            Cancel
+          </button>
         </div>
       </main>
       <Footer />
