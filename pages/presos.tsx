@@ -13,7 +13,15 @@ const Presos: NextPage = () => {
 
   useEffect(() => {
     const loadPresos = async () => {
-      const { error, data } = await supabaseClient.from<Preso>('Preso').select()
+      if (!session) {
+        return
+      }
+
+      const { error, data } = await supabaseClient
+        .from<Preso>('Preso')
+        .select()
+        .eq('userId', session?.user?.id)
+        .order('createdAt', { ascending: false })
 
       if (error) {
         console.error(error)
@@ -24,7 +32,7 @@ const Presos: NextPage = () => {
     }
 
     loadPresos()
-  }, [supabaseClient])
+  }, [supabaseClient, session])
 
   return (
     <div className="flex flex-col min-h-screen min-w-full">
