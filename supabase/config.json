@@ -1,0 +1,10 @@
+{
+  "projectId": "ngosi",
+  "ports": {
+    "api": 54321,
+    "db": 54322,
+    "studio": 54323,
+    "inbucket": 54324
+  },
+  "dbVersion": "140001"
+}
