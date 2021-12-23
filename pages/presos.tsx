@@ -51,6 +51,15 @@ const Presos: NextPage = () => {
             </ul>
           </div>
         </div>
+        <button
+          className="w-full h-14 bg-black text-white font-bold text-xl mt-5"
+          type="button"
+          onClick={() => {
+            router.push('preso')
+          }}
+        >
+          Add New Preso
+        </button>
       </main>
       <Footer />
     </div>
