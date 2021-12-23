@@ -48,7 +48,6 @@ const Preso: NextPage = () => {
         </div>
       </main>
       <Footer />
-      <pre>{JSON.stringify({ authState, session }, null, 2)}</pre>
     </div>
   )
 }
