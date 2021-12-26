@@ -32,6 +32,15 @@ const Qr: NextPage = () => {
         >
           Download QR
         </button>
+        <button
+          className="w-full h-14 bg-black text-white font-bold text-xl mt-5"
+          type="button"
+          onClick={() => {
+            router.push('/presos')
+          }}
+        >
+          Continue to your presos
+        </button>
       </main>
       <Footer />
     </div>

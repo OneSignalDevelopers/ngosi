@@ -9,6 +9,6 @@ const Footer = () => (
       ngosi
     </a>
   </footer>
-);
+)
 
-export default Footer;
+export default Footer
