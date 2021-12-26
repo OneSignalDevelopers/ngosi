@@ -63,6 +63,9 @@ export interface Survey {
   /** Just an ID for internal use. */
   readonly id: string
 
+  /** The presentation this response is for */
+  readonly presoId: string
+
   /** The attendee whose response is this survey */
   readonly attendeeId: string
 
