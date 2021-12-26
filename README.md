@@ -39,7 +39,7 @@ anon key: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiJ9.ZopqoUt20nEV
 service_role key: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic2VydmljZV9yb2xlIn0.M2d2z4SFn5C7HlJlaSLfrzuYim9nbY_XI40uWFN3hEE
 ```
 
-Once supacebase is up, you'll need to create the database by executing the `db.sql` script.
+Once supacebase is up, you'll need to create the database by executing the `db.sql` script with your postgres client. If you don't have a client installed, consider using [pgcli](https://www.pgcli.com/).
 
 ### Setup Your Env
 
