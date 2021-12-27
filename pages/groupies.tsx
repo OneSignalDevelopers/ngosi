@@ -7,9 +7,18 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
+interface AttendeeView {
+  presenter: string
+  preso: string
+  attendee: string
+  email: string
+  name: string
+  created_at: string
+}
+
 const Groupies: NextPage = () => {
   const router = useRouter()
-  const [attendees, setAttendees] = useState<Attendee[]>([])
+  const [attendees, setAttendees] = useState<AttendeeView[]>([])
   const { authState, session, supabaseClient } = useSupabase()
 
   useEffect(() => {
@@ -18,40 +27,16 @@ const Groupies: NextPage = () => {
         return
       }
 
-      const { error: presoErr, data: presoIds } = await supabaseClient
-        .from<Preso>('Preso')
-        .select('id')
-        .eq('userId', session?.user?.id)
-        .order('createdAt', { ascending: false })
-
-      if (presoErr) {
-        console.error(presoErr)
-        return
-      }
-
-      if (!presoIds) {
-        return
-      }
-
-      const { data: surveys, error: surveyErr } = await supabaseClient
-        .from<Survey>('Survey')
-        .select('attendeeId')
-        .in(
-          'presoId',
-          presoIds.map((x) => x.id)
-        )
-
-      if (!surveys) {
-        return
-      }
-
-      const { data: attendees, error: attendeeErr } = await supabaseClient
-        .from<Attendee>('Attendee')
+      const { error, data: attendees } = await supabaseClient
+        .from('attendees_view')
         .select()
-        .in(
-          'id',
-          surveys.map((x) => x.attendeeId)
-        )
+        .eq('presenter', session?.user?.id)
+        .order('created_at', { ascending: false })
+
+      if (error) {
+        console.error(error)
+        return
+      }
 
       if (attendees) {
         setAttendees(attendees)
@@ -75,8 +60,8 @@ const Groupies: NextPage = () => {
           <div className="mt-6">
             <ul>
               {attendees.map((a) => (
-                <li key={a.id}>
-                  {a.fullName} {a.email}
+                <li key={a.attendee}>
+                  {a.name} {a.email}
                 </li>
               ))}
             </ul>
