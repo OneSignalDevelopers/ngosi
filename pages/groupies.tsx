@@ -36,7 +36,7 @@ const Groupies: NextPage = () => {
       const { data: surveys, error: surveyErr } = await supabaseClient
         .from<Survey>('Survey')
         .select('attendeeId')
-        .contains(
+        .in(
           'presoId',
           presoIds.map((x) => x.id)
         )
@@ -48,7 +48,10 @@ const Groupies: NextPage = () => {
       const { data: attendees, error: attendeeErr } = await supabaseClient
         .from<Attendee>('Attendee')
         .select()
-        .contains('id', surveys)
+        .in(
+          'id',
+          surveys.map((x) => x.attendeeId)
+        )
 
       if (attendees) {
         setAttendees(attendees)
