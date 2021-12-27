@@ -68,7 +68,7 @@ yarn dev
 
 #### How to retrieve magic link email link
 
-When developing locally, emails will not be sent to an external server; however, supabase provides [this website](http://localhost:54324/monitor) to view mail that would be sent if hosted on production.
+When developing locally, emails will not be sent to an external server; however, supabase provides [this website to view emails](http://localhost:54324/monitor) that would be sent if hosted on production.
 
 ## Misc
 
