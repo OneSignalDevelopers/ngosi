@@ -63,3 +63,15 @@ CREATE TABLE "public"."profiles" (
     PRIMARY KEY ("id")
 );
 
+CREATE VIEW attendees_view AS (
+	SELECT
+		p. "userId",
+		p. "id" presoId,
+		a. "id" attendeeId,
+		a. "email" attendeeEmail,
+		a. "fullName" attendeeName
+	FROM
+		"Preso" p
+		JOIN "Survey" s ON p.id = s. "presoId"
+		JOIN "Attendee" a ON s. "attendeeId" = a.id
+);
