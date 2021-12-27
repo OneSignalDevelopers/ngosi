@@ -65,13 +65,15 @@ CREATE TABLE "public"."profiles" (
 
 CREATE VIEW attendees_view AS (
 	SELECT
-		p. "userId",
-		p. "id" presoId,
-		a. "id" attendeeId,
-		a. "email" attendeeEmail,
-		a. "fullName" attendeeName
+		p. "userId" AS presenter,
+		p. "id" AS preso,
+		a. "id" AS attendee,
+		a. "email" AS email,
+		a. "fullName" AS "name",
+		a."createdAt" As created_at
 	FROM
 		"Preso" p
 		JOIN "Survey" s ON p.id = s. "presoId"
 		JOIN "Attendee" a ON s. "attendeeId" = a.id
 );
+
