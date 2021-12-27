@@ -19,10 +19,6 @@ const Groupies: NextPage = () => {
 
   useEffect(() => {
     const loadPresos = async () => {
-      if (!session) {
-        return
-      }
-
       const { error, data: attendees } = await supabaseClient
         .from('attendees_view')
         .select()
@@ -31,10 +27,7 @@ const Groupies: NextPage = () => {
 
       if (error) {
         console.error(error)
-        return
-      }
-
-      if (attendees) {
+      } else if (attendees) {
         setAttendees(attendees)
       }
     }
