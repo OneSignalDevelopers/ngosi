@@ -75,7 +75,9 @@ const Groupies: NextPage = () => {
           <div className="mt-6">
             <ul>
               {attendees.map((a) => (
-                <li key={a.id}>{a.fullName}</li>
+                <li key={a.id}>
+                  {a.fullName} {a.email}
+                </li>
               ))}
             </ul>
           </div>
