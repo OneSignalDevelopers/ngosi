@@ -2,47 +2,75 @@
 
 ## What is it?
 
-Ngosi is a tool that aims to make it easy to share you presentation with a live audience and (building a list).
+Ngosi is an application that enables software developer influencers to measure, manage, and engage with their audience.
 
-## How does it work?
+Software developer influencers are notable software engineers, engineering leaders, developer advocates, or sales/marketing representatives from organizations that target developers as customers. Influencers typcally engage with their audience on social media, at conferences, on reddit/slack/discord and other online communities.
 
-- A presenter lands on the site where they will be asked for a link to their presentation
-- Ngosi will generate a QR code and associate it with a URL that _knows_ about the link to the presentation
-- The presenter is expected to put the generated QR code in their presenation
-- Audience members watching the talk can scan the QR code and be taken to the presenter's _talk_ in ngosi
-- Audience member fills out a form for the slides, their response is then logged in the email list
+## Features (MVP)
 
-The presenter's _talk_ page will present a short form survey to be completed before taking them to the presentation materials.
-
-The form survey will ask for some information:
-
-1. Name
-2. Email
-3. City/Country\*\*
-4. Whether to receive notification when the video of the talk goes live
-5. Whether to send a follow-up survey after the presenter concludes their live talk to give feedback
-6. Whether to be notified when this presenter gives a talk in the future
-
-## Yea, but why?
-
-I needed a _real_ project in which to demonstrate the power of [OneSignal](). The product direction is guided mostly by the messaging workflows OneSignal excels at.
-
-I've not gone to a single conference where someone either asked for the slides or decided to take pictures of the slides during the presentation. If you're going to share the slides, why not also collect some info so you can own your own audience?
+- Collect feedback on a presentation given at conf or meetup
+- Share upcoming events for influencers
+- Share historical presentations with links to video and other resources
+- Get feedback on your presentations
+- Notify your audience of upcoming events or when you publish a new content
 
 ## Getting Started
 
-First, install dependencies:
+Running Ngosi requires that you have the following tools installed on your system:
+
+- [Supabase CLI](https://github.com/supabase/cli#getting-started)
+
+### Start Supabase
+
+```bash
+supabase start
+```
+
+Note that :point_up: prints the values you'll need for local development.
+
+```bash
+Started local development setup.
+
+API URL: http://localhost:54321
+DB URL: postgresql://postgres:postgres@localhost:54322/postgres
+Studio URL: http://localhost:54323
+Inbucket URL: http://localhost:54324
+anon key: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiJ9.ZopqoUt20nEV9cklpv9e3yw3PVyZLmKs5qLD6nGL1SI
+service_role key: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic2VydmljZV9yb2xlIn0.M2d2z4SFn5C7HlJlaSLfrzuYim9nbY_XI40uWFN3hEE
+```
+
+Once supacebase is up, you'll need to create the database by executing the `db.sql` script with your postgres client. If you don't have a client installed, consider using [pgcli](https://www.pgcli.com/).
+
+### Setup Your Env
+
+Open the project in your text editor and copy the `.env.example` file and rename it to `.env.local` before setting each variable.
+
+| Variable                        | Purpose / how to get value                                                                   |
+| ------------------------------- | -------------------------------------------------------------------------------------------- |
+| `NEXT_PUBLIC_PUBLIC_URL`        | The hostname where Ngosi is being hosted                                                     |
+| `NEXT_PUBLIC_ONESIGNAL_APP_ID`  | The OneSignal app ID available on the OneSignal Dashboard (May need to create the app first) |
+| `NEXT_PUBLIC_SUPABASE_URL`      | This is the `API URL` returned by Supabase upon start                                        |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | This is the `anon key` returned by Supabase upon start                                       |
+
+### Start the Project
+
+First, install the project dependencies:
 
 ```bash
 yarn
 ```
 
-Then, run the development server:
+Finally, start the development server:
 
 ```bash
 yarn dev
 ```
 
-### Branding
-* Font - Lato italic
-* Ngosi green - #77bb3f
+#### How to retrieve magic link email link
+
+When developing locally, emails will not be sent to an external server; however, supabase provides [this website](http://localhost:54324/monitor) to view mail that would be sent if hosted on production.
+
+## Misc
+
+- Font - Lato italic
+- Ngosi green - #77bb3f

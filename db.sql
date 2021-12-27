@@ -1,19 +1,27 @@
--- CreateTable
-CREATE TABLE "Preso" (
-    "id" TEXT NOT NULL,
-    "eventName" TEXT NOT NULL,
-    "eventLocation" TEXT NULL,
-    "title" TEXT NOT NULL,
-    "url" TEXT,
-    "shortCode" TEXT,
-    "userId" UUID NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
-    CONSTRAINT "Preso_pkey" PRIMARY KEY ("id")
+CREATE TABLE "public"."profiles" (
+    "id" uuid NOT NULL,
+    "updated_at" timestamptz DEFAULT now(),
+    "username" text CHECK (char_length(username) >= 3),
+    "avatar_url" text,
+    "website" text,
+    PRIMARY KEY ("id"),
+    CONSTRAINT "profiles_userId_fkey" FOREIGN KEY ("id") REFERENCES "auth"."users"("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
--- CreateTable
+CREATE TABLE "Preso" (
+	"id" TEXT NOT NULL,
+	"eventName" TEXT NOT NULL,
+	"eventLocation" TEXT NULL,
+	"title" TEXT NOT NULL,
+	"url" TEXT,
+	"shortCode" TEXT,
+	"userId" UUID NOT NULL,
+	"createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	"updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	CONSTRAINT "Preso_pkey" PRIMARY KEY ("id"),
+	CONSTRAINT "Preso_userId_fkey" FOREIGN KEY ("userId") REFERENCES "profiles" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
 CREATE TABLE "Attendee" (
     "id" TEXT NOT NULL,
     "fullName" TEXT NOT NULL,
@@ -24,7 +32,8 @@ CREATE TABLE "Attendee" (
     CONSTRAINT "Attendee_pkey" PRIMARY KEY ("id")
 );
 
--- CreateTable
+CREATE UNIQUE INDEX "Attendee_email_key" ON "Attendee"("email");
+
 CREATE TABLE "Survey" (
     "id" TEXT NOT NULL,
     "presoId" TEXT NOT NULL,
@@ -33,34 +42,9 @@ CREATE TABLE "Survey" (
     "sendPresoFeedback" BOOLEAN NOT NULL,
     "notifyOfOtherTalks" BOOLEAN NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
-    CONSTRAINT "Survey_pkey" PRIMARY KEY ("id")
-);
-
--- CreateIndex
-CREATE UNIQUE INDEX "Attendee_email_key" ON "Attendee"("email");
-
--- AddForeignKey
-ALTER TABLE "Preso" ADD CONSTRAINT "Preso_userId_fkey" FOREIGN KEY ("userId") REFERENCES "profiles"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Survey" ADD CONSTRAINT "Survey_presoId_fkey" FOREIGN KEY ("presoId") REFERENCES "Preso"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Survey" ADD CONSTRAINT "Survey_attendeeId_fkey" FOREIGN KEY ("attendeeId") REFERENCES "Attendee"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "profiles" ADD CONSTRAINT "profiles_userId_fkey" FOREIGN KEY ("id") REFERENCES "auth"."users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
-CREATE TABLE "public"."profiles" (
-    "id" uuid NOT NULL,
-    "updated_at" timestamptz DEFAULT now(),
-    "username" text CHECK (char_length(username) >= 3),
-    "avatar_url" text,
-    "website" text,
-    CONSTRAINT "profiles_userId_fkey" FOREIGN KEY ("id") REFERENCES "auth"."users"("id") ON DELETE RESTRICT ON UPDATE CASCADE,
-    CONSTRAINT "profiles_id_fkey" FOREIGN KEY ("id") REFERENCES "auth"."users"("id"),
-    PRIMARY KEY ("id")
+    CONSTRAINT "Survey_pkey" PRIMARY KEY ("id"),
+    CONSTRAINT "Survey_presoId_fkey" FOREIGN KEY ("presoId") REFERENCES "Preso"("id") ON DELETE RESTRICT ON UPDATE CASCADE,
+    CONSTRAINT "Survey_attendeeId_fkey" FOREIGN KEY ("attendeeId") REFERENCES "Attendee"("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 CREATE VIEW attendees_view AS (
@@ -76,4 +60,3 @@ CREATE VIEW attendees_view AS (
 		JOIN "Survey" s ON p.id = s. "presoId"
 		JOIN "Attendee" a ON s. "attendeeId" = a.id
 );
-
