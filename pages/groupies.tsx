@@ -1,10 +1,7 @@
 import { useSupabase } from '@common/useSupabase'
 import Footer from '@components/Footer'
-import { SupabaseClient } from '@supabase/supabase-js'
-import { Attendee, Preso, Survey } from '@types'
 import { NextPage } from 'next'
 import Head from 'next/head'
-import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
 interface AttendeeView {
@@ -17,9 +14,8 @@ interface AttendeeView {
 }
 
 const Groupies: NextPage = () => {
-  const router = useRouter()
   const [attendees, setAttendees] = useState<AttendeeView[]>([])
-  const { authState, session, supabaseClient } = useSupabase()
+  const { session, supabaseClient } = useSupabase()
 
   useEffect(() => {
     const loadPresos = async () => {
