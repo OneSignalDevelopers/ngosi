@@ -2,6 +2,7 @@ import { supabaseClient } from '@common/useSupabase'
 import { Attendee, Preso, Survey, SurveyFormResponse } from '@types'
 import cuid from 'cuid'
 import { NextApiRequest, NextApiResponse } from 'next'
+import { StatusCodes } from 'http-status-codes'
 
 type Data =
   | {
@@ -32,7 +33,7 @@ export default async function asynchandler(
       .maybeSingle()
 
     if (!presoResult.data) {
-      res.status(500).json({
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
         error: `Preso with short code ${presoShortCode} couldn't be found.`
       })
       return
@@ -59,7 +60,7 @@ export default async function asynchandler(
     }
 
     if (!attendee) {
-      res.status(500).json({
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
         error: 'An unknown error occurred'
       })
       return
@@ -77,9 +78,9 @@ export default async function asynchandler(
       })
       .maybeSingle()
 
-    res.status(200).json({ message: 'ok' })
+    res.status(StatusCodes.OK).json({ message: 'ok' })
   } catch (error) {
     const { message } = error as Error
-    res.status(500).json({ error: message })
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: message })
   }
 }

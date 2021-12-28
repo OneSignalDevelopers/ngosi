@@ -1,6 +1,7 @@
 import { supabaseClient } from '@common/useSupabase'
 import { PresenterHeader, Preso, Profile } from '@types'
 import { NextApiRequest, NextApiResponse } from 'next'
+import { StatusCodes } from 'http-status-codes'
 
 type Data =
   | {
@@ -34,7 +35,7 @@ export default async function asynchandler(
       .eq('id', presoResult.data?.userId)
       .maybeSingle()
 
-    res.status(200).json({
+    res.status(StatusCodes.OK).json({
       preso: {
         ...presoResult.data!,
         eventLocation: presoResult.data!.eventLocation || undefined
@@ -45,6 +46,6 @@ export default async function asynchandler(
     })
   } catch (error) {
     const { message } = error as Error
-    res.status(500).json({ error: message })
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: message })
   }
 }

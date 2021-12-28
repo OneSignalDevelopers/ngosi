@@ -1,6 +1,7 @@
 import { supabaseClient } from '@common/useSupabase'
 import { Profile } from '@types'
 import { NextApiRequest, NextApiResponse } from 'next'
+import { StatusCodes } from 'http-status-codes'
 
 type Data =
   | {
@@ -30,12 +31,14 @@ export default async function asynchandler(
       .single()
 
     if (error) {
-      res.status(500).json({ error: JSON.stringify(error) })
+      res
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({ error: JSON.stringify(error) })
     } else {
-      res.status(200).json({ message: JSON.stringify(data) })
+      res.status(StatusCodes.OK).json({ message: JSON.stringify(data) })
     }
   } catch (error) {
     const { message } = error as Error
-    res.status(500).json({ error: message })
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: message })
   }
 }
