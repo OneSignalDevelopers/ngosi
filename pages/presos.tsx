@@ -46,7 +46,9 @@ const Presos: NextPage = () => {
           <div className="mt-6">
             <ul>
               {presos.map((p) => (
-                <li key={p.id}>{p.eventName}</li>
+                <li key={p.id}>
+                  {p.eventName} {p.shortCode}
+                </li>
               ))}
             </ul>
           </div>
