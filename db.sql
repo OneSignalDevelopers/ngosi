@@ -46,3 +46,17 @@ CREATE TABLE "Survey" (
     CONSTRAINT "Survey_presoId_fkey" FOREIGN KEY ("presoId") REFERENCES "Preso"("id") ON DELETE RESTRICT ON UPDATE CASCADE,
     CONSTRAINT "Survey_attendeeId_fkey" FOREIGN KEY ("attendeeId") REFERENCES "Attendee"("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
+
+CREATE VIEW attendees_view AS (
+	SELECT
+		p. "userId" AS presenter,
+		p. "id" AS preso,
+		a. "id" AS attendee,
+		a. "email" AS email,
+		a. "fullName" AS "name",
+		a."createdAt" As created_at
+	FROM
+		"Preso" p
+		JOIN "Survey" s ON p.id = s. "presoId"
+		JOIN "Attendee" a ON s. "attendeeId" = a.id
+);
