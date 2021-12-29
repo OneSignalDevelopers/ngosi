@@ -23,17 +23,17 @@ const Qr: NextPage = () => {
         <title>Ngosi</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="flex flex-col flex-1">
+      <main className="flex flex-col flex-1 items-center justify-center">
         <QRCode value={`${PublicUrl}/survey/${preso}`} />
         <button
-          className="w-full h-14 bg-black text-white font-bold text-xl mt-5"
+          className="w-80 h-14 bg-black text-white font-bold text-xl mt-24"
           type="button"
           onClick={downloadQRCode}
         >
           Download QR
         </button>
         <button
-          className="w-full h-14 bg-black text-white font-bold text-xl mt-5"
+          className="w-80 h-14 bg-black text-white font-bold text-xl mt-5"
           type="button"
           onClick={() => {
             router.push('/presos')
