@@ -21,33 +21,29 @@ export default function Auth() {
   }
 
   return (
-    <div className="row flex flex-center">
-      <div className="col-6 form-widget">
-        <h1 className="header">Ngosi</h1>
-        <p className="description">
-          Sign in via magic link with your email below
-        </p>
-        <div>
-          <input
-            className="inputField"
-            type="email"
-            placeholder="Your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div>
-          <button
-            onClick={(e) => {
-              e.preventDefault()
-              handleLogin(email)
-            }}
-            className="button block"
-            disabled={loading}
-          >
-            <span>{loading ? 'Loading' : 'Send magic link'}</span>
-          </button>
-        </div>
+    <div className="flex flex-col items-center h-screen ">
+      <h1 className="text-4xl text-center">Ngosi</h1>
+      <p className=" mt-5">Sign in via magic link with your email below</p>
+      <div>
+        <input
+          className="h-9 border border-black text-lg px-2 mt-1 w-80"
+          type="email"
+          placeholder="Your email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+      </div>
+      <div>
+        <button
+          onClick={(e) => {
+            e.preventDefault()
+            handleLogin(email)
+          }}
+          className=" h-14 bg-black text-white font-bold text-xl mt-5 w-80"
+          disabled={loading}
+        >
+          <span>{loading ? 'Loading' : 'Send magic link'}</span>
+        </button>
       </div>
     </div>
   )
