@@ -8,10 +8,8 @@ const Home: NextPage = () => {
 
   if (!session) {
     return (
-      <div className="h-screen w-screen bg-primary pt-4 pl-6">
-        <div className="">
-          <Auth />
-        </div>
+      <div className=" bg-primary ">
+        <Auth />
       </div>
     )
   }
