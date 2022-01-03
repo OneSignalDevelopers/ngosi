@@ -3,7 +3,7 @@ import { NextPage } from 'next'
 
 const SignIn: NextPage = () => {
   return (
-    <div className="bg-primary">
+    <div className="bg-red-400">
       <Auth />
     </div>
   )

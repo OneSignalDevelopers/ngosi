@@ -2,17 +2,18 @@ import { useSupabase } from '@common/useSupabase'
 import Auth from '@components/Auth'
 import { NextPage } from 'next'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 
 const Home: NextPage = () => {
   const { session, supabaseClient } = useSupabase()
+  const router = useRouter()
 
-  if (!session) {
-    return (
-      <div className=" bg-primary ">
-        <Auth />
-      </div>
-    )
-  }
+  useEffect(() => {
+    if (!session) {
+      router.replace('/signin')
+    }
+  }, [router, session])
 
   return (
     <div className="h-screen w-screen bg-primary pt-4 pl-6">
