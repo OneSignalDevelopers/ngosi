@@ -1,4 +1,4 @@
-import { useSupabase } from '@common/useSupabase'
+import { useSupabase } from '@common/supabaseProvider'
 import Footer from '@components/Footer'
 import { NextPage } from 'next'
 import Head from 'next/head'

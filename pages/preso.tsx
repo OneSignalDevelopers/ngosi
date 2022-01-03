@@ -1,4 +1,4 @@
-import { useSupabase } from '@common/useSupabase'
+import { useSupabase } from '@common/supabaseProvider'
 import Footer from '@components/Footer'
 import PresentationForm from '@components/PresoForm'
 import { PresoForm } from '@types'

@@ -1,4 +1,4 @@
-import { useSupabase } from '@common/useSupabase'
+import { useSupabase } from '@common/supabaseProvider'
 import Footer from '@components/Footer'
 import { Preso } from '@types'
 import { NextPage } from 'next'
@@ -13,7 +13,7 @@ const Presos: NextPage = () => {
 
   useEffect(() => {
     const loadPresos = async () => {
-      if (!session) {
+      if (authState !== 'authenticated') {
         return
       }
 
@@ -32,7 +32,7 @@ const Presos: NextPage = () => {
     }
 
     loadPresos()
-  }, [supabaseClient, session])
+  }, [supabaseClient, session, authState])
 
   return (
     <div className="flex flex-col min-h-screen min-w-full">

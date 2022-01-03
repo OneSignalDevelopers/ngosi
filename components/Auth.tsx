@@ -1,4 +1,4 @@
-import { useSupabase } from '@common/useSupabase'
+import { useSupabase } from '@common/supabaseProvider'
 import { useState } from 'react'
 
 export default function Auth() {

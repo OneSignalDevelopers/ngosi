@@ -1,8 +1,6 @@
-import { useState, useEffect } from 'react'
-import { useSupabase } from '@common/useSupabase'
+import { useSupabase } from '@common/supabaseProvider'
 import type { Session } from '@supabase/supabase-js'
-import { useRouter } from 'next/router'
-import cuid from 'cuid'
+import { useEffect, useState } from 'react'
 
 interface Props {
   session: Session

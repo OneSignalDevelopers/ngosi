@@ -1,9 +1,9 @@
-import { supabaseClient } from '@common/useSupabase'
 import { Preso, PresoForm } from '@types'
 import cuid from 'cuid'
 import { nanoid } from 'nanoid'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { StatusCodes } from 'http-status-codes'
+import { supabaseClient } from './common/supabase'
 
 type Data =
   | {

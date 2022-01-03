@@ -5,18 +5,19 @@ import {
   SupabaseClient
 } from '@supabase/supabase-js'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { SupabaseAnonKey, SupabaseUrl } from './constants'
 
-export type AuthState = 'authenticated' | 'not-authenticated'
+type AuthState = 'authenticated' | 'not-authenticated'
+interface SupabaseContext {
+  readonly authState: AuthState
+  readonly session: Session | null
+  readonly supabaseClient: SupabaseClient
+}
 
-export const supabaseClient = createClient(SupabaseUrl, SupabaseAnonKey)
-
-export const useSupabase = (): {
-  authState: AuthState
-  session: Session | null
-  supabaseClient: SupabaseClient
-} => {
+const supabaseClient = createClient(SupabaseUrl, SupabaseAnonKey)
+const supabaseContext = React.createContext<SupabaseContext | null>(null)
+const SupabaseProvider: React.FC = ({ children }) => {
   const [session, setSession] = useState<Session | null>(null)
   const [authState, setAuthState] = useState<AuthState>('not-authenticated')
   const router = useRouter()
@@ -66,5 +67,19 @@ export const useSupabase = (): {
     }
   }, [router, session])
 
-  return { authState, session, supabaseClient }
+  return (
+    <supabaseContext.Provider
+      value={{
+        authState,
+        session,
+        supabaseClient
+      }}
+    >
+      {children}
+    </supabaseContext.Provider>
+  )
 }
+
+export const useSupabase = () => useContext(supabaseContext)!
+
+export default SupabaseProvider
