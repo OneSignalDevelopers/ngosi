@@ -10,6 +10,8 @@
 
 ---
 
+Fixes #<issue number>.
+
 ## Solution
 
 - Describe **how** your solution works and solves the problem. Speak to your design and the approach taken in the implementation.
