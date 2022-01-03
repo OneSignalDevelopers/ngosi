@@ -17,6 +17,8 @@ const Qr: NextPage = () => {
     return <div>Preso ID is missing</div>
   }
 
+  // I need a commit to retrigger vercel
+
   return (
     <div className="flex flex-col min-h-screen min-w-full">
       <Head>
