@@ -5,14 +5,11 @@ import { PresoForm } from '@types'
 import { NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 
 const Preso: NextPage = () => {
   const router = useRouter()
-  const { authState, session } = useSupabase()
-
-  if (!session) {
-    return <div>No logged in user.</div>
-  }
+  const { session } = useSupabase()
 
   const onSubmit = async (values: PresoForm) => {
     try {
@@ -20,7 +17,7 @@ const Preso: NextPage = () => {
         method: 'POST',
         body: JSON.stringify({
           ...values,
-          userId: session?.user?.id
+          userId: session!.user?.id
         } as PresoForm)
       })
       const json = await response.json()
