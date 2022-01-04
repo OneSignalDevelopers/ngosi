@@ -25,6 +25,7 @@ const SupabaseProvider: React.FC = ({ children }) => {
   useEffect(() => {
     try {
       setSession(supabaseClient.auth.session())
+
       const { data, error } = supabaseClient.auth.onAuthStateChange((event) => {
         onAuthChanged(event, session)
 
@@ -35,6 +36,8 @@ const SupabaseProvider: React.FC = ({ children }) => {
             break
           case 'SIGNED_OUT':
             setAuthState('not-authenticated')
+            router.replace('/')
+            break
         }
 
         setSession(session)
