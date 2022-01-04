@@ -75,28 +75,39 @@ const Account: React.FC<Props> = (props) => {
   }
 
   return (
-    <div className="form-widget">
-      <div>
-        <label htmlFor="email">Email</label>
+    <div className="mt-16">
+      <div className="flex flex-col">
+        <label className="mt-1" htmlFor="email">
+          Email
+        </label>
         <input
+          className="h-10 w-80 p-3"
           id="email"
           type="text"
           value={props.session.user?.email}
           disabled
         />
       </div>
-      <div>
-        <label htmlFor="username">Name</label>
+      <div className="flex flex-col">
+        <label className="mt-3" htmlFor="username">
+          Name
+        </label>
         <input
+          className="h-10 w-80 p-3"
+          placeholder="Enter Name"
           id="username"
           type="text"
           value={username || ''}
           onChange={(e) => setUsername(e.target.value)}
         />
       </div>
-      <div>
-        <label htmlFor="website">Website</label>
+      <div className="flex flex-col">
+        <label className="mt-3" htmlFor="website">
+          Website
+        </label>
         <input
+          className="h-10 w-80 p-3"
+          placeholder="Enter Website"
           id="website"
           type="website"
           value={website || ''}
@@ -106,7 +117,7 @@ const Account: React.FC<Props> = (props) => {
 
       <div>
         <button
-          className="button block primary"
+          className="h-10 bg-black text-white font-bold text-xl mt-5 w-80"
           onClick={() => updateProfile({ username, website, avatar_url })}
           disabled={loading}
         >
@@ -116,7 +127,7 @@ const Account: React.FC<Props> = (props) => {
 
       <div>
         <button
-          className="button block"
+          className="h-10 bg-black text-white font-bold text-xl mt-5 w-80"
           onClick={() => supabaseClient.auth.signOut()}
         >
           Sign Out
