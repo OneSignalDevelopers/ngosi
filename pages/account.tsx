@@ -2,15 +2,9 @@ import { useSupabase } from '@common/supabaseProvider'
 import Account from '@components/Account'
 import { NextPage } from 'next'
 import Head from 'next/head'
-import { useRouter } from 'next/router'
 
 const AccountPage: NextPage = () => {
-  const { authState, session, supabaseClient } = useSupabase()
-  const router = useRouter()
-
-  if (!session) {
-    return <div>No session</div>
-  }
+  const { session, supabaseClient } = useSupabase()
 
   return (
     <div className="h-screen w-screen flex flex-col  items-center justify-center bg-primary">
@@ -21,7 +15,7 @@ const AccountPage: NextPage = () => {
         ></script>
       </Head>
       <h1 className="text-white text-6xl">Ngosi</h1>
-      <Account key={session.user?.id} session={session!} />
+      <Account key={session!.user?.id} session={session!} />
       <button
         className="h-12 bg-black text-white font-bold text-xl mt-5 w-80"
         onClick={async () => {
