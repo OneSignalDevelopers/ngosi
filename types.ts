@@ -62,6 +62,8 @@ export type PresoForm = Omit<
   'id' | 'shortCode' | 'createdAt' | 'updatedAt'
 >
 
+export type PresoDetails = Omit<Preso, 'id' | 'userId' | 'shortCode'>
+
 export interface Survey {
   /** Just an ID for internal use. */
   readonly id: string
