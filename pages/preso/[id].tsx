@@ -1,4 +1,5 @@
 import { useSupabase } from '@common/supabaseProvider'
+import Details from '@components/PresoDetails'
 import { Preso } from '@types'
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
@@ -36,7 +37,13 @@ const PresoDetails: NextPage = () => {
     getPresoDetails()
   }, [client, shortCode])
 
-  return <pre>{JSON.stringify(preso, null, 2)}</pre>
+  return preso ? (
+    <div>
+      <Details preso={preso} onSubmit={async () => Promise.resolve(console.log("Save button clicked")) }/>
+    </div>
+  ) : (
+    <div></div>
+  )
 }
 
 export default PresoDetails
