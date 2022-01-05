@@ -15,12 +15,4 @@ const PresoDetails: NextPage = () => {
   return <pre>{JSON.stringify(router.query, null, 2)}</pre>
 }
 
-// export const getServerSideProps: GetServerSideProps = (context) => {
-//   const { id: presoId } = context.query
-
-//   return {
-//     props: {}
-//   }
-// }
-
 export default PresoDetails
