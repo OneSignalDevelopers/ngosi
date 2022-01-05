@@ -16,6 +16,7 @@ CREATE TABLE "Preso" (
 	"url" TEXT,
 	"shortCode" TEXT,
 	"userId" UUID NOT NULL,
+    "publishedContentUrl" TEXT,
 	"createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	"updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	CONSTRAINT "Preso_pkey" PRIMARY KEY ("id"),
