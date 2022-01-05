@@ -2,11 +2,9 @@ import { useSupabase } from '@common/supabaseProvider'
 import Account from '@components/Account'
 import { NextPage } from 'next'
 import Head from 'next/head'
-import { useRouter } from 'next/router'
 
 const AccountPage: NextPage = () => {
-  const { authState, session, supabaseClient } = useSupabase()
-  const router = useRouter()
+  const { session, supabaseClient } = useSupabase()
 
   if (!session) {
     return <div>No session</div>
