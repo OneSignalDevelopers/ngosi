@@ -1,11 +1,11 @@
-import { Preso, PresoForm as PresoDetails } from '@types'
+import { Preso, PresoDetails } from '@types'
 import { Field, FieldProps, Form, Formik, FormikErrors } from 'formik'
 import React from 'react'
 import type { Writeable } from '@common/utils'
 
 interface Props {
   readonly onSubmit: (values: PresoDetails) => Promise<void>
-  readonly preso?: Preso
+  readonly preso: Preso
 }
 
 const onValidate = (values: PresoDetails) => {
@@ -27,14 +27,18 @@ const onValidate = (values: PresoDetails) => {
 }
 
 const PresoDetails: React.FC<Props> = (props) => {
+  const { preso } = props
   return (
     <Formik
       initialValues={
         {
-          url: props.preso?.url || '',
-          eventName: props.preso?.eventName || '',
-          title: props.preso?.title || '',
-          eventLocation: props.preso?.eventLocation || ''
+          url: preso.url,
+          eventName: preso.eventName,
+          title: preso.title,
+          eventLocation: preso.eventLocation,
+          publishedContentUrl: preso.publishedContentUrl,
+          createdAt: preso.createdAt,
+          updatedAt: preso.updatedAt
         } as PresoDetails
       }
       onSubmit={props.onSubmit}
@@ -72,7 +76,7 @@ const PresoDetails: React.FC<Props> = (props) => {
           <div className="flex flex-col space-y-1">
             <label
               className="font-semibold text-sm text-gray-900"
-              htmlFor="url"
+              htmlFor="title"
             >
               Title
             </label>
@@ -87,7 +91,7 @@ const PresoDetails: React.FC<Props> = (props) => {
           <div className="flex flex-col space-y-1">
             <label
               className="font-semibold text-sm text-gray-900"
-              htmlFor="url"
+              htmlFor="eventName"
             >
               Event Name
             </label>
@@ -102,16 +106,32 @@ const PresoDetails: React.FC<Props> = (props) => {
           <div className="flex flex-col space-y-1">
             <label
               className="font-semibold text-sm text-gray-900"
-              htmlFor="url"
+              htmlFor="eventLocation"
             >
               Event location
             </label>
 
             <Field
-              name="location"
+              name="eventLocation"
               type="text"
               className="h-12 w-full border border-black text-lg px-2"
               placeholder="Houston, TX"
+            ></Field>
+          </div>
+
+          <div className="flex flex-col space-y-1">
+            <label
+              className="font-semibold text-sm text-gray-900"
+              htmlFor="publishedContentUrl"
+            >
+              Published content location
+            </label>
+
+            <Field
+              name="publishedContentUrl"
+              type="text"
+              className="h-12 w-full border border-black text-lg px-2"
+              placeholder="https://youtube.com"
             ></Field>
           </div>
 
