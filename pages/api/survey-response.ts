@@ -1,8 +1,8 @@
-import { supabaseClient } from '@common/useSupabase'
 import { Attendee, Preso, Survey, SurveyFormResponse } from '@types'
 import cuid from 'cuid'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { StatusCodes } from 'http-status-codes'
+import { supabaseClient } from './common/supabase'
 
 type Data =
   | {

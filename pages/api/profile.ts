@@ -1,7 +1,7 @@
-import { supabaseClient } from '@common/useSupabase'
 import { Profile } from '@types'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { StatusCodes } from 'http-status-codes'
+import { supabaseClient } from './common/supabase'
 
 type Data =
   | {

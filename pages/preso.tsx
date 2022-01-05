@@ -1,4 +1,4 @@
-import { useSupabase } from '@common/useSupabase'
+import { useSupabase } from '@common/supabaseProvider'
 import Footer from '@components/Footer'
 import PresentationForm from '@components/PresoForm'
 import { PresoForm } from '@types'
@@ -8,11 +8,7 @@ import { useRouter } from 'next/router'
 
 const Preso: NextPage = () => {
   const router = useRouter()
-  const { authState, session } = useSupabase()
-
-  if (!session) {
-    return <div>No logged in user.</div>
-  }
+  const { session } = useSupabase()
 
   const onSubmit = async (values: PresoForm) => {
     try {
@@ -20,7 +16,7 @@ const Preso: NextPage = () => {
         method: 'POST',
         body: JSON.stringify({
           ...values,
-          userId: session?.user?.id
+          userId: session!.user?.id
         } as PresoForm)
       })
       const json = await response.json()

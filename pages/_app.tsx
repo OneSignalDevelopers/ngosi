@@ -1,14 +1,14 @@
 import { useOneSignal } from '@common/useOneSignal'
+import SupabaseProvider from '@common/supabaseProvider'
 import { AppProps } from 'next/app'
-import { RecoilRoot } from 'recoil'
 import '../styles/globals.css'
 
 export default function Ngosi({ Component, pageProps }: AppProps) {
   useOneSignal()
 
   return (
-    <RecoilRoot>
+    <SupabaseProvider>
       <Component {...pageProps} />
-    </RecoilRoot>
+    </SupabaseProvider>
   )
 }

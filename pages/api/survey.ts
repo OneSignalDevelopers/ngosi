@@ -1,4 +1,4 @@
-import { supabaseClient } from '@common/useSupabase'
+import { supabaseClient } from './common/supabase'
 import { PresenterHeader, Preso, Profile } from '@types'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { StatusCodes } from 'http-status-codes'

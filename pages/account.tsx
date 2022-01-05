@@ -1,9 +1,8 @@
-import { useSupabase } from '@common/useSupabase'
+import { useSupabase } from '@common/supabaseProvider'
 import Account from '@components/Account'
 import { NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
 
 const AccountPage: NextPage = () => {
   const { authState, session, supabaseClient } = useSupabase()
