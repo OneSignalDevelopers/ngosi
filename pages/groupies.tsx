@@ -15,7 +15,7 @@ interface AttendeeView {
 
 const Groupies: NextPage = () => {
   const [attendees, setAttendees] = useState<AttendeeView[]>([])
-  const { session, supabaseClient } = useSupabase()
+  const { session, client: supabaseClient } = useSupabase()
 
   useEffect(() => {
     const loadPresos = async () => {

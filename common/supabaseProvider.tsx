@@ -12,7 +12,7 @@ type AuthState = 'authenticated' | 'not-authenticated'
 interface SupabaseContext {
   readonly authState: AuthState
   readonly session: Session | null
-  readonly supabaseClient: SupabaseClient
+  readonly client: SupabaseClient
 }
 
 const supabaseClient = createClient(SupabaseUrl, SupabaseAnonKey)
@@ -75,7 +75,7 @@ const SupabaseProvider: React.FC = ({ children }) => {
       value={{
         authState,
         session,
-        supabaseClient
+        client: supabaseClient
       }}
     >
       {children}

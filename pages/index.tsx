@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 
 const Home: NextPage = () => {
-  const { session, supabaseClient } = useSupabase()
+  const { session, client: supabaseClient } = useSupabase()
   const router = useRouter()
 
   useEffect(() => {

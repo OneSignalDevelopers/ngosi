@@ -4,7 +4,7 @@ import { useState } from 'react'
 export default function Auth() {
   const [loading, setLoading] = useState(false)
   const [email, setEmail] = useState('')
-  const { supabaseClient } = useSupabase()
+  const { client: supabaseClient } = useSupabase()
 
   const handleLogin = async (email: string) => {
     try {

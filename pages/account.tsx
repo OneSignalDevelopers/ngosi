@@ -4,7 +4,7 @@ import { NextPage } from 'next'
 import Head from 'next/head'
 
 const AccountPage: NextPage = () => {
-  const { session, supabaseClient } = useSupabase()
+  const { session, client: supabaseClient } = useSupabase()
 
   if (!session) {
     return <div>No session</div>
