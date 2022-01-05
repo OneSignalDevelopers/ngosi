@@ -6,6 +6,10 @@ import Head from 'next/head'
 const AccountPage: NextPage = () => {
   const { session, supabaseClient } = useSupabase()
 
+  if (!session) {
+    return <div>No session</div>
+  }
+
   return (
     <div className="h-screen w-screen flex flex-col  items-center justify-center bg-primary">
       <Head>
@@ -15,7 +19,7 @@ const AccountPage: NextPage = () => {
         ></script>
       </Head>
       <h1 className="text-white text-6xl">Ngosi</h1>
-      <Account key={session!.user?.id} session={session!} />
+      <Account key={session.user?.id} session={session!} />
       <button
         className="h-12 bg-black text-white font-bold text-xl mt-5 w-80"
         onClick={async () => {
