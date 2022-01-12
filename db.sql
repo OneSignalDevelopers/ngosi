@@ -49,15 +49,16 @@ CREATE TABLE "Survey" (
 );
 
 CREATE VIEW attendees_view AS (
-	SELECT
-		p. "userId" AS presenter,
-		p. "id" AS preso,
-		a. "id" AS attendee,
-		a. "email" AS email,
-		a. "fullName" AS "name",
-		a."createdAt" As created_at
-	FROM
-		"Preso" p
-		JOIN "Survey" s ON p.id = s. "presoId"
-		JOIN "Attendee" a ON s. "attendeeId" = a.id
+    SELECT p."userId" AS presenter,
+        p.id AS preso,
+        a.id AS attendee,
+        a.email,
+        a."fullName" AS name,
+        a."createdAt" AS created_at,
+        s."notifyOfOtherTalks",
+        s."notifyWhenVideoPublished",
+        s."sendPresoFeedback"
+    FROM "Preso" p
+        JOIN "Survey" s ON p.id = s."presoId"
+        JOIN "Attendee" a ON s."attendeeId" = a.id;
 );
