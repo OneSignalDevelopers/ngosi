@@ -96,7 +96,8 @@ async function updatePreso(
         eventName: eventName,
         eventLocation: eventLocation,
         title: title,
-        url: url
+        url: url,
+        publishedContentUrl: publishedContentUrl
       })
       .match({ id: id })
       .single()
