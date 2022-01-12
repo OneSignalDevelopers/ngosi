@@ -103,5 +103,10 @@ async function updatePreso(
       .single()
 
     res.status(StatusCodes.OK).json({ success: true })
-  } catch (error) {}
+  } catch (error) {
+    const { message } = error as Error
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ success: false, error: message })
+  }
 }
