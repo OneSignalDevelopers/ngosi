@@ -5,6 +5,7 @@ import type { Writeable } from '@common/utils'
 
 interface Props {
   readonly onSubmit: (values: PresoDetails) => Promise<void>
+  readonly onViewSurvey: (shortCode: string) => void
   readonly preso: Preso
 }
 
@@ -28,17 +29,18 @@ const onValidate = (values: PresoDetails) => {
 
 const PresoDetails: React.FC<Props> = (props) => {
   const { preso } = props
+
   return (
     <Formik
       initialValues={
         {
-          url: preso.url,
-          eventName: preso.eventName,
-          title: preso.title,
-          eventLocation: preso.eventLocation,
-          publishedContentUrl: preso.publishedContentUrl,
-          createdAt: preso.createdAt,
-          updatedAt: preso.updatedAt
+          url: preso.url || '',
+          eventName: preso.eventName || '',
+          title: preso.title || '',
+          eventLocation: preso.eventLocation || '',
+          publishedContentUrl: preso.publishedContentUrl || '',
+          createdAt: preso.createdAt || '',
+          updatedAt: preso.updatedAt || ''
         } as PresoDetails
       }
       onSubmit={props.onSubmit}
@@ -141,6 +143,14 @@ const PresoDetails: React.FC<Props> = (props) => {
             className="w-full h-14 bg-black text-white font-bold text-xl"
           >
             Save
+          </button>
+
+          <button
+            type="button"
+            className="w-full h-14 bg-black text-white font-bold text-xl"
+            onClick={() => props.onViewSurvey(preso.id)}
+          >
+            View Surveys Responses
           </button>
         </Form>
       )}
