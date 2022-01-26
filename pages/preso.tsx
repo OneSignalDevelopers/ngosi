@@ -28,7 +28,7 @@ const Preso: NextPage = () => {
   }
 
   return (
-    <div className="flex flex-col min-h-screen min-w-full">
+    <div className="flex flex-col min-h-screen">
       <Head>
         <title>Ngosi</title>
         <link rel="icon" href="/favicon.ico" />
@@ -37,19 +37,19 @@ const Preso: NextPage = () => {
         <h1 className="text-3xl bg-black py-2 px-6 text-white">
           Add Presentation
         </h1>
-        <div className="pt-4 px-6">
-          <div className="mt-6">
+        <div className="pt-4 px-6 mt-6">
+          <div className="flex flex-col items-center justify-center">
             <PresentationForm onSubmit={(values) => onSubmit(values)} />
+            <button
+              className="w-80 h-14 bg-black text-white font-bold text-xl mt-5"
+              type="button"
+              onClick={() => {
+                router.replace('presos')
+              }}
+            >
+              Cancel
+            </button>
           </div>
-          <button
-            className="w-full h-14 bg-black text-white font-bold text-xl mt-5"
-            type="button"
-            onClick={() => {
-              router.replace('presos')
-            }}
-          >
-            Cancel
-          </button>
         </div>
       </main>
       <Footer />
