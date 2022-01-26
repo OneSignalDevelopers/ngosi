@@ -11,7 +11,7 @@ const Account: React.FC<Props> = (props) => {
   const [username, setUsername] = useState<string | null>(null)
   const [website, setWebsite] = useState<string | null>(null)
   const [avatar_url, setAvatarUrl] = useState<string | null>(null)
-  const { supabaseClient } = useSupabase()
+  const { client: supabaseClient } = useSupabase()
 
   useEffect(() => {
     async function getProfile() {

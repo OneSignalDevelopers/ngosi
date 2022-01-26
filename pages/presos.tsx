@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react'
 const Presos: NextPage = () => {
   const router = useRouter()
   const [presos, setPresos] = useState<Preso[]>([])
-  const { authState, session, supabaseClient } = useSupabase()
+  const { authState, session, client: supabaseClient } = useSupabase()
 
   useEffect(() => {
     const loadPresos = async () => {
@@ -47,7 +47,7 @@ const Presos: NextPage = () => {
             <ul>
               {presos.map((p) => (
                 <li key={p.id}>
-                  {p.eventName} {p.shortCode}
+                  <a href={`/preso/${p.shortCode}`}>{p.eventName}</a>
                 </li>
               ))}
             </ul>

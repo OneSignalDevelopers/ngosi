@@ -47,6 +47,9 @@ export interface Preso {
   /** The location where the event took place. */
   readonly eventLocation?: string
 
+  /** The location where the published video or other content can be found. */
+  readonly publishedContentUrl?: string
+
   /** The time the presentation was created. */
   readonly createdAt?: string
 
@@ -58,6 +61,8 @@ export type PresoForm = Omit<
   Preso,
   'id' | 'shortCode' | 'createdAt' | 'updatedAt'
 >
+
+export type PresoDetails = Omit<Preso, 'id' | 'userId' | 'shortCode'>
 
 export interface Survey {
   /** Just an ID for internal use. */
