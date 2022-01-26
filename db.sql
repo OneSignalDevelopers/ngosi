@@ -60,5 +60,5 @@ CREATE VIEW attendees_view AS (
         s."sendPresoFeedback"
     FROM "Preso" p
         JOIN "Survey" s ON p.id = s."presoId"
-        JOIN "Attendee" a ON s."attendeeId" = a.id;
+        JOIN "Attendee" a ON s."attendeeId" = a.id
 );
