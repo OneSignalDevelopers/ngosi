@@ -1,8 +1,6 @@
 import { useSupabase } from '@common/supabaseProvider'
-import Footer from '@components/Footer'
 import { Preso } from '@types'
 import { NextPage } from 'next'
-import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
@@ -35,12 +33,7 @@ const Presos: NextPage = () => {
   }, [supabaseClient, session, authState])
 
   return (
-    <div className="flex flex-col min-h-screen min-w-full">
-      <Head>
-        <title>Ngosi</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <main className="flex flex-col flex-1">
+    <>
         <h1 className="text-3xl bg-black py-2 px-6 text-white">Your Presos</h1>
         <div className="pt-4 px-6">
           <div className="mt-6">
@@ -62,9 +55,7 @@ const Presos: NextPage = () => {
         >
           Add New Preso
         </button>
-      </main>
-      <Footer />
-    </div>
+    </>
   )
 }
 

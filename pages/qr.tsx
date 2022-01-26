@@ -1,4 +1,4 @@
-import Footer from '@components/Footer'
+import FooterBar from '@components/FooterBar'
 import { NextPage } from 'next'
 import Head from 'next/head'
 import QRCode from 'react-qr-code'
@@ -18,32 +18,25 @@ const Qr: NextPage = () => {
   }
 
   return (
-    <div className="flex flex-col min-h-screen min-w-full">
-      <Head>
-        <title>Ngosi</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <main className="flex flex-col flex-1 items-center justify-center">
-        <QRCode value={`${PublicUrl}/survey/${preso}`} />
-        <button
-          className="w-80 h-14 bg-black text-white font-bold text-xl mt-24"
-          type="button"
-          onClick={downloadQRCode}
-        >
-          Download QR
-        </button>
-        <button
-          className="w-80 h-14 bg-black text-white font-bold text-xl mt-5"
-          type="button"
-          onClick={() => {
-            router.push('/presos')
-          }}
-        >
-          Continue to your presos
-        </button>
-      </main>
-      <Footer />
-    </div>
+    <>
+      <QRCode value={`${PublicUrl}/survey/${preso}`} />
+      <button
+        className="w-80 h-14 bg-black text-white font-bold text-xl mt-24"
+        type="button"
+        onClick={downloadQRCode}
+      >
+        Download QR
+      </button>
+      <button
+        className="w-80 h-14 bg-black text-white font-bold text-xl mt-5"
+        type="button"
+        onClick={() => {
+          router.push('/presos')
+        }}
+      >
+        Continue to your presos
+      </button>
+    </>
   )
 }
 
