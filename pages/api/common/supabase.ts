@@ -1,6 +1,6 @@
 import { SupabaseUrl, SupabaseAnonKey } from '@common/constants'
 import { createClient } from '@supabase/supabase-js'
-import * as OneSignal from 'onesignal-node'
+import { onesignalClient } from './onesignal'
 
 export const supabaseClient = createClient(SupabaseUrl, SupabaseAnonKey)
 
@@ -10,13 +10,31 @@ const subscriptionToPublishedVideos = supabaseClient
     // Ideally we can inspect the diff of the change and only
     // react if there's a change.
     const { id: presoId, publishedContentUrl } = payload.new
-    const { error, data: presoAttendees } = await supabaseClient
-      .from('attendees_view')
-      .select('email, attendee')
-      .match({ preso: presoId, notifyWhenVideoPublished: true })
 
-    error
-      ? console.error(error)
-      : console.log('Attendee emails', presoAttendees)
+    try {
+      const { error, data: presoAttendees } = await supabaseClient
+        .from('attendees_view')
+        .select('email, attendee')
+        .match({ preso: presoId, notifyWhenVideoPublished: true })
+
+      if (error) {
+        console.error(error)
+        return
+      }
+
+      if (!presoAttendees || !presoAttendees.length) {
+        return
+      }
+
+      console.log('Attendee emails', presoAttendees)
+      const osClientRes = await onesignalClient.createNotification({
+        template_id: 'a30dcca1-e693-45ad-a277-acb608fd55e3',
+        include_external_user_ids: presoAttendees.map((x) => x.attendee)
+      })
+
+      console.log('OneSignal Client Response', osClientRes)
+    } catch (error) {
+      console.error(error)
+    }
   })
   .subscribe()
