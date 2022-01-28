@@ -16,7 +16,7 @@ const Home: NextPage = () => {
   }, [router, session])
 
   return (
-    <div className="h-screen w-screen bg-primary pt-4 pl-6">
+    <>
       <Head>
         <script
           src="https://cdn.onesignal.com/sdks/OneSignalSDK.js"
@@ -33,7 +33,7 @@ const Home: NextPage = () => {
       >
         Logout
       </button>
-    </div>
+    </>
   )
 }
 

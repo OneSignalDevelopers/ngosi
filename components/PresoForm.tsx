@@ -35,7 +35,7 @@ const PresoForm: React.FC<Props> = (props) => {
       validate={onValidate}
     >
       {(formikProps) => (
-        <Form className="flex flex-col space-y-5">
+        <Form className="flex flex-col space-y-5 w-80">
           <div className="flex flex-col space-y-1">
             <label
               className="font-semibold text-sm text-gray-900"

@@ -21,7 +21,7 @@ export default function Auth() {
   }
 
   return (
-    <div className="flex flex-col items-center h-screen bg-primary ">
+    <>
       <h1 className="text-4xl text-center">Ngosi</h1>
       <p className=" mt-5">Sign in via magic link with your email below</p>
 
@@ -38,11 +38,11 @@ export default function Auth() {
           e.preventDefault()
           handleLogin(email)
         }}
-        className=" h-14 bg-black text-white font-bold text-xl mt-5 w-80"
+        className="h-14 bg-accent-primary text-black font-bold text-xl mt-5 w-80 shadow-xl rounded-lg"
         disabled={loading}
       >
         <span>{loading ? 'Loading' : 'Send magic link'}</span>
       </button>
-    </div>
+    </>
   )
 }
