@@ -11,13 +11,7 @@ const AccountPage: NextPage = () => {
   }
 
   return (
-    <div className="h-screen w-screen flex flex-col  items-center justify-center bg-primary">
-      <Head>
-        <script
-          src="https://cdn.onesignal.com/sdks/OneSignalSDK.js"
-          async
-        ></script>
-      </Head>
+    <>
       <h1 className="text-white text-6xl">Ngosi</h1>
       <Account key={session.user?.id} session={session!} />
       <button
@@ -29,7 +23,7 @@ const AccountPage: NextPage = () => {
       >
         Logout
       </button>
-    </div>
+    </>
   )
 }
 

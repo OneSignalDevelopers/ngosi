@@ -1,6 +1,6 @@
 import EventHeader from '@components/EventHeader'
 import FatalError from '@components/FatalError'
-import Footer from '@components/Footer'
+import FooteBarr from '@components/FooterBar'
 import PresentationInfo from '@components/PresentationInfo'
 import SurveyForm from '@components/SurveyForm'
 import { PresenterHeader, Preso } from '@types'
@@ -53,15 +53,10 @@ const Survey: NextPage = () => {
   }
 
   return (
-    <div className="flex flex-col min-h-screen min-w-full">
-      <Head>
-        <title>Ngosi</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
+    <>
       <EventHeader name="React Conf" location="London" />
 
-      <main className="flex flex-col flex-1 mt-2 space-y-3">
+      <div className="flex flex-col flex-1 mt-2 space-y-3">
         <div className="px-8 py-2">
           <PresentationInfo
             firstName={presenter.firstName}
@@ -74,10 +69,8 @@ const Survey: NextPage = () => {
             <SurveyForm onSubmit={(values) => onSurveySubmit(values)} />
           </div>
         </div>
-      </main>
-
-      <Footer />
-    </div>
+      </div>
+    </>
   )
 }
 
