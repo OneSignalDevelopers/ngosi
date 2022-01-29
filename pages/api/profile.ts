@@ -1,45 +1,32 @@
-import { Preso, PresoForm } from '@types'
-import cuid from 'cuid'
-import { nanoid } from 'nanoid'
+import { Profile } from '@types'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { StatusCodes } from 'http-status-codes'
 import { supabaseClient } from './common/supabase'
 
 type Data =
   | {
-      presoShortCode: string
+      message: string
     }
   | {
       error: string
     }
 
-/**
- * Create a preso.
- */
 export default async function asynchandler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
   try {
-    const { url, userId, eventName, title, eventLocation } = JSON.parse(
+    const { id, username, avatar_url, website } = JSON.parse(
       req.body
-    ) as PresoForm
-    if (!url) {
-      res
-        .status(StatusCodes.BAD_REQUEST)
-        .json({ error: 'Presentation url is required.' })
-    }
+    ) as Profile
 
     const { data, error } = await supabaseClient
-      .from<Preso>('Preso')
-      .insert({
-        id: cuid(),
-        eventName: eventName,
-        eventLocation: eventLocation,
-        title: title,
-        url: url,
-        shortCode: nanoid(7),
-        userId: userId
+      .from<Profile>('profiles')
+      .upsert({
+        id: id,
+        username,
+        website,
+        avatar_url: avatar_url || ''
       })
       .single()
 
@@ -48,7 +35,7 @@ export default async function asynchandler(
         .status(StatusCodes.INTERNAL_SERVER_ERROR)
         .json({ error: JSON.stringify(error) })
     } else {
-      res.status(StatusCodes.OK).json({ presoShortCode: data?.shortCode || '' })
+      res.status(StatusCodes.OK).json({ message: JSON.stringify(data) })
     }
   } catch (error) {
     const { message } = error as Error

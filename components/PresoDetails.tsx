@@ -1,14 +1,16 @@
-import { PresoForm as PresoForm } from '@types'
+import { Preso, PresoDetails } from '@types'
 import { Field, FieldProps, Form, Formik, FormikErrors } from 'formik'
 import React from 'react'
 import type { Writeable } from '@common/utils'
 
 interface Props {
-  readonly onSubmit: (values: PresoForm) => Promise<void>
+  readonly onSubmit: (values: PresoDetails) => Promise<void>
+  readonly onViewSurvey: (shortCode: string) => void
+  readonly preso: Preso
 }
 
-const onValidate = (values: PresoForm) => {
-  let errors: FormikErrors<Writeable<PresoForm>> = {}
+const onValidate = (values: PresoDetails) => {
+  let errors: FormikErrors<Writeable<PresoDetails>> = {}
 
   if (!values.title) {
     errors.title = 'A presentation title is required.'
@@ -25,17 +27,27 @@ const onValidate = (values: PresoForm) => {
   return errors
 }
 
-const PresoForm: React.FC<Props> = (props) => {
+const PresoDetails: React.FC<Props> = (props) => {
+  const { preso } = props
+
   return (
     <Formik
       initialValues={
-        { url: '', eventName: '', title: '', eventLocation: '' } as PresoForm
+        {
+          url: preso.url || '',
+          eventName: preso.eventName || '',
+          title: preso.title || '',
+          eventLocation: preso.eventLocation || '',
+          publishedContentUrl: preso.publishedContentUrl || '',
+          createdAt: preso.createdAt || '',
+          updatedAt: preso.updatedAt || ''
+        } as PresoDetails
       }
       onSubmit={props.onSubmit}
       validate={onValidate}
     >
       {(formikProps) => (
-        <Form className="flex flex-col space-y-5 w-80">
+        <Form className="flex flex-col space-y-5">
           <div className="flex flex-col space-y-1">
             <label
               className="font-semibold text-sm text-gray-900"
@@ -44,7 +56,7 @@ const PresoForm: React.FC<Props> = (props) => {
               Enter link to your presentation
             </label>
             <Field name="url">
-              {({ field, form, ...props }: FieldProps<PresoForm>) => (
+              {({ field, form, ...props }: FieldProps<PresoDetails>) => (
                 <>
                   <input
                     {...field}
@@ -66,7 +78,7 @@ const PresoForm: React.FC<Props> = (props) => {
           <div className="flex flex-col space-y-1">
             <label
               className="font-semibold text-sm text-gray-900"
-              htmlFor="url"
+              htmlFor="title"
             >
               Title
             </label>
@@ -81,7 +93,7 @@ const PresoForm: React.FC<Props> = (props) => {
           <div className="flex flex-col space-y-1">
             <label
               className="font-semibold text-sm text-gray-900"
-              htmlFor="url"
+              htmlFor="eventName"
             >
               Event Name
             </label>
@@ -96,16 +108,32 @@ const PresoForm: React.FC<Props> = (props) => {
           <div className="flex flex-col space-y-1">
             <label
               className="font-semibold text-sm text-gray-900"
-              htmlFor="url"
+              htmlFor="eventLocation"
             >
               Event location
             </label>
 
             <Field
-              name="location"
+              name="eventLocation"
               type="text"
               className="h-12 w-full border border-black text-lg px-2"
               placeholder="Houston, TX"
+            ></Field>
+          </div>
+
+          <div className="flex flex-col space-y-1">
+            <label
+              className="font-semibold text-sm text-gray-900"
+              htmlFor="publishedContentUrl"
+            >
+              Published content location
+            </label>
+
+            <Field
+              name="publishedContentUrl"
+              type="text"
+              className="h-12 w-full border border-black text-lg px-2"
+              placeholder="https://youtube.com"
             ></Field>
           </div>
 
@@ -114,11 +142,19 @@ const PresoForm: React.FC<Props> = (props) => {
             disabled={formikProps.isSubmitting}
             className="w-full h-14 bg-black text-white font-bold text-xl"
           >
-            Generate QR Code
+            Save
+          </button>
+
+          <button
+            type="button"
+            className="w-full h-14 bg-black text-white font-bold text-xl"
+            onClick={() => props.onViewSurvey(preso.id)}
+          >
+            View Surveys Responses
           </button>
         </Form>
       )}
     </Formik>
   )
 }
-export default PresoForm
+export default PresoDetails

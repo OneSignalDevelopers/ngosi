@@ -15,10 +15,12 @@
     "jsx": "preserve",
     "incremental": true,
     "baseUrl": ".",
+    "sourceMap": true,
     "paths": {
       "@components/*": ["components/*"],
       "@types": ["types.ts"],
-      "@state": ["state.ts"]
+      "@state": ["state.ts"],
+      "@common/*": ["common/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
