@@ -1,7 +1,6 @@
 import { useSupabase } from '@common/supabaseProvider'
 import Account from '@components/Account'
 import { NextPage } from 'next'
-import Head from 'next/head'
 
 const AccountPage: NextPage = () => {
   const { session, client: supabaseClient } = useSupabase()
