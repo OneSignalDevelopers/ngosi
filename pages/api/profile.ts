@@ -2,9 +2,7 @@ import { Profile } from '@types'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { StatusCodes } from 'http-status-codes'
 import { supabaseClient } from './common/supabase'
-
-const OneSignalApiKey = 'NmI4NTI5NWEtMzZmYy00MTgxLWI0ZDUtNzYxMDJhMTgzMzkz'
-const OneSignalAppId = 'c0961ce4-be33-4242-a8f7-83d9f9725a79'
+import { OneSignalApiKey, OneSignalAppId } from '@common/constants'
 
 type Data =
   | {
