@@ -52,7 +52,8 @@ const Account: React.FC<Props> = (props) => {
         username,
         website,
         avatar_url,
-        updated_at: new Date()
+        updated_at: new Date(),
+        email: user?.email!
       }
 
       const response = await fetch('/api/profile', {
