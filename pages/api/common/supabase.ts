@@ -1,6 +1,10 @@
 import { SupabaseUrl, SupabaseAnonKey } from '@common/constants'
 import { createClient } from '@supabase/supabase-js'
-import { onesignalClient } from './onesignal'
+import {
+  OneSignalEmailTemplates,
+  sendEmail,
+  upsertEmailDevice
+} from './onesignal'
 
 export const supabaseClient = createClient(SupabaseUrl, SupabaseAnonKey)
 
@@ -27,12 +31,20 @@ const subscriptionToPublishedVideos = supabaseClient
       }
 
       console.log('Attendee emails', presoAttendees)
-      const osClientRes = await onesignalClient.createNotification({
-        template_id: 'a30dcca1-e693-45ad-a277-acb608fd55e3',
-        include_external_user_ids: presoAttendees.map((x) => x.attendee)
-      })
+      const { id: templateId, subject } = OneSignalEmailTemplates.videoPublished
 
-      console.log('OneSignal Client Response', osClientRes)
+      await Promise.all(
+        presoAttendees.map(async (x) => {
+          const { email, attendee } = x
+          await upsertEmailDevice(email, attendee)
+          // set data tags
+          await sendEmail(email, subject, templateId)
+        })
+      )
+      console.log(
+        'Emailed attendees',
+        presoAttendees.map((x) => x.email)
+      )
     } catch (error) {
       console.error(error)
     }
