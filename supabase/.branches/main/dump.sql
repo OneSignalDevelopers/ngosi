@@ -820,6 +820,12 @@ COPY auth.audit_log_entries (instance_id, id, payload, created_at) FROM stdin;
 00000000-0000-0000-0000-000000000000	45f04491-b9b7-4a57-b7ff-d7e47a9d6c49	{"action":"token_revoked","actor_id":"ce32f57d-c350-4464-8837-c3aad7178064","actor_username":"william@onesignal.com","log_type":"token","timestamp":"2022-01-29T00:31:18Z"}	2022-01-29 00:31:18.019371+00
 00000000-0000-0000-0000-000000000000	765fdb12-7d7c-4937-8989-f24bd8e43366	{"action":"token_refreshed","actor_id":"ce32f57d-c350-4464-8837-c3aad7178064","actor_username":"william@onesignal.com","log_type":"token","timestamp":"2022-01-29T01:30:18Z"}	2022-01-29 01:30:18.082069+00
 00000000-0000-0000-0000-000000000000	ca683803-7edc-47de-a1a4-ce72ef3b61de	{"action":"token_revoked","actor_id":"ce32f57d-c350-4464-8837-c3aad7178064","actor_username":"william@onesignal.com","log_type":"token","timestamp":"2022-01-29T01:30:18Z"}	2022-01-29 01:30:18.085689+00
+00000000-0000-0000-0000-000000000000	3f2e4c7f-2974-4b35-bf66-c89aa3eb51e1	{"action":"token_refreshed","actor_id":"ce32f57d-c350-4464-8837-c3aad7178064","actor_username":"william@onesignal.com","log_type":"token","timestamp":"2022-02-02T00:58:51Z"}	2022-02-02 00:58:51.738392+00
+00000000-0000-0000-0000-000000000000	fc88b398-11e7-48d1-9ef6-4705fa99be0f	{"action":"token_revoked","actor_id":"ce32f57d-c350-4464-8837-c3aad7178064","actor_username":"william@onesignal.com","log_type":"token","timestamp":"2022-02-02T00:58:51Z"}	2022-02-02 00:58:51.768174+00
+00000000-0000-0000-0000-000000000000	52e6e33f-2bcc-49a1-92dd-bfb126c8bb92	{"action":"token_refreshed","actor_id":"ce32f57d-c350-4464-8837-c3aad7178064","actor_username":"william@onesignal.com","log_type":"token","timestamp":"2022-02-02T01:57:52Z"}	2022-02-02 01:57:52.377601+00
+00000000-0000-0000-0000-000000000000	74ba2fbc-3214-47e2-8a24-1cc245cff1a7	{"action":"token_revoked","actor_id":"ce32f57d-c350-4464-8837-c3aad7178064","actor_username":"william@onesignal.com","log_type":"token","timestamp":"2022-02-02T01:57:52Z"}	2022-02-02 01:57:52.382103+00
+00000000-0000-0000-0000-000000000000	fafb6205-8ee7-4f12-ae41-dcbdc930766f	{"action":"token_refreshed","actor_id":"ce32f57d-c350-4464-8837-c3aad7178064","actor_username":"william@onesignal.com","log_type":"token","timestamp":"2022-02-02T02:56:51Z"}	2022-02-02 02:56:51.56147+00
+00000000-0000-0000-0000-000000000000	b10aa317-1cd1-4b2e-8941-b3895fc015da	{"action":"token_revoked","actor_id":"ce32f57d-c350-4464-8837-c3aad7178064","actor_username":"william@onesignal.com","log_type":"token","timestamp":"2022-02-02T02:56:51Z"}	2022-02-02 02:56:51.565608+00
 \.
 
 
@@ -897,11 +903,14 @@ COPY auth.refresh_tokens (instance_id, id, token, user_id, revoked, created_at, 
 00000000-0000-0000-0000-000000000000	50	Mia9-1U7ybDHGVOAS2M8cg	ce32f57d-c350-4464-8837-c3aad7178064	t	2022-01-26 22:08:00.3201+00	2022-01-26 22:08:00.3201+00	Vs-N5wm77ogSqdZEXKgKWA
 00000000-0000-0000-0000-000000000000	51	hhMwaj3jK0mhbJ-PYO11Gg	ce32f57d-c350-4464-8837-c3aad7178064	t	2022-01-26 22:09:33.483773+00	2022-01-26 22:09:33.483773+00	\N
 00000000-0000-0000-0000-000000000000	52	w2N1gKgAuKpDacf5YWUzmw	ce32f57d-c350-4464-8837-c3aad7178064	t	2022-01-26 23:08:34.140666+00	2022-01-26 23:08:34.140666+00	hhMwaj3jK0mhbJ-PYO11Gg
-00000000-0000-0000-0000-000000000000	54	9cUbt051rvo_zdx1d0kufg	ce32f57d-c350-4464-8837-c3aad7178064	f	2022-01-27 00:16:44.480675+00	2022-01-27 00:16:44.480675+00	\N
 00000000-0000-0000-0000-000000000000	55	qaQS0I190L5u3I6TfgcuwA	ce32f57d-c350-4464-8837-c3aad7178064	t	2022-01-28 22:33:16.352645+00	2022-01-28 22:33:16.352645+00	\N
 00000000-0000-0000-0000-000000000000	56	wKk18cQ7FmsWBKe-WQpWZw	ce32f57d-c350-4464-8837-c3aad7178064	t	2022-01-28 23:32:17.95486+00	2022-01-28 23:32:17.95486+00	qaQS0I190L5u3I6TfgcuwA
 00000000-0000-0000-0000-000000000000	57	FtPM7f9ZfEFsVa0_RNiMPQ	ce32f57d-c350-4464-8837-c3aad7178064	t	2022-01-29 00:31:18.022944+00	2022-01-29 00:31:18.022944+00	wKk18cQ7FmsWBKe-WQpWZw
 00000000-0000-0000-0000-000000000000	58	w3dz9G4Aao8oGY-uhgTseg	ce32f57d-c350-4464-8837-c3aad7178064	f	2022-01-29 01:30:18.091662+00	2022-01-29 01:30:18.091662+00	FtPM7f9ZfEFsVa0_RNiMPQ
+00000000-0000-0000-0000-000000000000	54	9cUbt051rvo_zdx1d0kufg	ce32f57d-c350-4464-8837-c3aad7178064	t	2022-01-27 00:16:44.480675+00	2022-01-27 00:16:44.480675+00	\N
+00000000-0000-0000-0000-000000000000	59	zYG1VIbJanVWR3vHRn3g2g	ce32f57d-c350-4464-8837-c3aad7178064	t	2022-02-02 00:58:51.791926+00	2022-02-02 00:58:51.791926+00	9cUbt051rvo_zdx1d0kufg
+00000000-0000-0000-0000-000000000000	60	oQ8VZrwTRIL7bZrrStrMrg	ce32f57d-c350-4464-8837-c3aad7178064	t	2022-02-02 01:57:52.388424+00	2022-02-02 01:57:52.388424+00	zYG1VIbJanVWR3vHRn3g2g
+00000000-0000-0000-0000-000000000000	61	mbuvGN3Zey1V1AoFQnEHjQ	ce32f57d-c350-4464-8837-c3aad7178064	f	2022-02-02 02:56:51.570798+00	2022-02-02 02:56:51.570798+00	oQ8VZrwTRIL7bZrrStrMrg
 \.
 
 
@@ -1014,7 +1023,7 @@ COPY storage.objects (id, bucket_id, name, owner, created_at, updated_at, last_a
 -- Name: refresh_tokens_id_seq; Type: SEQUENCE SET; Schema: auth; Owner: supabase_auth_admin
 --
 
-SELECT pg_catalog.setval('auth.refresh_tokens_id_seq', 58, true);
+SELECT pg_catalog.setval('auth.refresh_tokens_id_seq', 61, true);
 
 
 --
