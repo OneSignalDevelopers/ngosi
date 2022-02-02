@@ -30,9 +30,7 @@ const subscriptionToPublishedVideos = supabaseClient
         return
       }
 
-      console.log('Attendee emails', presoAttendees)
       const { id: templateId, subject } = OneSignalEmailTemplates.videoPublished
-
       await Promise.all(
         presoAttendees.map(async (x) => {
           const { email, attendee } = x
