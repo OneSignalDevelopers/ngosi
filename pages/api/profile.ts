@@ -12,12 +12,24 @@ type Data =
       error: string
     }
 
+interface EmailTemplate {
+  readonly id: string
+  readonly subject: string
+}
+
+const OneSignalEmailTemplates: Record<string, EmailTemplate> = {
+  accountUpdated: {
+    subject: 'Account Updated',
+    id: '67e66178-78fd-4e8e-8588-5a389f42af1d'
+  }
+}
+
 async function upsertEmailDevice(
   email: string,
   extId: string
 ): Promise<string | null> {
   const endpoint = 'https://onesignal.com/api/v1/players'
-  const reqBody = {
+  const body = {
     app_id: OneSignalAppId,
     device_type: 11,
     identifier: email,
@@ -30,7 +42,7 @@ async function upsertEmailDevice(
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(reqBody)
+      body: JSON.stringify(body)
     })
 
     const { success, id } = await res.json()
@@ -47,7 +59,7 @@ async function updateTags(
   newTags: Record<string, string | number | boolean>
 ): Promise<'succeded' | 'failed'> {
   const endpoint = `https://onesignal.com/api/v1/apps/${OneSignalAppId}/users/${extId}`
-  const reqBody = {
+  const body = {
     tags: {
       ...newTags
     }
@@ -59,31 +71,24 @@ async function updateTags(
       headers: {
         'Content-Type': 'application/json; charset=utf-8'
       },
-      body: JSON.stringify(reqBody)
+      body: JSON.stringify(body)
     })
 
-    console.log(JSON.stringify(res, null, 2))
-    const a = await res.json()
-
-    return 'succeded'
-    // return success ? 'succeded' : 'failed'
+    const { success } = await res.json()
+    return success ? 'succeded' : 'failed'
   } catch (error) {
     console.error(error)
     return 'failed'
   }
 }
 
-enum OneSignalEmailTemplate {
-  template1 = '613e4df2-b4aa-4612-b448-4e27ffffb730'
-}
-
 async function sendEmail(
   email: string,
   subject: string,
-  template: OneSignalEmailTemplate
+  template: string
 ): Promise<void> {
   const endpoint = 'https://onesignal.com/api/v1/notifications'
-  const reqBody = {
+  const body = {
     app_id: OneSignalAppId,
     template_id: template,
     email_subject: subject,
@@ -97,12 +102,12 @@ async function sendEmail(
         'Content-Type': 'application/json; charset=utf-8',
         authorization: `Bearer ${OneSignalApiKey}`
       },
-      body: JSON.stringify(reqBody)
+      body: JSON.stringify(body)
     })
 
     const data = await res.json()
 
-    console.log(data)
+    console.log('sendEmal', data)
   } catch (error) {
     console.error(error)
   }
@@ -113,41 +118,40 @@ export default async function asynchandler(
   res: NextApiResponse<Data>
 ) {
   try {
-    const { id, username, avatar_url, website } = JSON.parse(
+    const { id, username, avatar_url, website, email } = JSON.parse(
       req.body
     ) as Profile
 
     const { data, error } = await supabaseClient
       .from<Profile>('profiles')
-      .upsert({
-        id: id,
-        username,
-        website,
-        avatar_url: avatar_url || ''
-      })
-      .single()
+      .upsert(
+        {
+          id: id,
+          username,
+          website,
+          avatar_url: avatar_url || ''
+        },
+        {
+          returning: 'minimal',
+          count: 'exact'
+        }
+      )
 
     if (error) {
-      res
+      return res
         .status(StatusCodes.INTERNAL_SERVER_ERROR)
         .json({ error: JSON.stringify(error) })
-      return
     }
 
-    await upsertEmailDevice('william@onesignal.com', id)
+    await upsertEmailDevice(email, id)
+
     const result = await updateTags(id, {
-      test: 'Hello'
+      username
     })
-    if (result !== 'succeded') {
-      return
-    }
+    if (result !== 'succeded') return
 
-    await sendEmail(
-      'william@onesignal.com',
-      'Test Demo',
-      OneSignalEmailTemplate.template1
-    )
-
+    const { id: templateId, subject } = OneSignalEmailTemplates.accountUpdated
+    await sendEmail(email, subject, templateId)
     res.status(StatusCodes.OK).json({ message: JSON.stringify(data) })
   } catch (error) {
     const { message } = error as Error
