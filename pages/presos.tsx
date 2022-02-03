@@ -38,7 +38,7 @@ const Presos: NextPage = () => {
       <div className="pt-4 px-6">
         <div className="mt-6">
           <ul>
-            {presos.length > 0 ? (
+            {presos.length ? (
               presos.map((p) => (
                 <li key={p.id}>
                   <a href={`/preso/${p.shortCode}`}>{p.eventName}</a>
