@@ -34,27 +34,31 @@ const Presos: NextPage = () => {
 
   return (
     <>
-        <h1 className="text-3xl bg-black py-2 px-6 text-white">Your Presos</h1>
-        <div className="pt-4 px-6">
-          <div className="mt-6">
-            <ul>
-              {presos.map((p) => (
+      <h1 className="text-3xl bg-black py-2 px-6 text-white">Your Presos</h1>
+      <div className="pt-4 px-6">
+        <div className="mt-6">
+          <ul>
+            {presos.length ? (
+              presos.map((p) => (
                 <li key={p.id}>
                   <a href={`/preso/${p.shortCode}`}>{p.eventName}</a>
                 </li>
-              ))}
-            </ul>
-          </div>
+              ))
+            ) : (
+              <p>You have no presentations at the time.</p>
+            )}
+          </ul>
         </div>
-        <button
-          className="w-full h-14 bg-black text-white font-bold text-xl mt-5"
-          type="button"
-          onClick={() => {
-            router.push('preso')
-          }}
-        >
-          Add New Preso
-        </button>
+      </div>
+      <button
+        className="w-full h-14 bg-black text-white font-bold text-xl mt-5"
+        type="button"
+        onClick={() => {
+          router.push('preso')
+        }}
+      >
+        Add New Preso
+      </button>
     </>
   )
 }
