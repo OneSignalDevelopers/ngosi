@@ -1,5 +1,9 @@
 import { useSupabase } from '@common/supabaseProvider'
 import { useState } from 'react'
+import { validateEmail } from 'validation/auth'
+import { InferType } from 'yup'
+
+
 
 export default function Auth() {
   const [loading, setLoading] = useState(false)
@@ -9,9 +13,12 @@ export default function Auth() {
   const handleLogin = async (email: string) => {
     try {
       setLoading(true)
-      const { user, error } = await supabaseClient.auth.signIn({ email })
-      if (error) throw error
-      alert('Check your email for the login link!')
+      const isEmailValid = await validateEmail.validate({ email }, { strict: true });
+      if (isEmailValid) {
+        const { user, error } = await supabaseClient.auth.signIn({ email })
+        if (error) throw error
+        alert('Check your email for the login link!')
+      }
     } catch (error) {
       const e = error as any
       alert(e.error_description || e.message)
