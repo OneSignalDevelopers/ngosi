@@ -19,7 +19,7 @@ const PresentationInfo: React.FC<Props> = ({ firstName, lastName, title }) => (
     </h2>
     <div className="flex">
       <div className="h-28 w-28 relative flex-none">
-        {" "}
+        {' '}
         <Image
           src={presenter}
           alt="Photo of presenter"
@@ -30,6 +30,6 @@ const PresentationInfo: React.FC<Props> = ({ firstName, lastName, title }) => (
       <p className="ml-2 px-2 overflow-ellipsis max-h-28">{title}</p>
     </div>
   </div>
-);
+)
 
 export default PresentationInfo

@@ -47,7 +47,7 @@ export async function sendEmail(
   }
 }
 
-export async function upsertEmailDevice(
+export async function setEmailDevice(
   email: string,
   extId: string
 ): Promise<string | null> {

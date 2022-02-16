@@ -7,7 +7,7 @@ import { supabaseClient } from './common/supabase'
 import {
   OneSignalEmailTemplates,
   sendEmail,
-  upsertEmailDevice
+  setEmailDevice
 } from './common/onesignal'
 
 type PresoPostResp =
@@ -149,7 +149,7 @@ async function updatePreso(
       await Promise.all(
         presoAttendees.map(async (x) => {
           const { email, attendee } = x
-          await upsertEmailDevice(email, attendee)
+          await setEmailDevice(email, attendee)
           // set data tags
           await sendEmail(email, subject, templateId)
         })
