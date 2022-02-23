@@ -1,7 +1,7 @@
+import type { Writeable } from '@common/utils'
 import { Preso, PresoDetails } from '@types'
 import { Field, FieldProps, Form, Formik, FormikErrors } from 'formik'
 import React from 'react'
-import type { Writeable } from '@common/utils'
 
 interface Props {
   readonly onSubmit: (values: PresoDetails) => Promise<void>

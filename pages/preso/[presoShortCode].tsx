@@ -1,15 +1,32 @@
 import { useSupabase } from '@common/supabaseProvider'
 import Details from '@components/PresoDetails'
-import { Preso } from '@types'
+import { Preso, PresoDetails } from '@types'
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
-const PresoDetails: NextPage = () => {
+const PresoDetail: NextPage = () => {
   const router = useRouter()
-  const { client } = useSupabase()
+  const { client, session } = useSupabase()
   const { presoShortCode } = router.query
   const [preso, setPreso] = useState<Preso | null>(null)
+
+  const onSubmit = async (values: PresoDetails) => {
+    try {
+      const response = await fetch('/api/preso', {
+        method: 'PUT',
+        body: JSON.stringify({
+          ...values,
+          id: preso?.id
+        } as PresoDetails)
+      })
+      const json = await response.json()
+      console.log(json)
+    } catch (error) {
+      const { message } = error as Error
+      console.error(message)
+    }
+  }
 
   useEffect(() => {
     async function getPresoDetails() {
@@ -39,9 +56,7 @@ const PresoDetails: NextPage = () => {
     <div>
       <Details
         preso={preso}
-        onSubmit={async () =>
-          Promise.resolve(console.log('Save button clicked'))
-        }
+        onSubmit={onSubmit}
         onViewSurvey={(presoId) => {
           router.push(`/response/${presoId}`)
         }}
@@ -52,4 +67,4 @@ const PresoDetails: NextPage = () => {
   )
 }
 
-export default PresoDetails
+export default PresoDetail
