@@ -18,6 +18,7 @@
     "http-status-codes": "^2.1.4",
     "nanoid": "^3.1.31",
     "next": "^12.1.0",
+    "onesignal-node": "^3.3.0",
     "postgresql": "^0.0.1",
     "qrcode": "^1.4.4",
     "react": "17.0.2",
