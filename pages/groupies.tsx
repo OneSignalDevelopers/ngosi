@@ -37,9 +37,7 @@ const Groupies: NextPage = () => {
 
   return (
     <>
-      <h1 className="text-3xl bg-black py-2 px-6 text-white">
-        Your Groupies
-      </h1>
+      <h1 className="text-3xl bg-black py-2 px-6 text-white">Your Audience</h1>
       <div className="pt-4 px-6">
         <div className="mt-6">
           <ul>

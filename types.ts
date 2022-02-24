@@ -95,6 +95,9 @@ export interface Survey {
    */
   readonly notifyOfOtherTalks: boolean
 
+  /** The feedback they'd like to share with the presenter */
+  readonly feedback?: string
+
   /** The time the survey was completed. */
   readonly createdAt?: string
 }
@@ -122,4 +125,14 @@ export interface Attendee {
   readonly id: string
   readonly fullName: string
   readonly email: string
+}
+
+export interface AttendeesView {
+  readonly presenter: string
+  readonly preso: string
+  readonly attendee: string
+  readonly email: string
+  readonly name: string
+  readonly feedback: string
+  readonly created_at: string
 }
