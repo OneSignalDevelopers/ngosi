@@ -3,39 +3,6 @@
 -- and may require manual changes to the script to ensure changes are applied in the correct order.
 -- Please report an issue for any failure with the reproduction steps.
 
-CREATE TABLE IF NOT EXISTS public."Survey"
-(
-    id text COLLATE pg_catalog."default" NOT NULL,
-    "presoId" text COLLATE pg_catalog."default" NOT NULL,
-    "attendeeId" text COLLATE pg_catalog."default" NOT NULL,
-    "notifyWhenVideoPublished" boolean NOT NULL,
-    "sendPresoFeedback" boolean NOT NULL,
-    "notifyOfOtherTalks" boolean NOT NULL,
-    "createdAt" timestamp(3) without time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT "Survey_pkey" PRIMARY KEY (id),
-    CONSTRAINT "Survey_attendeeId_fkey" FOREIGN KEY ("attendeeId")
-        REFERENCES public."Attendee" (id) MATCH SIMPLE
-        ON UPDATE CASCADE
-        ON DELETE RESTRICT,
-    CONSTRAINT "Survey_presoId_fkey" FOREIGN KEY ("presoId")
-        REFERENCES public."Preso" (id) MATCH SIMPLE
-        ON UPDATE CASCADE
-        ON DELETE RESTRICT
-)
-
-TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public."Survey"
-    OWNER to postgres;
-
-GRANT ALL ON TABLE public."Survey" TO anon;
-
-GRANT ALL ON TABLE public."Survey" TO authenticated;
-
-GRANT ALL ON TABLE public."Survey" TO postgres;
-
-GRANT ALL ON TABLE public."Survey" TO service_role;
-
 CREATE TABLE IF NOT EXISTS public.profiles
 (
     id uuid NOT NULL,
@@ -63,33 +30,6 @@ GRANT ALL ON TABLE public.profiles TO authenticated;
 GRANT ALL ON TABLE public.profiles TO postgres;
 
 GRANT ALL ON TABLE public.profiles TO service_role;
-
-CREATE TABLE IF NOT EXISTS public."Attendee"
-(
-    id text COLLATE pg_catalog."default" NOT NULL,
-    "fullName" text COLLATE pg_catalog."default" NOT NULL,
-    email text COLLATE pg_catalog."default" NOT NULL,
-    "createdAt" timestamp(3) without time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" timestamp(3) without time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT "Attendee_pkey" PRIMARY KEY (id)
-)
-
-TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public."Attendee"
-    OWNER to postgres;
-
-GRANT ALL ON TABLE public."Attendee" TO anon;
-
-GRANT ALL ON TABLE public."Attendee" TO authenticated;
-
-GRANT ALL ON TABLE public."Attendee" TO postgres;
-
-GRANT ALL ON TABLE public."Attendee" TO service_role;
-CREATE UNIQUE INDEX IF NOT EXISTS "Attendee_email_key"
-    ON public."Attendee" USING btree
-    (email COLLATE pg_catalog."default" ASC NULLS LAST)
-    TABLESPACE pg_default;
 
 CREATE TABLE IF NOT EXISTS public."Preso"
 (
@@ -123,6 +63,65 @@ GRANT ALL ON TABLE public."Preso" TO postgres;
 
 GRANT ALL ON TABLE public."Preso" TO service_role;
 
+CREATE TABLE IF NOT EXISTS public."Attendee"
+(
+    id text COLLATE pg_catalog."default" NOT NULL,
+    "fullName" text COLLATE pg_catalog."default" NOT NULL,
+    email text COLLATE pg_catalog."default" NOT NULL,
+    "createdAt" timestamp(3) without time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" timestamp(3) without time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "Attendee_pkey" PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public."Attendee"
+    OWNER to postgres;
+
+GRANT ALL ON TABLE public."Attendee" TO anon;
+
+GRANT ALL ON TABLE public."Attendee" TO authenticated;
+
+GRANT ALL ON TABLE public."Attendee" TO postgres;
+
+GRANT ALL ON TABLE public."Attendee" TO service_role;
+CREATE UNIQUE INDEX IF NOT EXISTS "Attendee_email_key"
+    ON public."Attendee" USING btree
+    (email COLLATE pg_catalog."default" ASC NULLS LAST)
+    TABLESPACE pg_default;
+
+CREATE TABLE IF NOT EXISTS public."Survey"
+(
+    id text COLLATE pg_catalog."default" NOT NULL,
+    "presoId" text COLLATE pg_catalog."default" NOT NULL,
+    "attendeeId" text COLLATE pg_catalog."default" NOT NULL,
+    "notifyWhenVideoPublished" boolean NOT NULL,
+    "sendPresoFeedback" boolean NOT NULL,
+    "notifyOfOtherTalks" boolean NOT NULL,
+    "createdAt" timestamp(3) without time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT "Survey_pkey" PRIMARY KEY (id),
+    CONSTRAINT "Survey_attendeeId_fkey" FOREIGN KEY ("attendeeId")
+        REFERENCES public."Attendee" (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT,
+    CONSTRAINT "Survey_presoId_fkey" FOREIGN KEY ("presoId")
+        REFERENCES public."Preso" (id) MATCH SIMPLE
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public."Survey"
+    OWNER to postgres;
+
+GRANT ALL ON TABLE public."Survey" TO anon;
+
+GRANT ALL ON TABLE public."Survey" TO authenticated;
+
+GRANT ALL ON TABLE public."Survey" TO postgres;
+
+GRANT ALL ON TABLE public."Survey" TO service_role;
 CREATE OR REPLACE VIEW public.attendees_view
  AS
  SELECT p."userId" AS presenter,

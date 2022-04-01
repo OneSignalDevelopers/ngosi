@@ -1,10 +1,19 @@
 import { useSupabase } from '@common/supabaseProvider'
 import Account from '@components/Account'
 import { NextPage } from 'next'
+import { useRouter } from 'next/router'
 import Head from 'next/head'
+import { useEffect, useState } from 'react'
 
 const AccountPage: NextPage = () => {
-  const { session, client: supabaseClient } = useSupabase()
+  const router = useRouter();
+  const { authState, session, client: supabaseClient } = useSupabase()
+
+  useEffect(() => {
+    if (authState !== 'authenticated') {
+      router.replace('/signin')
+    }
+  }, [authState, router])
 
   if (!session) {
     return <div>No session</div>

@@ -13,8 +13,7 @@ type Data =
     }
 
 /**
- * 1. Fetch the preso using the short code
- * 2. Pluck userId property from record
+ *
  */
 export default async function asynchandler(
   req: NextApiRequest,
@@ -23,12 +22,14 @@ export default async function asynchandler(
   try {
     const { presoShortCode } = JSON.parse(req.body)
 
+    // Lookup preso by shortCode
     const presoResult = await supabaseClient
       .from<Preso>('Preso')
       .select()
       .eq('shortCode', presoShortCode)
       .maybeSingle()
 
+    // Find the presenter of the preso
     const presenterResult = await supabaseClient
       .from<Profile>('profiles')
       .select()
