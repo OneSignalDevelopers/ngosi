@@ -6,7 +6,7 @@ const FooterBar = () => (
       target="_blank"
       rel="noopener noreferrer"
     >
-      ngosi
+      ngosi &ndash; made with &hearts; in SF &ndash; <a className="underline" href="https://github.com/OneSignalDevelopers/ngosi/issues">suggestions?</a>
     </a>
   </footer>
 )

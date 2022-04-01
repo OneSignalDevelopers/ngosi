@@ -10,6 +10,12 @@ const Presos: NextPage = () => {
   const { authState, session, client: supabaseClient } = useSupabase()
 
   useEffect(() => {
+    if (authState !== 'authenticated') {
+      router.replace('/signin')
+    }
+  }, [authState, router])
+
+  useEffect(() => {
     const loadPresos = async () => {
       if (authState !== 'authenticated') {
         return
