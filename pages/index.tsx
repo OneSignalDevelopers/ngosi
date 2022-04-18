@@ -3,18 +3,18 @@ import { NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
+import Script from 'next/script'
 
 const Home: NextPage = () => {
   const router = useRouter()
 
   return (
     <>
-      <Head>
-        <script
-          src="https://cdn.onesignal.com/sdks/OneSignalSDK.js"
-          async
-        ></script>
-      </Head>
+      <Script
+        src="https://cdn.onesignal.com/sdks/OneSignalSDK.js"
+        strategy="beforeInteractive"
+      ></Script>
+
       <div className="prose mt-5">
           <div>
               <img className="float-right" src="/images/ngosi.png" />
