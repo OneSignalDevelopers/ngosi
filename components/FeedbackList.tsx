@@ -1,4 +1,4 @@
-import { SurveyFeedbackData } from 'pages/api/survey-feedback'
+import { SurveyFeedbackData } from 'pages/api/feedback'
 import { useEffect, useState } from 'react'
 
 interface Props {
@@ -10,7 +10,7 @@ export const FeedbackList = (props: Props) => {
 
   useEffect(() => {
     const fetchFeedback = async (): Promise<void> => {
-      const apiResult = await fetch('/api/survey-feedback', {
+      const apiResult = await fetch('/api/feedback', {
         method: 'POST',
         body: JSON.stringify({ presenterId: props.presenterId })
       })
