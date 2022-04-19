@@ -24,8 +24,6 @@ export const FeedbackList = (props: Props) => {
     fetchFeedback()
   }, [props.presenterId])
 
-  console.log('Survey results', surveyResults)
-
   return (
     <>
       <table>
