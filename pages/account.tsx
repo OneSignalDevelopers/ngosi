@@ -9,7 +9,7 @@ const AccountPage: NextPage = () => {
   const { session, client: supabaseClient } = useSupabase()
 
   useEffect(() => {
-    if (!session) {
+    if (!session || !session.user) {
       router.replace('/signin')
     }
   }, [session, router])
