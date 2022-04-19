@@ -39,7 +39,6 @@ export default async function asynchandler(
     if (error)
       return res.status(StatusCodes.NOT_FOUND).json({ error: error.message })
 
-    console.log(data)
     data &&
       res.status(StatusCodes.OK).json({
         surveyFeedback: data.map((x) => {

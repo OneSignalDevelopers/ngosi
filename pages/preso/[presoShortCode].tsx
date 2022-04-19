@@ -7,21 +7,19 @@ import { useEffect, useState } from 'react'
 
 const PresoDetail: NextPage = () => {
   const router = useRouter()
-  const { client, session } = useSupabase()
+  const { client } = useSupabase()
   const { presoShortCode } = router.query
   const [preso, setPreso] = useState<Preso | null>(null)
 
   const onSubmit = async (values: PresoDetails) => {
     try {
-      const response = await fetch('/api/preso', {
+      await fetch('/api/preso', {
         method: 'PUT',
         body: JSON.stringify({
           ...values,
           id: preso?.id
         } as PresoDetails)
       })
-      const json = await response.json()
-      console.log(json)
     } catch (error) {
       const { message } = error as Error
       console.error(message)
