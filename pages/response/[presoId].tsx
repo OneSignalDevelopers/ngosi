@@ -32,8 +32,6 @@ const SurveyResponses: NextPage = () => {
 
       error && console.error(error)
 
-      console.log(data)
-
       setSurveys(data || [])
     }
 
