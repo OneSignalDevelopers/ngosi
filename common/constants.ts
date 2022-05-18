@@ -1,4 +1,4 @@
-// Secret keys
+export const __env__ = process.env.NEXT_PUBLIC_ENV ?? 'local'
 export const OneSignalApiKey = process.env.ONESIGNAL_API_KEY!
 
 // Public keys
