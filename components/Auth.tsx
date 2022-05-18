@@ -1,4 +1,4 @@
-import { PublicUrl } from '@common/constants'
+import { PublicUrl, __env__ } from '@common/constants'
 import { useSupabase } from '@common/supabaseProvider'
 import { useState } from 'react'
 
@@ -12,7 +12,14 @@ export default function Auth() {
       setLoading(true)
       const { error } = await supabaseClient.auth.signIn(
         { email },
-        { redirectTo: PublicUrl }
+        {
+          redirectTo:
+            __env__ === 'production'
+              ? PublicUrl
+              : __env__ === 'staging'
+              ? window.origin
+              : 'localhost:3001'
+        }
       )
       if (error) throw error
       alert('Check your email for the login link!')
