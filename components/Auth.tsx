@@ -1,4 +1,10 @@
-import { PublicUrl, __env__ } from '@common/constants'
+import {
+  LocalUrl as LocalDevUrl,
+  isProduction,
+  PublicUrl,
+  isStaging,
+  __env__
+} from '@common/constants'
 import { useSupabase } from '@common/supabaseProvider'
 import { useState } from 'react'
 
@@ -13,12 +19,11 @@ export default function Auth() {
       const { error } = await supabaseClient.auth.signIn(
         { email },
         {
-          redirectTo:
-            __env__ === 'production'
-              ? PublicUrl
-              : __env__ === 'staging'
-              ? window.origin
-              : 'localhost:3001'
+          redirectTo: isProduction
+            ? PublicUrl
+            : isStaging
+            ? window.origin
+            : LocalDevUrl
         }
       )
       if (error) throw error
