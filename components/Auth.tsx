@@ -1,3 +1,4 @@
+import { PublicUrl } from '@common/constants'
 import { useSupabase } from '@common/supabaseProvider'
 import { useState } from 'react'
 
@@ -9,7 +10,10 @@ export default function Auth() {
   const handleLogin = async (email: string) => {
     try {
       setLoading(true)
-      const { error } = await supabaseClient.auth.signIn({ email })
+      const { error } = await supabaseClient.auth.signIn(
+        { email },
+        { redirectTo: PublicUrl }
+      )
       if (error) throw error
       alert('Check your email for the login link!')
     } catch (error) {
