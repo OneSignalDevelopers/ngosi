@@ -5,18 +5,18 @@ import {
   isStaging,
   __env__
 } from '@common/constants'
-import { useSupabase } from '@common/supabaseProvider'
 import { useState } from 'react'
+import { useClient } from 'react-supabase'
 
 export default function Auth() {
   const [loading, setLoading] = useState(false)
   const [email, setEmail] = useState('')
-  const { client: supabaseClient } = useSupabase()
+  const client = useClient()
 
   const handleLogin = async (email: string) => {
     try {
       setLoading(true)
-      const { error } = await supabaseClient.auth.signIn(
+      const { error } = await client.auth.signIn(
         { email },
         {
           redirectTo: isProduction

@@ -1,13 +1,13 @@
-import { useSupabase } from '@common/supabaseProvider'
 import Details from '@components/PresoDetails'
 import { Preso, PresoDetails } from '@types'
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import { useClient } from 'react-supabase'
 
 const PresoDetail: NextPage = () => {
   const router = useRouter()
-  const { client } = useSupabase()
+  const client = useClient()
   const { presoShortCode } = router.query
   const [preso, setPreso] = useState<Preso | null>(null)
 
