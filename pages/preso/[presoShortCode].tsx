@@ -1,27 +1,25 @@
-import { useSupabase } from '@common/supabaseProvider'
 import Details from '@components/PresoDetails'
 import { Preso, PresoDetails } from '@types'
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import { useClient } from 'react-supabase'
 
 const PresoDetail: NextPage = () => {
   const router = useRouter()
-  const { client, session } = useSupabase()
+  const client = useClient()
   const { presoShortCode } = router.query
   const [preso, setPreso] = useState<Preso | null>(null)
 
   const onSubmit = async (values: PresoDetails) => {
     try {
-      const response = await fetch('/api/preso', {
+      await fetch('/api/preso', {
         method: 'PUT',
         body: JSON.stringify({
           ...values,
           id: preso?.id
         } as PresoDetails)
       })
-      const json = await response.json()
-      console.log(json)
     } catch (error) {
       const { message } = error as Error
       console.error(message)

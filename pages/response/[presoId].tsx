@@ -1,8 +1,7 @@
-import { useSupabase } from '@common/supabaseProvider'
-import { Survey } from '@types'
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import { useClient } from 'react-supabase'
 
 interface AttendeeView {
   presenter: string
@@ -15,7 +14,7 @@ interface AttendeeView {
 
 const SurveyResponses: NextPage = () => {
   const router = useRouter()
-  const { client } = useSupabase()
+  const client = useClient()
   const { presoId } = router.query
   const [surveys, setSurveys] = useState<AttendeeView[]>([])
 
@@ -31,8 +30,6 @@ const SurveyResponses: NextPage = () => {
         .eq('preso', presoId)
 
       error && console.error(error)
-
-      console.log(data)
 
       setSurveys(data || [])
     }

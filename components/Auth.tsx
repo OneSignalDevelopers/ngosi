@@ -1,15 +1,31 @@
-import { useSupabase } from '@common/supabaseProvider'
+import {
+  LocalUrl as LocalDevUrl,
+  isProduction,
+  PublicUrl,
+  isStaging,
+  __env__
+} from '@common/constants'
 import { useState } from 'react'
+import { useClient } from 'react-supabase'
 
 export default function Auth() {
   const [loading, setLoading] = useState(false)
   const [email, setEmail] = useState('')
-  const { client: supabaseClient } = useSupabase()
+  const client = useClient()
 
   const handleLogin = async (email: string) => {
     try {
       setLoading(true)
-      const { error } = await supabaseClient.auth.signIn({ email })
+      const { error } = await client.auth.signIn(
+        { email },
+        {
+          redirectTo: isProduction
+            ? PublicUrl
+            : isStaging
+            ? window.origin
+            : LocalDevUrl
+        }
+      )
       if (error) throw error
       alert('Check your email for the login link!')
     } catch (error) {

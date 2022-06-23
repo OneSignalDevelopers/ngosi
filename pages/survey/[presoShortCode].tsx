@@ -1,11 +1,9 @@
 import EventHeader from '@components/EventHeader'
 import FatalError from '@components/FatalError'
-import FooteBarr from '@components/FooterBar'
 import PresentationInfo from '@components/PresentationInfo'
 import SurveyForm from '@components/SurveyForm'
 import { PresenterHeader, Preso } from '@types'
 import { NextPage } from 'next'
-import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import type { SurveyForm as ISurveyForm } from 'types'
@@ -39,13 +37,19 @@ const Survey: NextPage = () => {
   }, [router.query])
 
   const onSurveySubmit = async (values: ISurveyForm) => {
-    const response = await fetch('/api/survey-response', {
-      method: 'POST',
-      body: JSON.stringify({
-        ...values,
-        presoShortCode: router.query.presoShortCode
-      } as ISurveyForm)
-    })
+    try {
+      await fetch('/api/survey-response', {
+        method: 'POST',
+        body: JSON.stringify({
+          ...values,
+          presoShortCode: router.query.presoShortCode
+        } as ISurveyForm)
+      })
+
+      router.replace(preso!.url)
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   if (!preso || !presenter) {
