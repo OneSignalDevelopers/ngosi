@@ -1,28 +1,29 @@
-import { useSupabase } from '@common/supabaseProvider'
+import { useAuth } from '@components/Hooks/useAuth'
 import Account from '@components/Account'
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
-import Head from 'next/head'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
+import { useClient } from 'react-supabase'
 
 const AccountPage: NextPage = () => {
-  const router = useRouter();
-  const { authState, session, client: supabaseClient } = useSupabase()
+  const router = useRouter()
+  const supabaseClient = useClient()
+  const { session } = useAuth()
 
   useEffect(() => {
-    if (authState !== 'authenticated') {
+    if (!session || !session.user) {
       router.replace('/signin')
     }
-  }, [authState, router])
+  }, [session, router])
 
-  if (!session) {
-    return <div>No session</div>
+  if (!session?.user) {
+    return <p>Loading...</p>
   }
 
   return (
     <>
       <h1 className="text-white text-6xl">Ngosi</h1>
-      <Account key={session.user?.id} session={session!} />
+      <Account key={session!.user?.id} />
       <button
         className="h-12 bg-black text-white font-bold text-xl mt-5 w-80"
         onClick={async () => {

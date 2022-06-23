@@ -1,30 +1,22 @@
-import { useSupabase } from '@common/supabaseProvider'
+import { useAuth } from '@components/Hooks/useAuth'
 import { Preso } from '@types'
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import { useClient } from 'react-supabase'
 
 const Presos: NextPage = () => {
   const router = useRouter()
   const [presos, setPresos] = useState<Preso[]>([])
-  const { authState, session, client: supabaseClient } = useSupabase()
-
-  useEffect(() => {
-    if (authState !== 'authenticated') {
-      router.replace('/signin')
-    }
-  }, [authState, router])
+  const { user } = useAuth()
+  const client = useClient()
 
   useEffect(() => {
     const loadPresos = async () => {
-      if (authState !== 'authenticated') {
-        return
-      }
-
-      const { error, data } = await supabaseClient
+      const { error, data } = await client
         .from<Preso>('Preso')
         .select()
-        .eq('userId', session?.user?.id)
+        .eq('userId', user?.id)
         .order('createdAt', { ascending: false })
 
       if (error) {
@@ -36,7 +28,7 @@ const Presos: NextPage = () => {
     }
 
     loadPresos()
-  }, [supabaseClient, session, authState])
+  }, [client, user?.id])
 
   return (
     <>

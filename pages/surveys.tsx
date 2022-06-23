@@ -1,18 +1,9 @@
-import { useSupabase } from '@common/supabaseProvider'
+import { useAuth } from '@components/Hooks/useAuth'
 import { FeedbackList } from '@components/FeedbackList'
 import { NextPage } from 'next'
-import { useRouter } from 'next/router'
-import { useEffect } from 'react'
 
 const SurveysPage: NextPage = () => {
-  const router = useRouter()
-  const { authState, session } = useSupabase()
-
-  useEffect(() => {
-    if (authState !== 'authenticated') {
-      router.replace('/signin')
-    }
-  }, [authState, router])
+  const { session } = useAuth()
 
   return (
     <>

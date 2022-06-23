@@ -154,11 +154,6 @@ async function updatePreso(
           await sendEmail(email, subject, templateId)
         })
       )
-      console.log(
-        'Emailed attendees',
-        presoAttendees.map((x) => x.email)
-      )
-      //email people
     }
 
     res.status(StatusCodes.OK).json({ success: true })

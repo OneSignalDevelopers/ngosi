@@ -1,12 +1,10 @@
-import FooterBar from '@components/FooterBar'
-import { NextPage } from 'next'
-import Head from 'next/head'
-import QRCode from 'react-qr-code'
-import { useRouter } from 'next/router'
 import { PublicUrl } from '@common/constants'
+import { NextPage } from 'next'
+import { useRouter } from 'next/router'
+import QRCode from 'react-qr-code'
 
 const downloadQRCode = (e: React.MouseEvent) => {
-  console.log('downloadQRCode clicked.')
+  console.log('This feature is not implemented yet.')
 }
 
 const Qr: NextPage = () => {
