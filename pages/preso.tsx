@@ -1,14 +1,12 @@
-import { useSupabase } from '@common/supabaseProvider'
-import FooterBar from '@components/FooterBar'
+import { useAuth } from '@components/Hooks/useAuth'
 import PresentationForm from '@components/PresoForm'
 import { PresoForm } from '@types'
 import { NextPage } from 'next'
-import Head from 'next/head'
 import { useRouter } from 'next/router'
 
 const Preso: NextPage = () => {
   const router = useRouter()
-  const { session } = useSupabase()
+  const { session } = useAuth()
 
   const onSubmit = async (values: PresoForm) => {
     try {
