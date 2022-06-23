@@ -1,5 +1,6 @@
-import { useSupabase } from '@common/supabaseProvider'
+import { useAuth } from '@components/Hooks/useAuth'
 import Link from 'next/link'
+import { useClient } from 'react-supabase'
 
 const HeaderBarAnonymous = () => (
   <Link href="/signin">
@@ -8,7 +9,8 @@ const HeaderBarAnonymous = () => (
 )
 
 const HeaderBarLoggedIn = () => {
-  const { session, client: supabaseClient } = useSupabase()
+  const client = useClient()
+
   return (
     <>
       <Link href="/presos">
@@ -26,7 +28,7 @@ const HeaderBarLoggedIn = () => {
       <button
         className=""
         onClick={async () => {
-          const { error } = await supabaseClient.auth.signOut()
+          const { error } = await client.auth.signOut()
           if (error) console.error('Error logging out.')
         }}
       >
@@ -37,7 +39,7 @@ const HeaderBarLoggedIn = () => {
 }
 
 const HeaderBar = () => {
-  const { session } = useSupabase()
+  const { session } = useAuth()
   return (
     <nav className="flex flex-none justify-between p-2 h-12 bg-accent-primary text-sm text-black font-bold min-w-full px-6 py-3">
       <Link href="/">
