@@ -1,13 +1,19 @@
+import React from 'react'
 import { useSupabase } from '@common/supabaseProvider'
 import { useState } from 'react'
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
+
+interface MyFormValues {
+  email: string
+}
 
 export default function Auth() {
   const [loading, setLoading] = useState(false)
   const [email, setEmail] = useState('')
   const [yupError, setyupError] = useState('')
   const { client: supabaseClient } = useSupabase()
+  const initialValues: MyFormValues = { email: '' }
 
   const sendMagicLinkSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Email is Required')
@@ -29,10 +35,13 @@ export default function Auth() {
 
   return (
     <Formik
-      initialValues={{
-        email: ''
-      }}
+      initialValues={initialValues}
       validationSchema={sendMagicLinkSchema}
+      onSubmit={(values, actions) => {
+        console.log({ values, actions })
+        alert(JSON.stringify(values, null, 2))
+        actions.setSubmitting(false)
+      }}
     >
       {({ errors, touched }) => (
         <Form className="flex flex-col">
@@ -45,7 +54,9 @@ export default function Auth() {
             type="email"
             placeholder="Your email"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setEmail(e.target.value)
+            }
           />
           {(errors.email && touched.email) || yupError ? (
             <div className="text-red-500 text-sm w-80 mt-1">
