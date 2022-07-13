@@ -21,9 +21,9 @@ export default function Auth() {
   const [email, setEmail] = useState('')
 
   const initialValues: MyFormValues = { email: '' }
-  const [yupError, setyupError] = useState('')
+  const [yupError, setupError] = useState('')
   const sendMagicLinkSchema = Yup.object().shape({
-    email: Yup.string().email('Invalid email').required('Email is Required')
+    email: Yup.string().email('Invalid email').required('Email is required')
   })
 
   const handleLogin = async (email: string) => {
@@ -43,7 +43,7 @@ export default function Auth() {
       alert('Check your email for the login link!')
     } catch (error) {
       const e = error as any
-      setyupError(e.error_description || e.message)
+      setupError(e.error_description || e.message)
     } finally {
       setLoading(false)
     }
