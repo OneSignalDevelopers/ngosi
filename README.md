@@ -18,6 +18,7 @@ Software developer influencers are notable software engineers, engineering leade
 
 Running Ngosi requires that you have the following tools installed on your system:
 
+- [Docker](https://www.docker.com/products/docker-desktop/)
 - [Supabase CLI](https://github.com/supabase/cli#getting-started)
 
 ### Setup Your Env
