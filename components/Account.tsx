@@ -1,25 +1,21 @@
-import { useSupabase } from '@common/supabaseProvider'
-import type { Session } from '@supabase/supabase-js'
+import { useAuth } from '@components/Hooks/useAuth'
 import { useEffect, useState } from 'react'
+import { useClient } from 'react-supabase'
 
-interface Props {
-  session: Session
-}
-
-const Account: React.FC<Props> = (props) => {
+const Account: React.FC = (props) => {
   const [loading, setLoading] = useState(false)
   const [username, setUsername] = useState<string | null>(null)
   const [website, setWebsite] = useState<string | null>(null)
   const [avatar_url, setAvatarUrl] = useState<string | null>(null)
-  const { client: supabaseClient } = useSupabase()
+  const { session, user } = useAuth()
+  const client = useClient()
 
   useEffect(() => {
     async function getProfile() {
       try {
         setLoading(true)
-        const user = supabaseClient.auth.user()
 
-        let { data, error, status } = await supabaseClient
+        let { data, error, status } = await client
           .from('profiles')
           .select(`username, website, avatar_url`)
           .eq('id', user!.id)
@@ -41,12 +37,12 @@ const Account: React.FC<Props> = (props) => {
       }
     }
     getProfile()
-  }, [supabaseClient])
+  }, [client, user])
 
   async function updateProfile({ username, website, avatar_url }: any) {
     try {
       setLoading(true)
-      const user = supabaseClient.auth.user()
+      const user = client.auth.user()
       const updates = {
         id: user!.id,
         username,
@@ -82,7 +78,7 @@ const Account: React.FC<Props> = (props) => {
           className="h-10 w-80 p-3"
           id="email"
           type="text"
-          value={props.session.user?.email}
+          value={session?.user?.email}
           disabled
         />
       </div>
@@ -126,7 +122,7 @@ const Account: React.FC<Props> = (props) => {
       <div>
         <button
           className="h-10 bg-black text-white font-bold text-xl mt-5 w-80"
-          onClick={() => supabaseClient.auth.signOut()}
+          onClick={() => client.auth.signOut()}
         >
           Sign Out
         </button>

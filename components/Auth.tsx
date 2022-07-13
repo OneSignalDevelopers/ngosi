@@ -1,20 +1,27 @@
 import React from 'react'
-import { useSupabase } from '@common/supabaseProvider'
 import { useState } from 'react'
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
+import {
+  LocalUrl as LocalDevUrl,
+  isProduction,
+  PublicUrl,
+  isStaging,
+  __env__
+} from '@common/constants'
+import { useClient } from 'react-supabase'
 
 interface MyFormValues {
   email: string
 }
 
 export default function Auth() {
+  const client = useClient()
   const [loading, setLoading] = useState(false)
   const [email, setEmail] = useState('')
-  const [yupError, setyupError] = useState('')
-  const { client: supabaseClient } = useSupabase()
-  const initialValues: MyFormValues = { email: '' }
 
+  const initialValues: MyFormValues = { email: '' }
+  const [yupError, setyupError] = useState('')
   const sendMagicLinkSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Email is Required')
   })
@@ -22,7 +29,16 @@ export default function Auth() {
   const handleLogin = async (email: string) => {
     try {
       setLoading(true)
-      const { error } = await supabaseClient.auth.signIn({ email })
+      const { error } = await client.auth.signIn(
+        { email },
+        {
+          redirectTo: isProduction
+            ? PublicUrl
+            : isStaging
+            ? window.origin
+            : LocalDevUrl
+        }
+      )
       if (error) throw error
       alert('Check your email for the login link!')
     } catch (error) {

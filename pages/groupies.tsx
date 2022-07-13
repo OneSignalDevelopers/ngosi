@@ -1,9 +1,8 @@
-import { useSupabase } from '@common/supabaseProvider'
-import FooterBar from '@components/FooterBar'
+import { useAuth } from '@components/Hooks/useAuth'
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
-import Head from 'next/head'
 import { useEffect, useState } from 'react'
+import { useClient } from 'react-supabase'
 
 interface AttendeeView {
   presenter: string
@@ -15,19 +14,20 @@ interface AttendeeView {
 }
 
 const Groupies: NextPage = () => {
-  const router = useRouter();
+  const router = useRouter()
   const [attendees, setAttendees] = useState<AttendeeView[]>([])
-  const { authState, session, client: supabaseClient } = useSupabase()
+  const { session } = useAuth()
+  const client = useClient()
 
   useEffect(() => {
-    if (authState !== 'authenticated') {
+    if (session === null) {
       router.replace('/signin')
     }
-  }, [authState, router])
+  }, [router, session])
 
   useEffect(() => {
     const loadPresos = async () => {
-      const { error, data: attendees } = await supabaseClient
+      const { error, data: attendees } = await client
         .from('attendees_view')
         .select()
         .eq('presenter', session?.user?.id)
@@ -41,7 +41,7 @@ const Groupies: NextPage = () => {
     }
 
     loadPresos()
-  }, [supabaseClient, session])
+  }, [client, session])
 
   return (
     <>
