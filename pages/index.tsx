@@ -8,18 +8,17 @@ const Home: NextPage = () => {
       <Script
         src="https://cdn.onesignal.com/sdks/OneSignalSDK.js"
         strategy="beforeInteractive"
-      ></Script>
-
-      <div className="prose mt-5">
-        <div>
-          <div className="float-right">
-            <Image src="/images/ngosi.png" width={200} height={200} alt="" />
+      ></Script>    
+      <div className="">
+        <div className="grid grid-cols-2 h-96 m-4">
+          <div className="flex flex-col justify-center">
+            <h1 className='text-left text-xl'>Ngosi</h1>
+            <p>
+              ngosi enables trainers, lecturers, and other continuing education
+              professionals to engage and empower their audiences.
+            </p>
           </div>
-          <h1>ngosi</h1>
-          <p>
-            ngosi enables trainers, lecturers, and other continuing education
-            professionals to engage and empower their audiences.
-          </p>
+          <Image className="justify-center" width={400} height={400} src="/images/banner1.svg" alt="" />
         </div>
         <div className="clear-both">
           <h1>Share Content</h1>

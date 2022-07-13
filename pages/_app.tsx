@@ -22,6 +22,7 @@ export default function Ngosi({ Component, pageProps }: AppProps) {
           <title>Ngosi</title>
           <link rel="icon" href="/favicon.ico" />
         </Head>
+        
         <div
           id="shell"
           className="flex flex-col min-h-screen min-w-full bg-background-primary items-center justify-center"
