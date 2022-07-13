@@ -20,6 +20,18 @@ Running Ngosi requires that you have the following tools installed on your syste
 
 - [Supabase CLI](https://github.com/supabase/cli#getting-started)
 
+### Setup Your Env
+
+Open the project in your text editor and copy the `.env.example` file and rename it to `.env.local` before setting each variable.
+
+| Variable                        | Purpose / how to get value                                                                   |
+| ------------------------------- | -------------------------------------------------------------------------------------------- |
+| `NEXT_PUBLIC_PUBLIC_URL`        | The hostname where Ngosi is being hosted                                                     |
+| `NEXT_PUBLIC_ONESIGNAL_APP_ID`  | The OneSignal app ID available on the OneSignal Dashboard (May need to create the app first) |
+| `NEXT_PUBLIC_SUPABASE_URL`      | This is the `API URL` returned by Supabase upon start                                        |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | This is the `anon key` returned by Supabase upon start                                       |
+
+
 ### Start Supabase
 
 ```bash
@@ -41,16 +53,6 @@ service_role key: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoic2VydmljZV9yb
 
 Once supacebase is up, you'll need to create the database by executing the `db.sql` script with your postgres client. If you don't have a client installed, consider using [pgcli](https://www.pgcli.com/).
 
-### Setup Your Env
-
-Open the project in your text editor and copy the `.env.example` file and rename it to `.env.local` before setting each variable.
-
-| Variable                        | Purpose / how to get value                                                                   |
-| ------------------------------- | -------------------------------------------------------------------------------------------- |
-| `NEXT_PUBLIC_PUBLIC_URL`        | The hostname where Ngosi is being hosted                                                     |
-| `NEXT_PUBLIC_ONESIGNAL_APP_ID`  | The OneSignal app ID available on the OneSignal Dashboard (May need to create the app first) |
-| `NEXT_PUBLIC_SUPABASE_URL`      | This is the `API URL` returned by Supabase upon start                                        |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | This is the `anon key` returned by Supabase upon start                                       |
 
 ### Start the Project
 
