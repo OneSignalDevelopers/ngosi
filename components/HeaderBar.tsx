@@ -14,16 +14,16 @@ const HeaderBarLoggedIn = () => {
   return (
     <>
       <Link href="/presos">
-        <a>Presos</a>
+        <a className="font-display">PRESOS</a>
       </Link>
       <Link href="/surveys">
-        <a>Surveys</a>
+        <a className="font-display">SURVEYS</a>
       </Link>
       <Link href="/groupies">
-        <a>Audience</a>
+        <a className="font-display">AUDIENCE</a>
       </Link>
       <Link href="/account">
-        <a>Account</a>
+        <a className="font-display">ACCOUNT</a>
       </Link>
       <button
         className=""
@@ -32,7 +32,7 @@ const HeaderBarLoggedIn = () => {
           if (error) console.error('Error logging out.')
         }}
       >
-        Logout
+        LOGOUT
       </button>
     </>
   )

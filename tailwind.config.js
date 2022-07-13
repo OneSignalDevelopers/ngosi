@@ -4,12 +4,17 @@ module.exports = {
     './components/**/*.{js,ts,jsx,tsx}'
   ],
   theme: {
+    fontFamily: {
+      'display': ['Roboto', 'sans-serif'],
+    },
     extend: {
       colors: {
-          'accent-primary':     '#77BB3F',
-          'accent-secondary':   '#F6EDD9',
-          'background-primary': '#F5FBEE',
-          'text-primary':       '#82976D'
+          'accent-primary':     '#72BDA3',
+          'accent-secondary':   '#94E8B4',
+          'background-primary': '#F1F1F1',
+      },
+      textColor: {
+        'primary': '#6864b4'
       }
     }
   },
